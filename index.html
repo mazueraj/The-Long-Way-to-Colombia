@@ -406,7 +406,31 @@ body {
   margin-bottom: 14px;
 }
  
-/* ── BOTTOM NAV ── */
+/* ── ACCORDION ── */
+  .accordion { margin-top: 10px; border-radius: var(--r-sm); overflow: hidden; border: 1px solid var(--border); }
+  .accordion-btn {
+    width: 100%; display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 12px; background: var(--sand); border: none;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+    color: var(--navy); cursor: pointer; gap: 8px; text-align: left;
+  }
+  .accordion-btn:active { background: #ece5d8; }
+  .accordion-chevron { width: 15px; height: 15px; flex-shrink: 0; transition: transform 0.2s; color: var(--text-muted); }
+  .accordion-btn.open .accordion-chevron { transform: rotate(180deg); }
+  .accordion-body { display: none; background: white; }
+  .accordion-body.open { display: block; }
+  .acc-link {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 11px 12px; border-top: 1px solid var(--border);
+    text-decoration: none; color: inherit;
+    transition: background 0.1s;
+  }
+  .acc-link:active { background: #f8fbff; }
+  .acc-link-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .acc-link-title { font-size: 13px; font-weight: 500; color: var(--navy-light); margin-bottom: 2px; }
+  .acc-link-sub { font-size: 11px; color: var(--text-muted); }
+ 
+  /* ── BOTTOM NAV ── */
 .bottom-nav {
   position: fixed;
   bottom: 0; left: 0; right: 0;
@@ -540,7 +564,7 @@ body {
       <div class="journey-arrow"><div class="journey-line"></div>✈<div class="journey-line"></div></div>
       <div class="journey-city"><div class="city-code">LAX</div><div class="city-date">22 Jul</div></div>
       <div class="journey-arrow"><div class="journey-line"></div>✈<div class="journey-line"></div></div>
-      <div class="journey-city"><div class="city-code">BNE</div><div class="city-date">24 Jul</div></div>
+      <div class="journey-city"><div class="city-code">BNE</div><div class="city-date">25 Jul</div></div>
     </div>
   </div>
  
@@ -564,8 +588,8 @@ body {
   <div id="page-flights" class="page active">
  
     <div class="stats-strip" style="border-radius:0; margin-bottom:20px;">
-      <div class="stat"><span class="stat-num">5</span><span class="stat-label">Flights</span></div>
-      <div class="stat"><span class="stat-num">45</span><span class="stat-label">Days</span></div>
+      <div class="stat"><span class="stat-num">7</span><span class="stat-label">Flights</span></div>
+      <div class="stat"><span class="stat-num">46</span><span class="stat-label">Days</span></div>
       <div class="stat"><span class="stat-num">3</span><span class="stat-label">Countries</span></div>
       <div class="stat"><span class="stat-num">6</span><span class="stat-label">Cities</span></div>
     </div>
@@ -583,10 +607,19 @@ body {
           <div class="detail-grid">
             <div><div class="detail-label">Terminal BNE</div><div class="detail-value">International · Lvl 4</div></div>
             <div><div class="detail-label">Check-in opens</div><div class="detail-value">17:35 (3 hrs prior)</div></div>
-            <div><div class="detail-label">Arrives LAX</div><div class="detail-value">10 Jun (same day)</div></div>
+            <div><div class="detail-label">Arrives LAX</div><div class="detail-value">17:05 · Tue 9 Jun</div></div>
             <div><div class="detail-label">Terminal LAX</div><div class="detail-value">Tom Bradley Int'l</div></div>
+            <div><div class="detail-label">Duration</div><div class="detail-value">13h 30m</div></div>
+            <div><div class="detail-label">Class</div><div class="detail-value">Economy · 1 bag included</div></div>
           </div>
-          <div class="alert-pill alert-warning">⚠ Crosses date line — arrives same calendar date</div>
+          <div style="margin: 8px 0 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);">Passengers</div>
+          <div style="font-size: 12px; line-height: 1.9; color: var(--text-mid);">
+            Laura Nataly Cruz Ropero<br>
+            Julian Mazuera Molina<br>
+            Martin Emilio Mazuera<br>
+            Oliver Isaias Mazuera
+          </div>
+          <div class="alert-pill alert-warning" style="margin-top:10px;">⚠ Crosses date line — departs Tue 9 Jun, arrives Tue 9 Jun LAX time</div>
         </div>
       </div>
     </div>
@@ -612,19 +645,56 @@ body {
       </div>
       <div class="flight-row" onclick="toggleFlight(this)">
         <div class="flight-main">
-          <div><div class="flight-num">UA 1871</div><div class="flight-carrier">United</div></div>
-          <div class="flight-route"><span class="route-city">AUS</span><span class="route-arrow">→</span><span class="route-city">BOG</span></div>
+          <div><div class="flight-num">UA 1871</div><div class="flight-carrier">United · Leg 1</div></div>
+          <div class="flight-route"><span class="route-city">AUS</span><span class="route-arrow">→</span><span class="route-city">IAH</span></div>
           <div><div class="flight-time">19:44</div><div class="flight-date">18 Jun</div></div>
           <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
         <div class="flight-detail">
           <div class="detail-grid">
             <div><div class="detail-label">Confirmation</div><div class="detail-value"><span class="ref-code">FK6G3M</span></div></div>
-            <div><div class="detail-label">Arrives BOG</div><div class="detail-value">04:54 — 19 Jun</div></div>
-            <div><div class="detail-label">Dep airport</div><div class="detail-value">Austin–Bergstrom</div></div>
-            <div><div class="detail-label">Arr airport</div><div class="detail-value">El Dorado Int'l</div></div>
+            <div><div class="detail-label">Class</div><div class="detail-value">United Economy (T)</div></div>
+            <div><div class="detail-label">Departs AUS</div><div class="detail-value">19:44 Austin–Bergstrom</div></div>
+            <div><div class="detail-label">Arrives IAH</div><div class="detail-value">20:55 George Bush</div></div>
           </div>
-          <div class="alert-pill alert-info">ℹ Arrives overnight — arrange Bogotá transfer in advance</div>
+          <div style="margin: 8px 0 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);">eTicket Numbers</div>
+          <div style="font-size: 12px; line-height: 1.9; color: var(--text-mid);">
+            Julian &nbsp;&nbsp;&nbsp;<span class="ref-code">016 2378251451</span> · Seat 35A<br>
+            Laura &nbsp;&nbsp;&nbsp;&nbsp;<span class="ref-code">016 2378251452</span> · Seat 35B<br>
+            Martin &nbsp;&nbsp;&nbsp;<span class="ref-code">016 2378251453</span><br>
+            Oliver &nbsp;&nbsp;&nbsp;&nbsp;<span class="ref-code">016 2378251459</span>
+          </div>
+          <div class="alert-pill alert-info" style="margin-top:10px;">ℹ Paid by Visa ····8035 · $932.00 USD total (4 pax · $233 each)</div>
+        </div>
+      </div>
+      <div class="flight-row" onclick="toggleFlight(this)">
+        <div class="flight-main">
+          <div><div class="flight-num">UA 209</div><div class="flight-carrier">United · Leg 2</div></div>
+          <div class="flight-route"><span class="route-city">IAH</span><span class="route-arrow">→</span><span class="route-city">BOG</span></div>
+          <div><div class="flight-time">23:59</div><div class="flight-date">18 Jun</div></div>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="flight-detail">
+          <div class="detail-grid">
+            <div><div class="detail-label">Confirmation</div><div class="detail-value"><span class="ref-code">FK6G3M</span></div></div>
+            <div><div class="detail-label">Class</div><div class="detail-value">United Economy (T)</div></div>
+            <div><div class="detail-label">Departs IAH</div><div class="detail-value">23:59 18 Jun</div></div>
+            <div><div class="detail-label">Arrives BOG</div><div class="detail-value">04:54 — 19 Jun</div></div>
+            <div><div class="detail-label">IAH layover</div><div class="detail-value">~3h 04m</div></div>
+            <div><div class="detail-label">Arr airport</div><div class="detail-value">El Dorado Int'l (BOG)</div></div>
+          </div>
+          <div style="margin: 8px 0 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);">Seats IAH→BOG</div>
+          <div style="font-size: 12px; line-height: 1.9; color: var(--text-mid);">
+            Julian · Seat 38A &nbsp;&nbsp; Laura · Seat 38B
+          </div>
+          <div style="margin: 8px 0 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);">Checked Baggage — AUS to BOG</div>
+          <div style="font-size: 12px; line-height: 1.8; color: var(--text-mid);">
+            1st bag: <strong>USD $70.00</strong> · max 23kg / 157cm<br>
+            2nd bag: <strong>USD $100.00</strong> · max 23kg / 157cm<br>
+            Carry-on: 1 bag (56×35×22cm) + 1 personal item
+          </div>
+          <div class="alert-pill alert-warning" style="margin-top:10px;">⚠ Overnight arrival in Bogotá — pre-arrange airport transfer</div>
+          <div class="alert-pill alert-info" style="margin-top:6px;">ℹ Fare: NRF — non-refundable, no changes after departure</div>
         </div>
       </div>
     </div>
@@ -633,19 +703,52 @@ body {
     <div class="card">
       <div class="flight-row" onclick="toggleFlight(this)">
         <div class="flight-main">
-          <div><div class="flight-num">UA 508</div><div class="flight-carrier">United</div></div>
-          <div class="flight-route"><span class="route-city">BOG</span><span class="route-arrow">→</span><span class="route-city">HOU</span><span class="route-arrow">→</span><span class="route-city">LAX</span></div>
+          <div><div class="flight-num">UA 508</div><div class="flight-carrier">United · Leg 1</div></div>
+          <div class="flight-route"><span class="route-city">BOG</span><span class="route-arrow">→</span><span class="route-city">IAH</span></div>
           <div><div class="flight-time">08:30</div><div class="flight-date">22 Jul</div></div>
           <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
         <div class="flight-detail">
           <div class="detail-grid">
             <div><div class="detail-label">Confirmation</div><div class="detail-value"><span class="ref-code">ACFMM1</span></div></div>
-            <div><div class="detail-label">BOG dep</div><div class="detail-value">08:30 → HOU</div></div>
-            <div><div class="detail-label">HOU dep</div><div class="detail-value">20:30 → LAX</div></div>
-            <div><div class="detail-label">Arrives LAX</div><div class="detail-value">22 Jul (late)</div></div>
+            <div><div class="detail-label">Class</div><div class="detail-value">United Economy (T)</div></div>
+            <div><div class="detail-label">Departs BOG</div><div class="detail-value">08:30 AM</div></div>
+            <div><div class="detail-label">Arrives IAH</div><div class="detail-value">01:50 PM</div></div>
           </div>
-          <div class="alert-pill alert-info">ℹ Long HOU layover — ESTA must cover re-entry. Overnight in LAX before QF16.</div>
+          <div style="margin: 8px 0 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);">eTicket Numbers</div>
+          <div style="font-size: 12px; line-height: 1.9; color: var(--text-mid);">
+            Julian &nbsp;&nbsp;<span class="ref-code">016 2359863889</span><br>
+            Laura &nbsp;&nbsp;&nbsp;<span class="ref-code">016 2359863890</span><br>
+            Martin &nbsp;&nbsp;<span class="ref-code">016 2359863891</span><br>
+            Oliver &nbsp;&nbsp;<span class="ref-code">016 2359863892</span>
+          </div>
+          <div class="alert-pill alert-info" style="margin-top:10px;">ℹ Check-in bags 60 min before departure. At gate 30 min prior (international rule).</div>
+        </div>
+      </div>
+      <div class="flight-row" onclick="toggleFlight(this)">
+        <div class="flight-main">
+          <div><div class="flight-num">UA 1743</div><div class="flight-carrier">United · Leg 2</div></div>
+          <div class="flight-route"><span class="route-city">IAH</span><span class="route-arrow">→</span><span class="route-city">LAX</span></div>
+          <div><div class="flight-time">16:30</div><div class="flight-date">22 Jul</div></div>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="flight-detail">
+          <div class="detail-grid">
+            <div><div class="detail-label">Confirmation</div><div class="detail-value"><span class="ref-code">ACFMM1</span></div></div>
+            <div><div class="detail-label">Class</div><div class="detail-value">United Economy (T)</div></div>
+            <div><div class="detail-label">Departs IAH</div><div class="detail-value">04:30 PM</div></div>
+            <div><div class="detail-label">Arrives LAX</div><div class="detail-value">06:10 PM</div></div>
+            <div><div class="detail-label">IAH layover</div><div class="detail-value">~2h 40m</div></div>
+            <div><div class="detail-label">Paid by</div><div class="detail-value">Visa ····8035</div></div>
+          </div>
+          <div style="margin: 8px 0 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);">Checked Baggage — BOG to LAX</div>
+          <div style="font-size: 12px; line-height: 1.8; color: var(--text-mid);">
+            1st bag: <strong>USD $70.00</strong> · max 23kg / 157cm<br>
+            2nd bag: <strong>USD $100.00</strong> · max 23kg / 157cm<br>
+            Carry-on: 1 bag (56×35×22cm) + 1 personal item (43×25×22cm)
+          </div>
+          <div class="alert-pill alert-warning" style="margin-top:10px;">⚠ No bags included in fare — budget $70 per person per bag checked</div>
+          <div class="alert-pill alert-info" style="margin-top:6px;">ℹ Fare rules: NRF — non-refundable. No changes after departure.</div>
         </div>
       </div>
       <div class="flight-row" onclick="toggleFlight(this)">
@@ -657,11 +760,20 @@ body {
         </div>
         <div class="flight-detail">
           <div class="detail-grid">
-            <div><div class="detail-label">Terminal</div><div class="detail-value">Tom Bradley (TBIT)</div></div>
+            <div><div class="detail-label">Terminal LAX</div><div class="detail-value">Tom Bradley (TBIT)</div></div>
             <div><div class="detail-label">Check-in opens</div><div class="detail-value">19:10 (3 hrs prior)</div></div>
-            <div><div class="detail-label">Arrives BNE</div><div class="detail-value">~24 Jul</div></div>
+            <div><div class="detail-label">Arrives BNE</div><div class="detail-value">05:00 · Sat 25 Jul ✓</div></div>
+            <div><div class="detail-label">Duration</div><div class="detail-value">13h 50m</div></div>
+            <div><div class="detail-label">Class</div><div class="detail-value">Economy · 1 bag included</div></div>
           </div>
-          <div class="alert-pill alert-success">✓ Home! Plan overnight LAX accommodation after UA 508.</div>
+          <div style="margin: 8px 0 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);">Passengers</div>
+          <div style="font-size: 12px; line-height: 1.9; color: var(--text-mid);">
+            Laura Nataly Cruz Ropero<br>
+            Julian Mazuera Molina<br>
+            Martin Emilio Mazuera<br>
+            Oliver Isaias Mazuera
+          </div>
+          <div class="alert-pill alert-success" style="margin-top:10px;">✓ UA 1743 arrives LAX 6:10 PM on 22 Jul. QF16 departs 10:10 PM on 23 Jul — plan one night in LAX.</div>
         </div>
       </div>
     </div>
@@ -670,38 +782,83 @@ body {
   <!-- ═══════════════════════════════ STAYS PAGE ═══════════════════════════════ -->
   <div id="page-stays" class="page">
  
-    <div class="section-label">Hotels</div>
+    <div class="section-label">Accommodation</div>
     <div class="card">
-      <div class="card-header"><span class="card-title">Accommodation</span><span class="badge badge-confirmed">3 confirmed</span></div>
+      <div class="card-header"><span class="card-title">Hotels — 6 nights total</span><span class="badge badge-confirmed">3 booked</span></div>
  
+      <!-- HOTEL 1: LA -->
       <div class="hotel-row">
         <div class="hotel-icon">🏙</div>
-        <div>
-          <div class="hotel-name">The Westin Bonaventure</div>
-          <div class="hotel-addr">404 S Figueroa St, Los Angeles</div>
-          <div class="hotel-meta">Check-in: 09 Jun · 1 night</div>
-          <a href="https://maps.google.com/?q=The+Westin+Bonaventure+Los+Angeles" target="_blank" class="map-btn">📍 Open in Maps</a>
+        <div style="flex:1;">
+          <div class="hotel-name">Embassy Suites by Hilton — LAX South El Segundo</div>
+          <div class="hotel-addr">El Segundo, CA (2 miles from LAX)</div>
+          <div class="hotel-meta" style="margin-bottom:6px;">
+            📅 09 Jun – 10 Jun 2026 · <strong>1 night</strong><br>
+            🛏 Standard Suite · 2 Queen beds · Bed &amp; Breakfast<br>
+            🕑 Check-in: 2:00 PM · Check-out: 10:00 AM
+          </div>
+          <div style="font-size:11px; color:var(--success); font-weight:600; margin-bottom:4px;">✓ Fully refundable before 06 Jun 2026</div>
+          <div style="font-size:12px; color:var(--text-muted); margin-bottom:6px;">Pool · Restaurant · Spa · Bar · WiFi · Fitness · Laundry · Concierge</div>
+          <div style="font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">AUD $459.35 · 5 travellers</div>
+          <a href="https://maps.google.com/?q=Embassy+Suites+LAX+South+El+Segundo" target="_blank" class="map-btn">📍 Open in Maps</a>
         </div>
       </div>
  
+      <!-- HOTEL 2: SLO -->
       <div class="hotel-row">
         <div class="hotel-icon">🌊</div>
-        <div>
-          <div class="hotel-name">Embassy Suites San Luis Obispo</div>
-          <div class="hotel-addr">333 Madonna Rd, San Luis Obispo</div>
-          <div class="hotel-meta">Check-in: 10 Jun · road trip stop</div>
+        <div style="flex:1;">
+          <div class="hotel-name">Embassy Suites by Hilton — San Luis Obispo</div>
+          <div class="hotel-addr">333 Madonna Rd, San Luis Obispo, CA</div>
+          <div class="hotel-meta" style="margin-bottom:6px;">
+            📅 10 Jun – 11 Jun 2026 · <strong>1 night</strong><br>
+            🛏 Executive Room · 2 Queen beds, no smoking · Bed &amp; Breakfast<br>
+            🕑 Check-in: 2:00 PM · Check-out: 10:00 AM
+          </div>
+          <div style="font-size:11px; color:var(--success); font-weight:600; margin-bottom:4px;">✓ Fully refundable before 08 Jun 2026</div>
+          <div style="font-size:12px; color:var(--text-muted); margin-bottom:6px;">Free WiFi · Pool · Parking · Restaurant · Bar · Fitness · Laundry · Bicycle rentals</div>
+          <div style="font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">AUD $528.79 · 5 travellers</div>
           <a href="https://maps.google.com/?q=Embassy+Suites+333+Madonna+Rd+San+Luis+Obispo" target="_blank" class="map-btn">📍 Open in Maps</a>
         </div>
       </div>
  
+      <!-- HOTEL 3: SF -->
       <div class="hotel-row">
         <div class="hotel-icon">🌉</div>
-        <div>
-          <div class="hotel-name">Star Motel San Francisco</div>
-          <div class="hotel-addr">1727 Lombard St, San Francisco</div>
-          <div class="hotel-meta">Ref: <span class="ref-code">9085070482790</span></div>
+        <div style="flex:1;">
+          <div class="hotel-name">Star Motel — San Francisco</div>
+          <div class="hotel-addr">1727 Lombard St, San Francisco, CA</div>
+          <div class="hotel-meta" style="margin-bottom:6px;">
+            📅 11 Jun – 15 Jun 2026 · <strong>4 nights</strong><br>
+            🛏 Family Suite · 2 Queen beds with sofa<br>
+            Ref: <span class="ref-code">9085070482790</span>
+          </div>
+          <div style="font-size:11px; color:var(--success); font-weight:600; margin-bottom:4px;">✓ Fully refundable before 11 Jun 2026</div>
+          <div style="font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">AUD $3,279.46 · 5 travellers</div>
           <a href="https://maps.google.com/?q=Star+Motel+1727+Lombard+Street+San+Francisco" target="_blank" class="map-btn">📍 Open in Maps</a>
         </div>
+      </div>
+    </div>
+ 
+    <div class="section-label">Trip Summary</div>
+    <div class="card">
+      <div class="card-header"><span class="card-title">Booking Summary — Trip ID 7800906</span><span class="badge badge-confirmed">Booked</span></div>
+      <div class="car-grid" style="grid-template-columns:1fr 1fr;">
+        <div><div class="car-label">QF BNE↔LAX (×4)</div><div class="car-value">AUD $4,288.32</div></div>
+        <div><div class="car-label">Embassy Suites LAX</div><div class="car-value">AUD $459.35</div></div>
+        <div><div class="car-label">Embassy Suites SLO</div><div class="car-value">AUD $528.79</div></div>
+        <div><div class="car-label">Star Motel SF (4 nts)</div><div class="car-value">AUD $3,279.46</div></div>
+        <div><div class="car-label">Thrifty Car Hire</div><div class="car-value">AUD $1,268.83</div></div>
+        <div><div class="car-label">Captain's Pack</div><div class="car-value">AUD $236.00</div></div>
+      </div>
+      <div style="padding: 0 16px 4px; border-top: 1px solid var(--border); margin-top:4px;">
+        <div class="car-grid" style="grid-template-columns:1fr 1fr; padding:12px 0 0;">
+          <div><div class="car-label">Booked total</div><div class="car-value" style="font-size:15px; font-weight:700; color:var(--navy);">AUD $10,085.13</div></div>
+          <div><div class="car-label">Amount paid</div><div class="car-value" style="color:var(--success); font-weight:600;">AUD $6,276.88</div></div>
+        </div>
+      </div>
+      <div class="car-alert" style="background:var(--warning-bg); color:var(--warning);">
+        ⚠ Balance owing: <strong>AUD $3,808.25</strong> · Confirmation sent to lau_cruz7@hotmail.com
       </div>
     </div>
  
@@ -711,8 +868,8 @@ body {
       <div class="car-grid">
         <div><div class="car-label">Voucher</div><div class="car-value"><span class="ref-code">349649601</span></div></div>
         <div><div class="car-label">Reference</div><div class="car-value"><span class="ref-code">L46642299D4</span></div></div>
-        <div><div class="car-label">Pick-up</div><div class="car-value">10 Jun · 10:00 AM</div></div>
-        <div><div class="car-label">Location</div><div class="car-value">LAX Thrifty lot</div></div>
+        <div><div class="car-label">Pick-up</div><div class="car-value">10 Jun · 10:00 AM · LAX</div></div>
+        <div><div class="car-label">Drop-off</div><div class="car-value">15 Jun · SFO</div></div>
       </div>
       <div class="car-alert">⚠ Julian must have <strong>physical original licence</strong> + physical credit card. $200 USD deposit required.</div>
       <div style="padding:10px 16px;">
@@ -720,9 +877,18 @@ body {
       </div>
     </div>
  
-    <div class="section-label">Bogotá Note</div>
-    <div class="note-card">
-      No hotel listed for Bogotá (19 Jun – 22 Jul). If staying with family or a rental, save the address and ensure an airport transfer is arranged for the overnight arrival on 19 Jun.
+    <div class="section-label">Bogotá</div>
+    <div class="card">
+      <div class="hotel-row">
+        <div class="hotel-icon">🇨🇴</div>
+        <div style="flex:1;">
+          <div class="hotel-name">Private Apartment</div>
+          <div class="hotel-addr">Calle 118 #15-55, Apto 305<br>Edificio Savanna, Bogotá</div>
+          <div class="hotel-meta" style="margin-top:6px;">📅 19 Jun – 22 Jul 2026 · <strong>33 nights</strong></div>
+          <div class="alert-pill alert-warning" style="margin-top:8px;">⚠ Overnight arrival 04:54 on 19 Jun — pre-arrange airport transfer to this address</div>
+          <a href="https://maps.google.com/?q=Calle+118+%2315-55+Bogota+Colombia" target="_blank" class="map-btn" style="margin-top:8px;">📍 Open in Maps</a>
+        </div>
+      </div>
     </div>
   </div>
  
@@ -741,6 +907,30 @@ body {
         <div class="check-body">
           <div class="check-title">Apply for US ESTA — all 5 travellers</div>
           <div class="check-sub">esta.cbp.dhs.gov — apply 72+ hrs before departure. USD $21 per person. Valid 2 years.</div>
+          <div class="accordion" onclick="event.stopPropagation()">
+            <button class="accordion-btn" onclick="toggleAccordion(this)">
+              <span>🔗 ESTA links &amp; guides</span>
+              <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="accordion-body">
+              <a href="https://esta.cbp.dhs.gov" target="_blank" class="acc-link">
+                <span class="acc-link-icon">🇺🇸</span>
+                <div><div class="acc-link-title">Official ESTA Application</div><div class="acc-link-sub">esta.cbp.dhs.gov — US Government portal</div></div>
+              </a>
+              <a href="https://www.homeaffairs.gov.au/travelling/before-leaving/travel-to-usa" target="_blank" class="acc-link">
+                <span class="acc-link-icon">🇦🇺</span>
+                <div><div class="acc-link-title">Australian Home Affairs — USA Travel Guide</div><div class="acc-link-sub">Passport &amp; ESTA requirements for Australians</div></div>
+              </a>
+              <a href="https://au.usembassy.gov/visas/visa-waiver-program/" target="_blank" class="acc-link">
+                <span class="acc-link-icon">🏛</span>
+                <div><div class="acc-link-title">US Embassy Australia — Visa Waiver Program</div><div class="acc-link-sub">Eligibility and requirements explained</div></div>
+              </a>
+              <a href="https://www.smartraveller.gov.au/destinations/americas/united-states-america" target="_blank" class="acc-link">
+                <span class="acc-link-icon">📋</span>
+                <div><div class="acc-link-title">Smartraveller — USA Entry Requirements</div><div class="acc-link-sub">DFAT official travel advice for Australians</div></div>
+              </a>
+            </div>
+          </div>
         </div>
         <div class="check-right"><span class="urgency urgency-high">Critical</span></div>
       </div>
@@ -1082,6 +1272,14 @@ function restoreAllStates() {
       if (val === '1') el.classList.add('packed');
     } catch(e) {}
   });
+}
+ 
+// ── Accordion ──
+function toggleAccordion(btn) {
+  const body = btn.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  btn.classList.toggle('open', !isOpen);
+  body.classList.toggle('open', !isOpen);
 }
  
 // ── Navigation ──
