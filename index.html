@@ -12,27 +12,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
  
-<!-- PWA Manifest inline via JS (no extra file needed) -->
-<script>
-const manifest = {
-  name: "The Long Way to Colombia",
-  short_name: "Colombia Trip",
-  start_url: ".",
-  display: "standalone",
-  background_color: "#0d2b45",
-  theme_color: "#0d2b45",
-  description: "Julian, Laura, Luz Daly, Martin & Oliver — Jun–Jul 2026",
-  icons: [
-    { src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='40' fill='%230d2b45'/%3E%3Ctext x='96' y='130' font-size='110' text-anchor='middle'%3E✈%3C/text%3E%3C/svg%3E", sizes: "192x192", type: "image/svg+xml" },
-    { src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%230d2b45'/%3E%3Ctext x='256' y='360' font-size='300' text-anchor='middle'%3E✈%3C/text%3E%3C/svg%3E", sizes: "512x512", type: "image/svg+xml" }
-  ]
-};
-const blob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
-const url = URL.createObjectURL(blob);
-const link = document.createElement('link');
-link.rel = 'manifest'; link.href = url;
-document.head.appendChild(link);
-</script>
+<!-- PWA Manifest — base64 data URI, reliable on Android Chrome / Pixel -->
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiVGhlIExvbmcgV2F5IHRvIENvbG9tYmlhIiwic2hvcnRfbmFtZSI6IkNvbG9tYmlhIFRyaXAiLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzBkMmI0NSIsInRoZW1lX2NvbG9yIjoiIzBkMmI0NSIsImRlc2NyaXB0aW9uIjoiSnVsaWFuLCBMYXVyYSwgTHV6IERhbHksIE1hcnRpbiAmIE9saXZlciDigJQgSnVuLUp1bCAyMDI2IiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWmxjbk5wYjI0OUlqRXVNQ0lnZG1WeWMybHZiajBpTWk0d0lpQjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzlrWlhOakwzUnZiMjh2WkdWek15NXFZM01pUGp4eVpXTjBJSGQwYVc1bk9pSXhPVElpSUhKa09pSTBNQ0lnZUcxc09pSmpiMjB0Wm1sdVlXd3RiV1ZzWVhraVBqeDBaWGgwSUhnOUlqRWlJSGs5SWpFd01DSWdiM0JoWTJsMGVUMGlkWEpzS0NJd2Nja3dLU0F3S1NJZ1ptbHNiRDBpTWpBd01qUTBOU0lnWW14aFoyc3RabVZ1WTNScGIyNDlJbTV2Ym1VaVBnb2dJQ0FnSUNBZ0lDQThkR1Y0ZENCNGJXD3VjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TURNdmRHOXZiQzluWm1ZdlptbHNiQzl5WVhJdmFHbHpMM1J2YjI4dFkzVndMeUl2UGp3dmRHVjRkRDQ4TDNObmZqd3ZjbVZqZEQ0IiwicHVycG9zZSI6ImFueSBtYXNrYWJsZSIsInNpemVzIjoiMTkyeDE5MiIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn0seyJzcmMiOiJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5emRtY2lJSFpsY25OcGIyNDlJakV1TUNJZ2RtVnljMmx2YmowaU1pNHdJaUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5a1pYTmpMM1J2YjI4dlpHVnpNeTV5Y1djdlkzTXZZbUZ1YVhOekxuWmhjaUkrUEhKbFkzUWdkMmxrZEdnOUlqVXhNaUlnYkdsNFBTSXhNREFpSUhKa09pSXhNREFpSUdodGJHNXpQU0pqYjIwdFptbHVZV3d0YldWc1lYa2lQanhrWlhOakxYUmxlSFF1YW1OekxtRnNiRFlpT2lJek1EWWlQand2WkdWell5MTBaWGgwTGpGak1UNDhkR1Y0ZENCNGJXD3VjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TURNdmRHOXZiQzluWm1ZdlptbHNiQzl5WVhJdmFHbHpMM1J2YjI4dFkzVndMeUl2UGp3dmRHVjRkRDQ4TDNObmZqd3ZjbVZqZEQ0Iiwic2l6ZXMiOiI1MTJ4NTEyIiwidHlwZSI6ImltYWdlL3N2Zyt4bWwifV19">
  
 <style>
 :root {
@@ -1360,6 +1341,31 @@ function dismissIos() {
 restoreAllStates();
 updateProgress();
 updatePackProgress();
+ 
+// ── Service Worker — required for Android Chrome PWA install ──
+// Injected inline as a blob so no separate sw.js file is needed
+if ('serviceWorker' in navigator) {
+  const swCode = `
+    const CACHE = 'colombia-trip-v1';
+    self.addEventListener('install', e => {
+      self.skipWaiting();
+    });
+    self.addEventListener('activate', e => {
+      e.waitUntil(clients.claim());
+    });
+    self.addEventListener('fetch', e => {
+      e.respondWith(
+        caches.match(e.request).then(cached => cached || fetch(e.request))
+      );
+    });
+  `;
+  const swBlob = new Blob([swCode], { type: 'application/javascript' });
+  const swUrl = URL.createObjectURL(swBlob);
+  navigator.serviceWorker.register(swUrl, { scope: './' })
+    .then(() => console.log('SW registered'))
+    .catch(e => console.log('SW registration failed:', e));
+}
+ 
 </script>
 </body>
 </html>
