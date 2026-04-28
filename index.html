@@ -1052,6 +1052,38 @@ body {
 </nav>
  
 <script>
+// ══════════════════════════════════════════════
+//  PERSISTENT STATE — localStorage
+//  All checkbox/pack states survive close/reopen
+// ══════════════════════════════════════════════
+ 
+// Give every check-item and pack-item a stable ID based on its text content
+function getItemKey(el) {
+  const label = el.querySelector('.check-title, .pack-label, span');
+  return 'item:' + (label ? label.textContent.trim() : el.innerText.trim().slice(0, 60));
+}
+ 
+// Save a single item's state
+function saveState(el, checked) {
+  try { localStorage.setItem(getItemKey(el), checked ? '1' : '0'); } catch(e) {}
+}
+ 
+// Restore all item states on load
+function restoreAllStates() {
+  document.querySelectorAll('.check-item').forEach(el => {
+    try {
+      const val = localStorage.getItem(getItemKey(el));
+      if (val === '1') el.classList.add('checked');
+    } catch(e) {}
+  });
+  document.querySelectorAll('.pack-item').forEach(el => {
+    try {
+      const val = localStorage.getItem(getItemKey(el));
+      if (val === '1') el.classList.add('packed');
+    } catch(e) {}
+  });
+}
+ 
 // ── Navigation ──
 function showPage(name, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -1073,6 +1105,7 @@ function toggleFlight(row) {
 // ── Checklist ──
 function toggleCheck(item) {
   item.classList.toggle('checked');
+  saveState(item, item.classList.contains('checked'));
   updateProgress();
 }
 function updateProgress() {
@@ -1086,6 +1119,7 @@ function updateProgress() {
 // ── Packing ──
 function togglePack(item) {
   item.classList.toggle('packed');
+  saveState(item, item.classList.contains('packed'));
   updatePackProgress();
 }
 function updatePackProgress() {
@@ -1124,7 +1158,8 @@ function dismissIos() {
   document.getElementById('ios-tip').classList.remove('show');
 }
  
-// ── Init ──
+// ── Init — restore saved state first, then update progress bars ──
+restoreAllStates();
 updateProgress();
 updatePackProgress();
 </script>
