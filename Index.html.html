@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Long Way to Colombia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d2b45;
+    --navy-mid: #1a3f5c;
+    --navy-light: #2b5a7e;
+    --gold: #c9963a;
+    --gold-light: #e8b86d;
+    --gold-pale: #fdf3e3;
+    --sand: #f5ede0;
+    --white: #ffffff;
+    --text: #1a2e3e;
+    --text-mid: #4a6070;
+    --text-muted: #8aa0b0;
+    --border: rgba(13,43,69,0.12);
+    --border-gold: rgba(201,150,58,0.3);
+    --success: #2d7a4f;
+    --success-bg: #edf7f1;
+    --warning: #b05e10;
+    --warning-bg: #fef5ea;
+    --danger: #9b2335;
+    --danger-bg: #fdf0f2;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --shadow-card: 0 2px 12px rgba(13,43,69,0.08), 0 0 0 1px rgba(13,43,69,0.06);
+  }
+ 
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--sand);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+ 
+  /* Hero header */
+  .hero {
+    background: var(--navy);
+    padding: 36px 24px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 40px,
+      rgba(255,255,255,0.015) 40px,
+      rgba(255,255,255,0.015) 41px
+    );
+  }
+  .hero-inner { position: relative; z-index: 1; }
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 10px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 5vw, 42px);
+    color: var(--white);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+  .hero-dates {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+  }
+  .travellers {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .traveller-tag {
+    background: rgba(201,150,58,0.18);
+    border: 1px solid rgba(201,150,58,0.4);
+    color: var(--gold-light);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+  }
+ 
+  /* Journey timeline strip */
+  .journey-strip {
+    background: var(--navy-mid);
+    padding: 16px 24px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .journey-track {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    min-width: max-content;
+    margin: 0 auto;
+    justify-content: center;
+  }
+  .journey-city {
+    text-align: center;
+    padding: 0 4px;
+  }
+  .city-code {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 1px;
+  }
+  .city-date {
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    margin-top: 2px;
+  }
+  .journey-arrow {
+    display: flex;
+    align-items: center;
+    padding: 0 6px;
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .journey-line {
+    width: 28px;
+    height: 1px;
+    background: var(--gold);
+    margin: 0 2px;
+    opacity: 0.5;
+  }
+ 
+  /* Nav tabs */
+  .nav-wrap {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 8px rgba(13,43,69,0.08);
+  }
+  .nav-tabs {
+    display: flex;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+  .nav-tab {
+    padding: 14px 20px;
+    border: none;
+    background: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+  .nav-tab:hover { color: var(--navy); }
+  .nav-tab.active { color: var(--navy); border-bottom-color: var(--gold); }
+ 
+  /* Main content */
+  .page { display: none; max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; }
+  .page.active { display: block; }
+ 
+  /* Section header */
+  .section-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    margin-top: 32px;
+  }
+  .section-label:first-child { margin-top: 0; }
+ 
+  /* Card base */
+  .card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .card-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    letter-spacing: 0.3px;
+  }
+  .card-body { padding: 0; }
+ 
+  /* Flight rows */
+  .flight-row {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .flight-row:last-child { border-bottom: none; }
+  .flight-row:hover { background: #f8fbff; }
+  .flight-main {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    align-items: center;
+    gap: 12px;
+  }
+  .flight-num {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+  }
+  .flight-carrier {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 1px;
+  }
+  .flight-route {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .route-city {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 1px;
+  }
+  .route-arrow {
+    color: var(--gold);
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .flight-time-block { text-align: right; }
+  .flight-dep {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .flight-date {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 1px;
+  }
+ 
+  /* Flight detail drawer */
+  .flight-detail {
+    display: none;
+    background: var(--sand);
+    border-top: 1px solid var(--border-gold);
+    padding: 14px 20px;
+  }
+  .flight-detail.open { display: block; }
+  .detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .detail-item { }
+  .detail-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 3px;
+  }
+  .detail-value {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .alert-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 500;
+    margin-top: 8px;
+  }
+  .alert-warning { background: var(--warning-bg); color: var(--warning); }
+  .alert-info { background: #e8f3fd; color: #1a5fa8; }
+  .alert-success { background: var(--success-bg); color: var(--success); }
+ 
+  /* Status badge */
+  .badge {
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+  .badge-confirmed { background: var(--success-bg); color: var(--success); }
+ 
+  /* Hotel card */
+  .hotel-row {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 42px 1fr auto;
+    gap: 14px;
+    align-items: start;
+  }
+  .hotel-row:last-child { border-bottom: none; }
+  .hotel-icon {
+    width: 42px;
+    height: 42px;
+    background: var(--gold-pale);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .hotel-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+  .hotel-addr {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .hotel-dates { font-size: 12px; color: var(--text-mid); }
+  .hotel-nights {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--navy);
+    background: var(--sand);
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+ 
+  /* Map button */
+  .map-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--navy-light);
+    background: var(--sand);
+    border: 1px solid var(--border);
+    text-decoration: none;
+    transition: background 0.15s;
+    margin-top: 6px;
+  }
+  .map-btn:hover { background: #eae3d8; }
+  .map-btn svg { width: 12px; height: 12px; }
+ 
+  /* Car hire card */
+  .car-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+    padding: 16px 20px;
+  }
+  .car-item {}
+  .car-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .car-value {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .car-important {
+    padding: 12px 20px;
+    background: var(--warning-bg);
+    border-top: 1px solid rgba(176,94,16,0.15);
+    font-size: 12px;
+    color: var(--warning);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+ 
+  /* Checklist */
+  .checklist { padding: 8px 0; }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 13px 20px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.12s;
+  }
+  .check-item:last-child { border-bottom: none; }
+  .check-item:hover { background: #fafcff; }
+  .check-box {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border);
+    border-radius: 5px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    background: white;
+  }
+  .check-item.checked .check-box {
+    background: var(--navy);
+    border-color: var(--navy);
+  }
+  .check-item.checked .check-box::after {
+    content: '';
+    width: 10px;
+    height: 6px;
+    border-left: 2px solid white;
+    border-bottom: 2px solid white;
+    transform: rotate(-45deg) translate(1px, -1px);
+  }
+  .check-item.checked .check-text { color: var(--text-muted); text-decoration: line-through; }
+  .check-body { flex: 1; }
+  .check-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+  .check-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .check-urgency {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+  .urgency-high { background: var(--danger-bg); color: var(--danger); }
+  .urgency-med { background: var(--warning-bg); color: var(--warning); }
+  .urgency-low { background: var(--success-bg); color: var(--success); }
+ 
+  /* Progress bar */
+  .progress-wrap { padding: 14px 20px; border-bottom: 1px solid var(--border); }
+  .progress-label { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; display: flex; justify-content: space-between; }
+  .progress-bar { height: 5px; background: var(--sand); border-radius: 10px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%); border-radius: 10px; transition: width 0.4s; }
+ 
+  /* Packing list */
+  .pack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 4px;
+    padding: 12px 20px;
+  }
+  .pack-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.12s;
+    font-size: 13px;
+  }
+  .pack-item:hover { background: var(--sand); }
+  .pack-check {
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    transition: all 0.12s;
+  }
+  .pack-item.packed .pack-check { background: var(--navy); border-color: var(--navy); }
+  .pack-item.packed .pack-check::after {
+    content: '';
+    width: 8px;
+    height: 5px;
+    border-left: 1.5px solid white;
+    border-bottom: 1.5px solid white;
+    transform: rotate(-45deg) translate(1px, -1px);
+  }
+  .pack-item.packed span { color: var(--text-muted); text-decoration: line-through; }
+ 
+  /* Section summary strip */
+  .summary-strip {
+    background: var(--navy);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+  }
+  .summary-stat { text-align: center; flex-shrink: 0; }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: var(--gold-light);
+    display: block;
+  }
+  .stat-label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+ 
+  /* Chevron toggle */
+  .chevron {
+    width: 16px;
+    height: 16px;
+    color: var(--text-muted);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+  .flight-row.open .chevron { transform: rotate(180deg); }
+ 
+  /* Responsive */
+  @media (max-width: 600px) {
+    .flight-main { grid-template-columns: 70px 1fr auto; gap: 8px; }
+    .route-city { font-size: 13px; }
+    .hotel-row { grid-template-columns: 36px 1fr; }
+    .hotel-nights { display: none; }
+    .nav-tab { padding: 12px 14px; font-size: 13px; }
+    .summary-strip { gap: 16px; }
+  }
+ 
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+ 
+  /* Ref badge */
+  .ref-code {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    background: var(--sand);
+    border: 1px solid var(--border);
+    padding: 2px 7px;
+    border-radius: 4px;
+    color: var(--text-mid);
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+ 
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">09 June — 24 July 2026</div>
+    <h1>The Long Way to Colombia</h1>
+    <div class="hero-dates">Los Angeles · San Luis Obispo · San Francisco · Houston · Austin · Bogotá</div>
+    <div class="travellers">
+      <span class="traveller-tag">Julian</span>
+      <span class="traveller-tag">Laura</span>
+      <span class="traveller-tag">Luz Daly</span>
+      <span class="traveller-tag">Martin</span>
+      <span class="traveller-tag">Oliver</span>
+    </div>
+  </div>
+</div>
+ 
+<div class="journey-strip">
+  <div class="journey-track">
+    <div class="journey-city"><div class="city-code">BNE</div><div class="city-date">09 Jun</div></div>
+    <div class="journey-arrow"><div class="journey-line"></div>✈<div class="journey-line"></div></div>
+    <div class="journey-city"><div class="city-code">LAX</div><div class="city-date">10 Jun</div></div>
+    <div class="journey-arrow"><div class="journey-line"></div>🚗<div class="journey-line"></div></div>
+    <div class="journey-city"><div class="city-code">SLO</div><div class="city-date">10 Jun</div></div>
+    <div class="journey-arrow"><div class="journey-line"></div>🚗<div class="journey-line"></div></div>
+    <div class="journey-city"><div class="city-code">SFO</div><div class="city-date">~12 Jun</div></div>
+    <div class="journey-arrow"><div class="journey-line"></div>✈<div class="journey-line"></div></div>
+    <div class="journey-city"><div class="city-code">HOU</div><div class="city-date">15 Jun</div></div>
+    <div class="journey-arrow"><div class="journey-line"></div>🚗<div class="journey-line"></div></div>
+    <div class="journey-city"><div class="city-code">AUS</div><div class="city-date">~16 Jun</div></div>
+    <div class="journey-arrow"><div class="journey-line"></div>✈<div class="journey-line"></div></div>
+    <div class="journey-city"><div class="city-code">BOG</div><div class="city-date">19 Jun</div></div>
+    <div class="journey-arrow"><div class="journey-line"></div>✈<div class="journey-line"></div></div>
+    <div class="journey-city"><div class="city-code">LAX</div><div class="city-date">22 Jul</div></div>
+    <div class="journey-arrow"><div class="journey-line"></div>✈<div class="journey-line"></div></div>
+    <div class="journey-city"><div class="city-code">BNE</div><div class="city-date">24 Jul</div></div>
+  </div>
+</div>
+ 
+<div class="nav-wrap">
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('flights')">✈ Flights</button>
+    <button class="nav-tab" onclick="showPage('stays')">🏨 Stays</button>
+    <button class="nav-tab" onclick="showPage('pretrip')">📋 Pre-Trip</button>
+    <button class="nav-tab" onclick="showPage('packing')">🧳 Packing</button>
+  </div>
+</div>
+ 
+<!-- FLIGHTS PAGE -->
+<div id="page-flights" class="page active">
+ 
+  <div class="summary-strip">
+    <div class="summary-stat"><span class="stat-num">5</span><span class="stat-label">Flights</span></div>
+    <div class="summary-stat"><span class="stat-num">45</span><span class="stat-label">Days total</span></div>
+    <div class="summary-stat"><span class="stat-num">3</span><span class="stat-label">Countries</span></div>
+    <div class="summary-stat"><span class="stat-num">6</span><span class="stat-label">Cities</span></div>
+  </div>
+ 
+  <div class="section-label">Outbound — Australia to USA</div>
+  <div class="card">
+    <div class="card-body">
+ 
+      <div class="flight-row" onclick="toggleFlight(this)">
+        <div class="flight-main">
+          <div>
+            <div class="flight-num">QF 15</div>
+            <div class="flight-carrier">Qantas</div>
+          </div>
+          <div class="flight-route">
+            <span class="route-city">BNE</span>
+            <span class="route-arrow">→</span>
+            <span class="route-city">LAX</span>
+          </div>
+          <div class="flight-time-block">
+            <div class="flight-dep">20:35</div>
+            <div class="flight-date">09 Jun</div>
+          </div>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="flight-detail">
+          <div class="detail-grid">
+            <div class="detail-item"><div class="detail-label">Departure</div><div class="detail-value">Brisbane Int'l · Lvl 4</div></div>
+            <div class="detail-item"><div class="detail-label">Check-in opens</div><div class="detail-value">17:35 (3 hrs prior)</div></div>
+            <div class="detail-item"><div class="detail-label">Arrives LAX</div><div class="detail-value">10 Jun (same day due to date line)</div></div>
+            <div class="detail-item"><div class="detail-label">Terminal LAX</div><div class="detail-value">Tom Bradley Int'l</div></div>
+          </div>
+          <span class="alert-pill alert-warning">⚠ Crosses International Date Line — arrive same calendar date</span>
+        </div>
+      </div>
+ 
+    </div>
+  </div>
+ 
+  <div class="section-label">USA Domestic</div>
+  <div class="card">
+    <div class="card-body">
+ 
+      <div class="flight-row" onclick="toggleFlight(this)">
+        <div class="flight-main">
+          <div>
+            <div class="flight-num">UA 2305</div>
+            <div class="flight-carrier">United Airlines</div>
+          </div>
+          <div class="flight-route">
+            <span class="route-city">SFO</span>
+            <span class="route-arrow">→</span>
+            <span class="route-city">HOU</span>
+          </div>
+          <div class="flight-time-block">
+            <div class="flight-dep">04:45</div>
+            <div class="flight-date">15 Jun</div>
+          </div>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="flight-detail">
+          <div class="detail-grid">
+            <div class="detail-item"><div class="detail-label">Confirmation</div><div class="detail-value ref-code">GCZ8VL</div></div>
+            <div class="detail-item"><div class="detail-label">Departs</div><div class="detail-value">04:45 SFO</div></div>
+            <div class="detail-item"><div class="detail-label">Arrives HOU</div><div class="detail-value">10:51 (George Bush IAH)</div></div>
+            <div class="detail-item"><div class="detail-label">Duration</div><div class="detail-value">~4h 06m</div></div>
+          </div>
+          <span class="alert-pill alert-warning">⚠ 04:45 departure — allow time for airport transit from Star Motel</span>
+        </div>
+      </div>
+ 
+      <div class="flight-row" onclick="toggleFlight(this)">
+        <div class="flight-main">
+          <div>
+            <div class="flight-num">UA 1871</div>
+            <div class="flight-carrier">United Airlines</div>
+          </div>
+          <div class="flight-route">
+            <span class="route-city">AUS</span>
+            <span class="route-arrow">→</span>
+            <span class="route-city">BOG</span>
+          </div>
+          <div class="flight-time-block">
+            <div class="flight-dep">19:44</div>
+            <div class="flight-date">18 Jun</div>
+          </div>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="flight-detail">
+          <div class="detail-grid">
+            <div class="detail-item"><div class="detail-label">Confirmation</div><div class="detail-value ref-code">FK6G3M</div></div>
+            <div class="detail-item"><div class="detail-label">Departs</div><div class="detail-value">19:44 Austin-Bergstrom</div></div>
+            <div class="detail-item"><div class="detail-label">Arrives BOG</div><div class="detail-value">04:54 — 19 Jun (next day)</div></div>
+            <div class="detail-item"><div class="detail-label">Destination airport</div><div class="detail-value">El Dorado Int'l (BOG)</div></div>
+          </div>
+          <span class="alert-pill alert-info">ℹ Arrives overnight — arrange Bogotá transfer in advance</span>
+        </div>
+      </div>
+ 
+    </div>
+  </div>
+ 
+  <div class="section-label">Return — Colombia to Australia</div>
+  <div class="card">
+    <div class="card-body">
+ 
+      <div class="flight-row" onclick="toggleFlight(this)">
+        <div class="flight-main">
+          <div>
+            <div class="flight-num">UA 508</div>
+            <div class="flight-carrier">United Airlines</div>
+          </div>
+          <div class="flight-route">
+            <span class="route-city">BOG</span>
+            <span class="route-arrow">→</span>
+            <span class="route-city">HOU</span>
+            <span class="route-arrow">→</span>
+            <span class="route-city">LAX</span>
+          </div>
+          <div class="flight-time-block">
+            <div class="flight-dep">08:30</div>
+            <div class="flight-date">22 Jul</div>
+          </div>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="flight-detail">
+          <div class="detail-grid">
+            <div class="detail-item"><div class="detail-label">Confirmation</div><div class="detail-value ref-code">ACFMM1</div></div>
+            <div class="detail-item"><div class="detail-label">BOG → HOU</div><div class="detail-value">Dep 08:30 · connecting flight</div></div>
+            <div class="detail-item"><div class="detail-label">HOU → LAX</div><div class="detail-value">Dep 20:30 (same day)</div></div>
+            <div class="detail-item"><div class="detail-label">Layover HOU</div><div class="detail-value">~several hours — check baggage through</div></div>
+          </div>
+          <span class="alert-pill alert-info">ℹ Long layover in Houston — ESTA or visa must cover re-entry</span>
+        </div>
+      </div>
+ 
+      <div class="flight-row" onclick="toggleFlight(this)">
+        <div class="flight-main">
+          <div>
+            <div class="flight-num">QF 16</div>
+            <div class="flight-carrier">Qantas</div>
+          </div>
+          <div class="flight-route">
+            <span class="route-city">LAX</span>
+            <span class="route-arrow">→</span>
+            <span class="route-city">BNE</span>
+          </div>
+          <div class="flight-time-block">
+            <div class="flight-dep">22:10</div>
+            <div class="flight-date">23 Jul</div>
+          </div>
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="flight-detail">
+          <div class="detail-grid">
+            <div class="detail-item"><div class="detail-label">Terminal</div><div class="detail-value">Tom Bradley Int'l (TBIT)</div></div>
+            <div class="detail-item"><div class="detail-label">Check-in opens</div><div class="detail-value">19:10 (3 hrs prior)</div></div>
+            <div class="detail-item"><div class="detail-label">Arrives BNE</div><div class="detail-value">~24 Jul (crosses date line)</div></div>
+          </div>
+          <span class="alert-pill alert-success">✓ Allow overnight in LAX between UA 508 arrival and this departure</span>
+        </div>
+      </div>
+ 
+    </div>
+  </div>
+</div>
+ 
+<!-- STAYS PAGE -->
+<div id="page-stays" class="page">
+ 
+  <div class="summary-strip">
+    <div class="summary-stat"><span class="stat-num">3</span><span class="stat-label">Properties</span></div>
+    <div class="summary-stat"><span class="stat-num">1</span><span class="stat-label">Car rental</span></div>
+    <div class="summary-stat"><span class="stat-num">3</span><span class="stat-label">US cities</span></div>
+  </div>
+ 
+  <div class="section-label">Accommodation</div>
+  <div class="card">
+    <div class="card-header"><span class="card-title">Hotels & Lodging</span><span class="badge badge-confirmed">3 confirmed</span></div>
+    <div class="card-body">
+ 
+      <div class="hotel-row">
+        <div class="hotel-icon">🏙</div>
+        <div>
+          <div class="hotel-name">The Westin Bonaventure</div>
+          <div class="hotel-addr">404 S Figueroa St, Los Angeles, CA</div>
+          <div class="hotel-dates">Check-in: 09 Jun · Downtown LA · 1 night</div>
+          <a href="https://maps.google.com/?q=The+Westin+Bonaventure+Los+Angeles" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            Open in Maps
+          </a>
+        </div>
+        <div class="hotel-nights">1 night</div>
+      </div>
+ 
+      <div class="hotel-row">
+        <div class="hotel-icon">🌊</div>
+        <div>
+          <div class="hotel-name">Embassy Suites San Luis Obispo</div>
+          <div class="hotel-addr">333 Madonna Rd, San Luis Obispo, CA</div>
+          <div class="hotel-dates">Check-in: 10 Jun · Central Coast · road trip stop</div>
+          <a href="https://maps.google.com/?q=Embassy+Suites+San+Luis+Obispo+333+Madonna+Rd" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            Open in Maps
+          </a>
+        </div>
+        <div class="hotel-nights">~2 nights</div>
+      </div>
+ 
+      <div class="hotel-row">
+        <div class="hotel-icon">🌉</div>
+        <div>
+          <div class="hotel-name">Star Motel San Francisco</div>
+          <div class="hotel-addr">1727 Lombard St, San Francisco, CA</div>
+          <div class="hotel-dates">Booking ref: <span class="ref-code">9085070482790</span></div>
+          <a href="https://maps.google.com/?q=Star+Motel+1727+Lombard+Street+San+Francisco" target="_blank" class="map-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            Open in Maps
+          </a>
+        </div>
+        <div class="hotel-nights">~3 nights</div>
+      </div>
+ 
+    </div>
+  </div>
+ 
+  <div class="section-label">Car Hire</div>
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">Thrifty Car Rental — LAX Pick-up</span>
+      <span class="badge badge-confirmed">Confirmed</span>
+    </div>
+    <div class="car-grid">
+      <div class="car-item"><div class="car-label">Voucher</div><div class="car-value ref-code">349649601</div></div>
+      <div class="car-item"><div class="car-label">Reference</div><div class="car-value ref-code">L46642299D4</div></div>
+      <div class="car-item"><div class="car-label">Pick-up</div><div class="car-value">10 Jun · 10:00 AM</div></div>
+      <div class="car-item"><div class="car-label">Location</div><div class="car-value">LAX Thrifty lot</div></div>
+    </div>
+    <div class="car-important">
+      ⚠ Julian must present <strong>physical original licence</strong> + physical credit card. $200 USD deposit required.
+    </div>
+    <div style="padding: 10px 20px;">
+      <a href="https://www.google.com/maps/search/?api=1&query=Thrifty+Car+Rental+9000+Airport+Blvd+Los+Angeles" target="_blank" class="map-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        Navigate to Pick-up
+      </a>
+    </div>
+  </div>
+ 
+  <div class="section-label">Note on Bogotá</div>
+  <div class="card">
+    <div style="padding: 16px 20px; font-size: 13px; color: var(--text-mid); line-height: 1.7;">
+      No accommodation listed for Bogotá (19 Jun – 22 Jul). If this is a family stay or rental, ensure the address and entry/exit details are saved separately. The overnight arrival on 19 Jun means airport transfer arrangements should be confirmed in advance.
+    </div>
+  </div>
+</div>
+ 
+<!-- PRE-TRIP PAGE -->
+<div id="page-pretrip" class="page">
+ 
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>Pre-trip checklist progress</span>
+      <span id="progress-text">0 / 0 complete</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width: 0%"></div></div>
+  </div>
+ 
+  <div class="section-label">Visas & Entry Requirements</div>
+  <div class="card">
+    <div class="checklist" id="checklist-visas">
+      <div class="check-item" onclick="toggleCheck(this)" data-group="visas">
+        <div class="check-box"></div>
+        <div class="check-body check-text">
+          <div class="check-title">Apply for US ESTA (all AU passport holders)</div>
+          <div class="check-sub">Apply online at esta.cbp.dhs.gov — minimum 72 hours before departure. Cost: USD $21 per person. Valid 2 years. Required for: Julian, Laura, Luz Daly, Martin, Oliver.</div>
+        </div>
+        <span class="check-urgency urgency-high">Critical</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)" data-group="visas">
+        <div class="check-box"></div>
+        <div class="check-body check-text">
+          <div class="check-title">Colombia Check-Mig registration (dual nationals)</div>
+          <div class="check-sub">Mandatory online form for Colombian nationals entering Colombia. Complete 24–72 hours prior to arrival (19 Jun flight). Required for applicable travellers.</div>
+        </div>
+        <span class="check-urgency urgency-high">Critical</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)" data-group="visas">
+        <div class="check-box"></div>
+        <div class="check-body check-text">
+          <div class="check-title">Check all passport expiry dates</div>
+          <div class="check-sub">All AU passports must be valid for at least 6 months beyond return date (24 Jul 2026). Expiry must be after ~24 Jan 2027.</div>
+        </div>
+        <span class="check-urgency urgency-high">Critical</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)" data-group="visas">
+        <div class="check-box"></div>
+        <div class="check-body check-text">
+          <div class="check-title">Print or save all booking confirmations</div>
+          <div class="check-sub">Save ESTA approval, flight e-tickets, hotel reservations, car hire voucher, and Check-Mig confirmation to each person's phone and/or printed copies.</div>
+        </div>
+        <span class="check-urgency urgency-high">Critical</span>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="section-label">Insurance & Health</div>
+  <div class="card">
+    <div class="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-body check-text">
+          <div class="check-title">Confirm comprehensive travel insurance for all 5 travellers</div>
+          <div class="check-sub">Must cover medical, trip cancellation, luggage loss, and COVID-19. Colombia requires health coverage. Keep policy numbers easily accessible.</div>
+        </div>
+        <span class="check-urgency urgency-high">Critical</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-body check-text">
+          <div class="check-title">Visit GP / travel health clinic (6–8 weeks before travel)</div>
+          <div class="check-sub">Review vaccinations recommended for Colombia: Hepatitis A, Typhoid, Yellow Fever (required for some regions), and routine immunisations. Consider altitude sickness for Bogotá (2,640m).</div>
+        </div>
+        <span class="check-urgency urgency-high">Critical</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-body check-text">
+          <div class="check-title">Organise sufficient prescription medications</div>
+          <div class="check-sub">Pack enough for the full 45-day trip plus extra. Carry in original labelled containers with a doctor's letter for controlled substances. Split across bags in case of loss.</div>
+        </div>
+        <span class="check-urgency urgency-med">Medium</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-body check-text">
+          <div class="check-title">Pack first aid kit with essentials</div>
+          <div class="check-sub">Sunscreen, insect repellent (DEET-based for Colombia), antihistamines, anti-diarrhoeals, blister plasters, thermometer, rehydration sachets.</div>
+        </div>
+        <span class="check-urgency urgency-med">Medium</span>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="section-label">Finance & Money</div>
+  <div class="card">
+    <div class="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-body check-text">
+          <div class="check-title">USD cash ($2,500) — split across bags</div>
+          <div class="check-sub">Already purchased. Split: Julian, Laura, and Martin's carry-on bags. Keep record of how much each person holds.</div>
+        </div>
+        <span class="badge badge-confirmed" style="margin-left:auto; flex-shrink:0;">Done</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-body check-text">
+          <div class="check-title">Notify banks of overseas travel dates and destinations</div>
+          <div class="check-sub">Notify at least 5 days before travel. Include: USA (09 Jun–22 Jul) and Colombia (19 Jun–22 Jul). Prevent card blocks on international transactions.</div>
+        </div>
+        <span class="check-urgency urgency-high">Critical</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-body check-text">
+          <div class="check-title">Organise Colombian pesos (COP)</div>
+          <div class="check-sub">For Bogotá: withdraw COP at arrival airport ATMs or use a Wise/Revolut card. Avoid street money changers. Have ARS $500K–1M COP in cash for arrival.</div>
+        </div>
+        <span class="check-urgency urgency-med">Medium</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-body check-text">
+          <div class="check-title">Julian: physical credit card + licence for car rental deposit</div>
+          <div class="check-sub">$200 USD deposit on physical credit card (not debit). Physical original driver's licence required — digital/phone version not accepted by Thrifty.</div>
+        </div>
+        <span class="check-urgency urgency-high">Critical</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-body check-text">
+          <div class="check-title">Set up a group expense-tracking method</div>
+          <div class="check-sub">Consider Splitwise or a shared spreadsheet to track group costs fairly across 5 people for 45 days.</div>
+        </div>
+        <span class="check-urgency urgency-low">Low</span>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="section-label">Home & Utilities</div>
+  <div class="card">
+    <div class="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-body check-text">
+          <div class="check-title">SEMS solar portal → set to 'Away' mode</div>
+          <div class="check-sub">Maximise battery storage and export to grid while unoccupied. Check SEMS app before leaving.</div>
+        </div>
+        <span class="check-urgency urgency-med">Medium</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-body check-text">
+          <div class="check-title">Shut off water mains</div>
+          <div class="check-sub">Turn off at the street stopcock before departure to prevent leaks over the 45-day absence.</div>
+        </div>
+        <span class="check-urgency urgency-med">Medium</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-body check-text">
+          <div class="check-title">Set smart light timers for security</div>
+          <div class="check-sub">Programme lights to turn on/off at varied realistic hours. Check app schedule before departure.</div>
+        </div>
+        <span class="check-urgency urgency-low">Low</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-body check-text">
+          <div class="check-title">Pause or redirect mail / deliveries</div>
+          <div class="check-sub">Australia Post mail hold or redirect. Cancel any scheduled deliveries. Brief a trusted neighbour or arrange key access if needed.</div>
+        </div>
+        <span class="check-urgency urgency-low">Low</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-body check-text">
+          <div class="check-title">Arrange a house-checker or trusted neighbour</div>
+          <div class="check-sub">45 days is a long absence. Ask someone to check the property weekly, water any plants, and hold a spare key for emergencies.</div>
+        </div>
+        <span class="check-urgency urgency-med">Medium</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-body check-text">
+          <div class="check-title">Unplug non-essential appliances</div>
+          <div class="check-sub">Reduce standby power draw and fire risk: TVs, computers, small appliances, etc. Leave fridge running if stocked.</div>
+        </div>
+        <span class="check-urgency urgency-low">Low</span>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="section-label">Connectivity & Devices</div>
+  <div class="card">
+    <div class="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-body check-text">
+          <div class="check-title">Organise international SIM cards or travel eSIMs</div>
+          <div class="check-sub">For USA: Airalo or Google Fi eSIM. For Colombia: local SIM at BOG airport (Claro, Tigo, or Movistar) is cheap and reliable. Set up before or on arrival.</div>
+        </div>
+        <span class="check-urgency urgency-high">Critical</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-body check-text">
+          <div class="check-title">Check roaming plans with Australian carriers</div>
+          <div class="check-sub">Compare roaming vs eSIM costs. Some Aussie plans offer low-cost USA roaming — review before purchasing separate SIMs.</div>
+        </div>
+        <span class="check-urgency urgency-med">Medium</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-body check-text">
+          <div class="check-title">Pack universal power adaptors (AU to US plug)</div>
+          <div class="check-sub">USA uses Type A/B plugs (110V). Bring at least 2 adaptors for the group. Colombia also uses 110V / Type A — same adaptors work.</div>
+        </div>
+        <span class="check-urgency urgency-med">Medium</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-body check-text">
+          <div class="check-title">Download offline maps for all destinations</div>
+          <div class="check-sub">Google Maps offline areas: Los Angeles, San Luis Obispo, San Francisco, Houston, Austin, Bogotá. Download before departing Australia.</div>
+        </div>
+        <span class="check-urgency urgency-low">Low</span>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="section-label">Safety & Emergency</div>
+  <div class="card">
+    <div class="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-body check-text">
+          <div class="check-title">Register with DFAT Smartraveller (smartraveller.gov.au)</div>
+          <div class="check-sub">Register all Australian travellers. DFAT current advice: USA — Normal precautions; Colombia — Exercise a high degree of caution. Subscribe to updates.</div>
+        </div>
+        <span class="check-urgency urgency-high">Critical</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-body check-text">
+          <div class="check-title">Share full itinerary with a contact at home</div>
+          <div class="check-sub">Leave all flight numbers, hotel addresses, dates, and emergency contacts with a trusted person in Brisbane who can act if needed.</div>
+        </div>
+        <span class="check-urgency urgency-med">Medium</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-body check-text">
+          <div class="check-title">Note emergency numbers for each country</div>
+          <div class="check-sub">USA: 911 | Colombia: 123 (National Police/Emergencies). Save Australian Embassy Bogotá: +57 1 657 7800. Save in each phone.</div>
+        </div>
+        <span class="check-urgency urgency-med">Medium</span>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<!-- PACKING PAGE -->
+<div id="page-packing" class="page">
+ 
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>Packing progress</span>
+      <span id="pack-progress-text">0 / 0 packed</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="pack-progress-fill" style="width: 0%"></div></div>
+  </div>
+ 
+  <div class="section-label">Documents (every person)</div>
+  <div class="card">
+    <div class="pack-grid" id="pack-docs">
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Passport</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>ESTA approval printout</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Travel insurance card</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>All flight e-tickets</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Hotel confirmations</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Julian: driver's licence (original)</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Car hire voucher</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Emergency contact card</span></div>
+    </div>
+  </div>
+ 
+  <div class="section-label">Clothing (45 days — mix of climates)</div>
+  <div class="card">
+    <div class="pack-grid">
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>T-shirts (7–10)</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Shorts (3–4 pairs)</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Long trousers (2 pairs)</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Light jacket / hoodie</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Warm layer (Bogotá 15°C nights)</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Underwear (7–10)</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Socks (7–10 pairs)</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Comfortable walking shoes</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Sandals / flip flops</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Swimwear</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Rain poncho / umbrella</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Smart casual outfit (dining)</span></div>
+    </div>
+  </div>
+ 
+  <div class="section-label">Toiletries & Health</div>
+  <div class="card">
+    <div class="pack-grid">
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Prescription medications (full trip + extra)</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Sunscreen SPF 50+</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>DEET insect repellent (Colombia)</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Toothbrush + paste</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Deodorant</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Shampoo / conditioner (travel size)</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Antihistamines</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Anti-diarrhoeals / Imodium</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Paracetamol / Ibuprofen</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Rehydration sachets</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Blister plasters</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Hand sanitiser</span></div>
+    </div>
+  </div>
+ 
+  <div class="section-label">Tech & Gadgets</div>
+  <div class="card">
+    <div class="pack-grid">
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Phone + charger</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>AU to US power adaptor (×2)</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Portable power bank</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Laptop / tablet (if needed)</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Camera + memory cards</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Headphones / earbuds</span></div>
+      <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span>Travel card reader (offline payments)</span></div>
+    </div>
+  </div>
+ 
+</div>
+ 
+<script>
+  function showPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('page-' + name).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+ 
+  function toggleFlight(row) {
+    const detail = row.querySelector('.flight-detail');
+    const isOpen = detail.classList.contains('open');
+    document.querySelectorAll('.flight-detail.open').forEach(d => d.classList.remove('open'));
+    document.querySelectorAll('.flight-row.open').forEach(r => r.classList.remove('open'));
+    if (!isOpen) {
+      detail.classList.add('open');
+      row.classList.add('open');
+    }
+  }
+ 
+  function toggleCheck(item) {
+    item.classList.toggle('checked');
+    updateProgress();
+  }
+ 
+  function togglePack(item) {
+    item.classList.toggle('packed');
+    updatePackProgress();
+  }
+ 
+  function updateProgress() {
+    const all = document.querySelectorAll('#page-pretrip .check-item');
+    const done = document.querySelectorAll('#page-pretrip .check-item.checked');
+    const pct = all.length ? Math.round((done.length / all.length) * 100) : 0;
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-text').textContent = done.length + ' / ' + all.length + ' complete';
+  }
+ 
+  function updatePackProgress() {
+    const all = document.querySelectorAll('#page-packing .pack-item');
+    const done = document.querySelectorAll('#page-packing .pack-item.packed');
+    const pct = all.length ? Math.round((done.length / all.length) * 100) : 0;
+    document.getElementById('pack-progress-fill').style.width = pct + '%';
+    document.getElementById('pack-progress-text').textContent = done.length + ' / ' + all.length + ' packed';
+  }
+ 
+  updateProgress();
+  updatePackProgress();
+</script>
+</body>
+</html>
