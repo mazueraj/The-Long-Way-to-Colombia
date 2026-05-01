@@ -12,8 +12,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
  
-<!-- PWA Manifest — base64 data URI, reliable on Android Chrome / Pixel -->
-<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiVGhlIExvbmcgV2F5IHRvIENvbG9tYmlhIiwic2hvcnRfbmFtZSI6IkNvbG9tYmlhIFRyaXAiLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzBkMmI0NSIsInRoZW1lX2NvbG9yIjoiIzBkMmI0NSIsImRlc2NyaXB0aW9uIjoiSnVsaWFuLCBMYXVyYSwgTHV6IERhbHksIE1hcnRpbiAmIE9saXZlciDigJQgSnVuLUp1bCAyMDI2IiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMlp5QjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzl6ZG1jaUlIWmxjbk5wYjI0OUlqRXVNQ0lnZG1WeWMybHZiajBpTWk0d0lpQjRiV3h1Y3owaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNQzlrWlhOakwzUnZiMjh2WkdWek15NXFZM01pUGp4eVpXTjBJSGQwYVc1bk9pSXhPVElpSUhKa09pSTBNQ0lnZUcxc09pSmpiMjB0Wm1sdVlXd3RiV1ZzWVhraVBqeDBaWGgwSUhnOUlqRWlJSGs5SWpFd01DSWdiM0JoWTJsMGVUMGlkWEpzS0NJd2Nja3dLU0F3S1NJZ1ptbHNiRDBpTWpBd01qUTBOU0lnWW14aFoyc3RabVZ1WTNScGIyNDlJbTV2Ym1VaVBnb2dJQ0FnSUNBZ0lDQThkR1Y0ZENCNGJXD3VjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TURNdmRHOXZiQzluWm1ZdlptbHNiQzl5WVhJdmFHbHpMM1J2YjI4dFkzVndMeUl2UGp3dmRHVjRkRDQ4TDNObmZqd3ZjbVZqZEQ0IiwicHVycG9zZSI6ImFueSBtYXNrYWJsZSIsInNpemVzIjoiMTkyeDE5MiIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn0seyJzcmMiOiJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5emRtY2lJSFpsY25OcGIyNDlJakV1TUNJZ2RtVnljMmx2YmowaU1pNHdJaUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5a1pYTmpMM1J2YjI4dlpHVnpNeTV5Y1djdlkzTXZZbUZ1YVhOekxuWmhjaUkrUEhKbFkzUWdkMmxrZEdnOUlqVXhNaUlnYkdsNFBTSXhNREFpSUhKa09pSXhNREFpSUdodGJHNXpQU0pqYjIwdFptbHVZV3d0YldWc1lYa2lQanhrWlhOakxYUmxlSFF1YW1OekxtRnNiRFlpT2lJek1EWWlQand2WkdWell5MTBaWGgwTGpGak1UNDhkR1Y0ZENCNGJXD3VjejBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TURNdmRHOXZiQzluWm1ZdlptbHNiQzl5WVhJdmFHbHpMM1J2YjI4dFkzVndMeUl2UGp3dmRHVjRkRDQ4TDNObmZqd3ZjbVZqZEQ0Iiwic2l6ZXMiOiI1MTJ4NTEyIiwidHlwZSI6ImltYWdlL3N2Zyt4bWwifV19">
+<!-- PWA Manifest — real file, required for Android Chrome install -->
+<link rel="manifest" href="./manifest.json">
  
 <style>
 :root {
@@ -807,16 +807,22 @@ body {
       <div class="hotel-row">
         <div class="hotel-icon">🌉</div>
         <div style="flex:1;">
-          <div class="hotel-name">Star Motel — San Francisco</div>
-          <div class="hotel-addr">1727 Lombard St, San Francisco, CA</div>
+          <div class="hotel-name">Hotel Amari — San Francisco</div>
+          <div class="hotel-addr">635 Sutter St, Union Square, San Francisco, CA 94102</div>
           <div class="hotel-meta" style="margin-bottom:6px;">
-            📅 11 Jun – 15 Jun 2026 · <strong>4 nights</strong><br>
-            🛏 Family Suite · 2 Queen beds with sofa<br>
-            Ref: <span class="ref-code">9085070482790</span>
+            📅 11 Jun – 15 Jun 2026 · <strong>4 nights · 2 rooms</strong><br>
+            🛏 Room 1: Queen Room · Room 2: Double Room (2 double beds)<br>
+            👥 3 adults, 2 children (ages 5 &amp; 13)<br>
+            🕑 Check-in: from 3:00 PM · Check-out: 11:00 AM–12:00 PM<br>
+            📞 +1 415-673-9900
           </div>
-          <div style="font-size:11px; color:var(--success); font-weight:600; margin-bottom:4px;">✓ Fully refundable before 11 Jun 2026</div>
-          <div style="font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">AUD $3,279.46 · 5 travellers</div>
-          <a href="https://maps.google.com/?q=Star+Motel+1727+Lombard+Street+San+Francisco" target="_blank" class="map-btn">📍 Open in Maps</a>
+          <div style="margin-bottom:6px;">
+            <span class="ref-code">Confirmation: 5752368166</span> &nbsp; <span class="ref-code">PIN: 2686 🔒</span>
+          </div>
+          <div style="font-size:11px; color:var(--warning); font-weight:600; margin-bottom:4px;">⚠ Cancellation fee applies from 1 May 2026 — $345.36 (Rm 1) + $422.11 (Rm 2)</div>
+          <div style="font-size:12px; color:var(--text-muted); margin-bottom:6px;">No meal plan · Prepayment charged to Visa ····8035</div>
+          <div style="font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">USD $791.03 total (incl. city &amp; other taxes)</div>
+          <a href="https://maps.google.com/?q=635+Sutter+Street+San+Francisco+CA+94102" target="_blank" class="map-btn">📍 Open in Maps</a>
         </div>
       </div>
     </div>
@@ -828,7 +834,7 @@ body {
         <div><div class="car-label">QF BNE↔LAX (×4)</div><div class="car-value">AUD $4,288.32</div></div>
         <div><div class="car-label">Embassy Suites LAX</div><div class="car-value">AUD $459.35</div></div>
         <div><div class="car-label">Embassy Suites SLO</div><div class="car-value">AUD $528.79</div></div>
-        <div><div class="car-label">Star Motel SF (4 nts)</div><div class="car-value">AUD $3,279.46</div></div>
+        <div><div class="car-label">Hotel Amari SF (4 nts)</div><div class="car-value">USD $791.03</div></div>
         <div><div class="car-label">Thrifty Car Hire</div><div class="car-value">AUD $1,268.83</div></div>
         <div><div class="car-label">Captain's Pack</div><div class="car-value">AUD $236.00</div></div>
       </div>
@@ -1342,29 +1348,13 @@ restoreAllStates();
 updateProgress();
 updatePackProgress();
  
-// ── Service Worker — required for Android Chrome PWA install ──
-// Injected inline as a blob so no separate sw.js file is needed
+// ── Service Worker — references sw.js in same directory ──
 if ('serviceWorker' in navigator) {
-  const swCode = `
-    const CACHE = 'colombia-trip-v1';
-    self.addEventListener('install', e => {
-      self.skipWaiting();
-    });
-    self.addEventListener('activate', e => {
-      e.waitUntil(clients.claim());
-    });
-    self.addEventListener('fetch', e => {
-      e.respondWith(
-        caches.match(e.request).then(cached => cached || fetch(e.request))
-      );
-    });
-  `;
-  const swBlob = new Blob([swCode], { type: 'application/javascript' });
-  const swUrl = URL.createObjectURL(swBlob);
-  navigator.serviceWorker.register(swUrl, { scope: './' })
+  navigator.serviceWorker.register('./sw.js', { scope: './' })
     .then(() => console.log('SW registered'))
-    .catch(e => console.log('SW registration failed:', e));
+    .catch(e => console.log('SW failed:', e));
 }
+ 
  
 </script>
 </body>
