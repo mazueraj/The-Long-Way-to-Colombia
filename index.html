@@ -63,11 +63,28 @@ body {
   position: fixed;
   inset: 0;
   bottom: calc(var(--nav-h) + var(--safe-bot));
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.hero, .journey-strip, .install-banner, .ios-tip {
+  flex-shrink: 0;
+}
+.pages-wrap {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+.page {
+  display: none;
+  position: absolute;
+  inset: 0;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: contain;
+  padding: 20px 14px 32px;
 }
- 
+.page.active { display: block; }
 /* ── HERO ── */
 .hero {
   background: var(--navy);
@@ -566,6 +583,7 @@ body {
   </div>
  
   <!-- ═══════════════════════════════ FLIGHTS PAGE ═══════════════════════════════ -->
+  <div class="pages-wrap">
   <div id="page-flights" class="page active">
  
     <div class="stats-strip" style="border-radius:0; margin-bottom:20px;">
@@ -836,28 +854,94 @@ body {
       </div>
     </div>
  
-    <div class="section-label">Trip Summary</div>
+    <div class="section-label">Bogotá</div>
     <div class="card">
-      <div class="card-header"><span class="card-title">Booking Summary — Trip ID 7800906</span><span class="badge badge-confirmed">Booked</span></div>
-      <div class="car-grid" style="grid-template-columns:1fr 1fr;">
-        <div><div class="car-label">QF BNE↔LAX (×4)</div><div class="car-value">AUD $4,288.32</div></div>
-        <div><div class="car-label">Embassy Suites LAX</div><div class="car-value">AUD $459.35</div></div>
-        <div><div class="car-label">Embassy Suites SLO</div><div class="car-value">AUD $528.79</div></div>
-        <div><div class="car-label">Hotel Amari SF (4 nts)</div><div class="car-value">USD $791.03</div></div>
-        <div><div class="car-label">Thrifty Car Hire</div><div class="car-value">AUD $1,268.83</div></div>
-        <div><div class="car-label">Captain's Pack</div><div class="car-value">AUD $236.00</div></div>
-      </div>
-      <div style="padding: 0 16px 4px; border-top: 1px solid var(--border); margin-top:4px;">
-        <div class="car-grid" style="grid-template-columns:1fr 1fr; padding:12px 0 0;">
-          <div><div class="car-label">Booked total</div><div class="car-value" style="font-size:15px; font-weight:700; color:var(--navy);">AUD $10,085.13</div></div>
-          <div><div class="car-label">Amount paid</div><div class="car-value" style="color:var(--success); font-weight:600;">AUD $6,806.73 ✅</div></div>
+      <div class="hotel-row">
+        <div class="hotel-icon">🇨🇴</div>
+        <div style="flex:1;">
+          <div class="hotel-name">Private Apartment</div>
+          <div class="hotel-addr">Calle 118 #15-55, Apto 305<br>Edificio Savanna, Bogotá</div>
+          <div class="hotel-meta" style="margin-top:6px;">📅 19 Jun – 22 Jul 2026 · <strong>33 nights</strong></div>
+          <div class="alert-pill alert-warning" style="margin-top:8px;">⚠ Overnight arrival 04:54 on 19 Jun — pre-arrange airport transfer to this address</div>
+          <a href="https://maps.google.com/?q=Calle+118+%2315-55+Bogota+Colombia" target="_blank" class="map-btn" style="margin-top:8px;">📍 Open in Maps</a>
         </div>
-      </div>
-      <div class="car-alert" style="background:var(--success-bg); color:var(--success);">
-        ✅ Fully paid — AUD $6,806.73 · Balance owing: $0.00 · Invoice issued 09 May 2026
       </div>
     </div>
  
+  </div>
+ 
+  <!-- ═══════════════════════════════ INFO PAGE ═══════════════════════════════ -->
+  <div id="page-info" class="page">
+ 
+    <!-- DOCUMENTS REPOSITORY -->
+    <div class="section-label">Trip Documents</div>
+    <div class="card">
+      <div class="card-header"><span class="card-title">📁 Cali-Tx-Bog 2026 — OneDrive</span></div>
+      <div style="padding:16px;">
+        <div style="font-size:13px; color:var(--text-mid); line-height:1.6; margin-bottom:14px;">
+          All trip documents, receipts, confirmations and scans are stored in your shared OneDrive folder. Tap below to open.
+        </div>
+        <a href="https://1drv.ms/f/c/0e2d8412aed87f2a/IgC5PrE8dAU7R6WpSYeEI0-fATLUTFvEbeeADF3TQ_RlsJQ?e=s7A9B4" target="_blank" style="display:flex; align-items:center; gap:14px; background:var(--navy); color:white; padding:16px; border-radius:var(--r-lg); text-decoration:none;">
+          <span style="font-size:32px;">☁️</span>
+          <div>
+            <div style="font-size:14px; font-weight:600;">Open OneDrive Folder</div>
+            <div style="font-size:11px; opacity:0.65; margin-top:2px;">Cali-Tx-Bog 2026 · Shared repository</div>
+          </div>
+          <span style="margin-left:auto; font-size:18px; opacity:0.7;">›</span>
+        </a>
+      </div>
+    </div>
+ 
+    <!-- INSURANCE -->
+    <div class="section-label">Travel Insurance</div>
+    <div class="card">
+      <div class="card-header"><span class="card-title">ANZ Rewards Platinum — Allianz Global Assistance</span><span class="badge badge-confirmed">Confirmed</span></div>
+      <div class="car-grid" style="grid-template-columns:1fr 1fr;">
+        <div><div class="car-label">Reference</div><div class="car-value"><span class="ref-code">ANZREPT0024532</span></div></div>
+        <div><div class="car-label">Card</div><div class="car-value">ANZ Rewards Platinum</div></div>
+        <div><div class="car-label">Travel dates</div><div class="car-value">09 Jun – 25 Jul 2026</div></div>
+        <div><div class="car-label">Destinations</div><div class="car-value">USA &amp; Colombia</div></div>
+        <div><div class="car-label">Excess per claim</div><div class="car-value">AUD $500 max</div></div>
+        <div><div class="car-label">Issued</div><div class="car-value">09 May 2026</div></div>
+      </div>
+      <div style="padding:12px 16px; border-top:1px solid var(--border);">
+        <div style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted); margin-bottom:10px;">Covered Travellers</div>
+        <div style="font-size:13px; line-height:2; color:var(--text-mid);">
+          <strong style="color:var(--text);">Julian Mazuera</strong> · Cardholder · DOB 21 Jul 1986<br>
+          <strong style="color:var(--text);">Laura Cruz</strong> · Spouse · DOB 27 Feb 1988<br>
+          <strong style="color:var(--text);">Martin Mazuera</strong> · Dependant · DOB 23 Dec 2011<br>
+          <strong style="color:var(--text);">Oliver Mazuera</strong> · Dependant · DOB 21 Feb 2021
+        </div>
+      </div>
+      <div style="padding:12px 16px; border-top:1px solid var(--border);">
+        <div style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted); margin-bottom:10px;">Key Cover Limits</div>
+        <div style="font-size:12px; color:var(--text-mid); line-height:1.9;">
+          🏥 Overseas Emergency Medical &amp; Evacuation · <strong>$20M</strong><br>
+          ✈️ Trip Cancellation · <strong>Up to $20,000</strong><br>
+          💼 Luggage Loss/Damage · <strong>Up to $12,000</strong><br>
+          🚗 Rental Vehicle Excess · <strong>Up to $5,000</strong><br>
+          ⚖️ Personal Liability · <strong>Up to $3,000,000</strong><br>
+          🦷 Emergency Dental · <strong>Up to $2,000</strong><br>
+          ⏱ Travel Delay (6+ hrs) · <strong>$50 meals + $250 accommodation/24hrs</strong>
+        </div>
+      </div>
+      <div class="car-alert" style="background:var(--warning-bg); color:var(--warning); flex-direction:column; gap:4px;">
+        <div>⚠ Pre-existing conditions are <strong>not</strong> automatically covered — contact Allianz to assess</div>
+        <div>⚠ Must charge min. <strong>$250 in prepaid travel costs</strong> to ANZ card before departure to activate</div>
+      </div>
+      <div style="padding:12px 16px; border-top:1px solid var(--border); display:flex; flex-direction:column; gap:8px;">
+        <a href="tel:1800010075" class="map-btn">📞 Allianz AU: 1800 010 075</a>
+        <a href="tel:+61733057465" class="map-btn">📞 Allianz Overseas: +61 7 3305 7465</a>
+        <a href="https://claimmanager.com.au/anz" target="_blank" class="map-btn">🌐 Make a Claim Online</a>
+        <a href="https://www.anz.com.au/content/dam/anzcomau/documents/pdf/anz-platinum-and-black-complimentary-insurance-booklet.pdf" target="_blank" class="map-btn">📄 Policy Information Booklet</a>
+      </div>
+      <div style="padding:12px 16px; border-top:1px solid var(--border); background:var(--gold-pale);">
+        <div style="font-size:11px; font-weight:600; color:var(--navy); margin-bottom:6px;">Luz Daly Molina</div>
+        <div style="font-size:12px; color:var(--text-mid);">Has her own separate travel insurance policy ✅</div>
+      </div>
+    </div>
+ 
+    <!-- CAR HIRE -->
     <div class="section-label">Car Hire</div>
     <div class="card">
       <div class="card-header"><span class="card-title">Thrifty — Nissan Pathfinder or similar SUV</span><span class="badge badge-confirmed">Confirmed</span></div>
@@ -889,25 +973,44 @@ body {
         Additional driver: USD $13.50/day · Min age: 20 · Young driver fee (20–24): USD $25/day
       </div>
       <div style="padding:10px 16px; border-top:1px solid var(--border);">
-        <div style="font-size:11px; color:var(--danger); font-weight:600; margin-bottom:6px;">⚠ Cancellation charge of AUD $1,268.83 applies if cancelled on or after 10 Jun 2026</div>
-        <a href="https://www.google.com/maps/search/?api=1&query=Thrifty+Car+Rental+Los+Angeles+Airport" target="_blank" class="map-btn">📍 LAX Pick-up Location</a>
-        <a href="https://www.google.com/maps/search/?api=1&query=Thrifty+Car+Rental+San+Francisco+Airport" target="_blank" class="map-btn" style="margin-left:8px;">📍 SFO Drop-off Location</a>
+        <div style="font-size:11px; color:var(--danger); font-weight:600; margin-bottom:8px;">⚠ Cancellation charge of AUD $1,268.83 if cancelled on or after 10 Jun 2026</div>
+        <a href="https://www.google.com/maps/search/?api=1&query=Thrifty+Car+Rental+Los+Angeles+Airport" target="_blank" class="map-btn">📍 LAX Pick-up</a>
+        <a href="https://www.google.com/maps/search/?api=1&query=Thrifty+Car+Rental+San+Francisco+Airport" target="_blank" class="map-btn" style="margin-left:8px;">📍 SFO Drop-off</a>
       </div>
     </div>
  
-    <div class="section-label">Bogotá</div>
+    <!-- COST SUMMARY -->
+    <div class="section-label">Cost Summary</div>
     <div class="card">
-      <div class="hotel-row">
-        <div class="hotel-icon">🇨🇴</div>
-        <div style="flex:1;">
-          <div class="hotel-name">Private Apartment</div>
-          <div class="hotel-addr">Calle 118 #15-55, Apto 305<br>Edificio Savanna, Bogotá</div>
-          <div class="hotel-meta" style="margin-top:6px;">📅 19 Jun – 22 Jul 2026 · <strong>33 nights</strong></div>
-          <div class="alert-pill alert-warning" style="margin-top:8px;">⚠ Overnight arrival 04:54 on 19 Jun — pre-arrange airport transfer to this address</div>
-          <a href="https://maps.google.com/?q=Calle+118+%2315-55+Bogota+Colombia" target="_blank" class="map-btn" style="margin-top:8px;">📍 Open in Maps</a>
+      <div class="card-header"><span class="card-title">Trip ID 7800906 — Flight Centre Robina</span><span class="badge badge-confirmed">Fully Paid</span></div>
+      <div class="car-grid" style="grid-template-columns:1fr 1fr;">
+        <div><div class="car-label">QF BNE↔LAX (×4)</div><div class="car-value">AUD $4,288.32</div></div>
+        <div><div class="car-label">Embassy Suites LAX</div><div class="car-value">AUD $459.35</div></div>
+        <div><div class="car-label">Embassy Suites SLO</div><div class="car-value">AUD $528.79</div></div>
+        <div><div class="car-label">Hotel Amari SF (4 nts)</div><div class="car-value">USD $791.03</div></div>
+        <div><div class="car-label">Thrifty Car Hire</div><div class="car-value">AUD $1,268.83</div></div>
+        <div><div class="car-label">Captain's Pack</div><div class="car-value">AUD $236.00</div></div>
+      </div>
+      <div style="padding:12px 16px; border-top:1px solid var(--border);">
+        <div class="car-grid" style="grid-template-columns:1fr 1fr; padding:0;">
+          <div><div class="car-label">Grand total</div><div class="car-value" style="font-size:16px; font-weight:700; color:var(--navy);">AUD $10,085.13</div></div>
+          <div><div class="car-label">Total paid</div><div class="car-value" style="color:var(--success); font-weight:600;">AUD $6,806.73 ✅</div></div>
         </div>
       </div>
+      <div style="padding:12px 16px; border-top:1px solid var(--border);">
+        <div style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted); margin-bottom:8px;">Payment History</div>
+        <div style="font-size:12px; color:var(--text-mid); line-height:2;">
+          10 Sep 2025 · Visa Debit ····3032 · <strong>AUD $4,541.96</strong><br>
+          13 Jan 2026 · EFTPOS Debit Visa · <strong>AUD $1,734.92</strong><br>
+          09 May 2026 · EFTPOS Debit Visa · <strong>AUD $529.85</strong>
+        </div>
+      </div>
+      <div class="car-alert" style="background:var(--success-bg); color:var(--success);">
+        ✅ Balance owing: $0.00 · Invoice issued 09 May 2026
+      </div>
     </div>
+ 
+    <!-- FLIGHT CENTRE & EMERGENCY -->
     <div class="section-label">Flight Centre &amp; Emergency Contacts</div>
     <div class="card">
       <div class="card-header"><span class="card-title">Booking ID: 7800906 — Flight Centre Robina</span></div>
@@ -923,7 +1026,7 @@ body {
       </div>
       <div style="padding:12px 16px; border-top:1px solid var(--border);">
         <div style="font-size:12px; font-weight:600; color:var(--navy); margin-bottom:8px;">🧳 Captain's Pack — Lost Baggage</div>
-        <div style="font-size:12px; color:var(--text-mid); line-height:1.7; margin-bottom:10px;">
+        <div style="font-size:12px; color:var(--text-mid); line-height:1.7; margin-bottom:12px;">
           1. Report to airline &amp; get a printed numbered report<br>
           2. Report to Blue Ribbon Bags within <strong>24 hours</strong> of landing<br>
           📞 <a href="tel:19179209699" style="color:var(--navy-light);">1-917-920-9699</a> (toll free)<br>
@@ -931,12 +1034,11 @@ body {
         </div>
         <div style="font-size:12px; font-weight:600; color:var(--navy); margin-bottom:8px;">🔗 Key Links</div>
         <div style="display:flex; flex-direction:column; gap:6px;">
-          <a href="https://flightcentre.blueribbonbags.com/" target="_blank" class="map-btn" style="font-size:12px;">🧳 Report Lost Bag — Blue Ribbon Bags</a>
-          <a href="https://www.smartraveller.gov.au/destinations/americas/united-states-america" target="_blank" class="map-btn" style="font-size:12px;">🇦🇺 Smartraveller — USA Travel Advice</a>
-          <a href="https://www.smartraveller.gov.au/destinations/americas/colombia" target="_blank" class="map-btn" style="font-size:12px;">🇦🇺 Smartraveller — Colombia Travel Advice</a>
-          <a href="https://help.flightcentre.com.au/s/article/booking-terms-conditions-au" target="_blank" class="map-btn" style="font-size:12px;">📄 Flight Centre Booking Terms &amp; Conditions</a>
-          <a href="https://www.flightcentre.com.au/booking/insurance" target="_blank" class="map-btn" style="font-size:12px;">🛡 Flight Centre Travel Insurance</a>
-          <a href="https://flightcentre.com.au/p/captains-pack" target="_blank" class="map-btn" style="font-size:12px;">⚓ Captain's Pack Full Details</a>
+          <a href="https://flightcentre.blueribbonbags.com/" target="_blank" class="map-btn">🧳 Report Lost Bag — Blue Ribbon Bags</a>
+          <a href="https://www.smartraveller.gov.au/destinations/americas/united-states-america" target="_blank" class="map-btn">🇦🇺 Smartraveller — USA</a>
+          <a href="https://www.smartraveller.gov.au/destinations/americas/colombia" target="_blank" class="map-btn">🇦🇺 Smartraveller — Colombia</a>
+          <a href="https://help.flightcentre.com.au/s/article/booking-terms-conditions-au" target="_blank" class="map-btn">📄 Flight Centre T&amp;Cs</a>
+          <a href="https://flightcentre.com.au/p/captains-pack" target="_blank" class="map-btn">⚓ Captain's Pack Details</a>
         </div>
       </div>
     </div>
@@ -1016,8 +1118,32 @@ body {
       <div class="check-item" onclick="toggleCheck(this)">
         <div class="check-box"></div>
         <div class="check-body">
-          <div class="check-title">Confirm travel insurance — all 5 travellers</div>
-          <div class="check-sub">Must cover medical, cancellation, luggage loss. Colombia requires health coverage.</div>
+          <div class="check-title">Sort travel health insurance — all 5 travellers</div>
+          <div class="check-sub">Must cover medical evacuation, hospitalisation, trip cancellation, luggage loss. Colombia requires health coverage. Flight Centre 5% discount available via Captain's Pack.</div>
+          <div class="accordion" onclick="event.stopPropagation()">
+            <button class="accordion-btn" onclick="toggleAccordion(this)">
+              <span>🔗 Insurance options &amp; links</span>
+              <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="accordion-body">
+              <a href="https://www.flightcentre.com.au/booking/insurance" target="_blank" class="acc-link">
+                <span class="acc-link-icon">⚓</span>
+                <div><div class="acc-link-title">Flight Centre Travel Insurance</div><div class="acc-link-sub">5% discount with Captain's Pack — contact Eliza</div></div>
+              </a>
+              <a href="https://www.covermore.com.au" target="_blank" class="acc-link">
+                <span class="acc-link-icon">🛡</span>
+                <div><div class="acc-link-title">Cover-More Travel Insurance</div><div class="acc-link-sub">Popular Australian insurer — compare plans</div></div>
+              </a>
+              <a href="https://www.worldnomads.com/aus" target="_blank" class="acc-link">
+                <span class="acc-link-icon">🌏</span>
+                <div><div class="acc-link-title">World Nomads</div><div class="acc-link-sub">Good for extended trips &amp; adventure travel</div></div>
+              </a>
+              <a href="https://www.smartraveller.gov.au/before-you-go/the-basics/travel-insurance" target="_blank" class="acc-link">
+                <span class="acc-link-icon">🇦🇺</span>
+                <div><div class="acc-link-title">Smartraveller — What insurance do you need?</div><div class="acc-link-sub">DFAT guidance on choosing the right cover</div></div>
+              </a>
+            </div>
+          </div>
         </div>
         <div class="check-right"><span class="urgency urgency-high">Critical</span></div>
       </div>
@@ -1049,6 +1175,21 @@ body {
  
     <div class="section-label">Finance</div>
     <div class="card">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box"></div>
+        <div class="check-body">
+          <div class="check-title">🚨 Charge min. $250 in prepaid travel costs to ANZ Platinum card — BEFORE departure</div>
+          <div class="check-sub">Required to activate complimentary travel insurance (Ref: ANZREPT0024532). The ANZ eligibility letter confirms cover for Julian, Laura, Martin &amp; Oliver — but only if at least $250 in prepaid travel costs is charged to the ANZ Rewards Platinum card before leaving Australia. Examples from the letter that qualify:<br><br>
+            ✓ Return overseas travel ticket (or portion of)<br>
+            ✓ Airport / departure taxes<br>
+            ✓ Prepaid overseas accommodation<br>
+            ✓ Prepaid overseas travel costs<br>
+            ✓ Other prepaid overseas itinerary items<br><br>
+            Easiest options: load AUD $250+ onto a Travel Money Oz Currency Pass at Flight Centre (also earns $25 Captain's Pack bonus), pre-pay a night's accommodation, or pay airport taxes on the ANZ card at check-in. Keep the receipt as proof.
+          </div>
+        </div>
+        <div class="check-right"><span class="urgency urgency-high">Critical</span></div>
+      </div>
       <div class="check-item" onclick="toggleCheck(this)">
         <div class="check-box"></div>
         <div class="check-body">
@@ -1266,28 +1407,35 @@ body {
   </div>
   <!-- end pages -->
  
+  </div><!-- end pages-wrap -->
+ 
 </div><!-- end scroll-root -->
  
 <!-- BOTTOM NAV -->
 <nav class="bottom-nav">
-  <button class="nav-item active" onclick="showPage('flights', this)">
+  <button class="nav-item active" onclick="showPage('flights', this)" style="font-size:9px;">
     <span class="nav-icon">✈️</span>
     <span>Flights</span>
     <div class="nav-dot"></div>
   </button>
-  <button class="nav-item" onclick="showPage('stays', this)">
+  <button class="nav-item" onclick="showPage('stays', this)" style="font-size:9px;">
     <span class="nav-icon">🏨</span>
     <span>Stays</span>
     <div class="nav-dot"></div>
   </button>
-  <button class="nav-item" onclick="showPage('pretrip', this)">
+  <button class="nav-item" onclick="showPage('pretrip', this)" style="font-size:9px;">
     <span class="nav-icon">📋</span>
     <span>Pre-Trip</span>
     <div class="nav-dot"></div>
   </button>
-  <button class="nav-item" onclick="showPage('packing', this)">
+  <button class="nav-item" onclick="showPage('packing', this)" style="font-size:9px;">
     <span class="nav-icon">🧳</span>
     <span>Packing</span>
+    <div class="nav-dot"></div>
+  </button>
+  <button class="nav-item" onclick="showPage('info', this)" style="font-size:9px;">
+    <span class="nav-icon">ℹ️</span>
+    <span>Info</span>
     <div class="nav-dot"></div>
   </button>
 </nav>
@@ -1337,9 +1485,10 @@ function toggleAccordion(btn) {
 function showPage(name, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-  document.getElementById('page-' + name).classList.add('active');
+  const page = document.getElementById('page-' + name);
+  page.classList.add('active');
+  page.scrollTop = 0;
   if (btn) btn.classList.add('active');
-  document.getElementById('scroll-root').scrollTo({top: 0, behavior: 'smooth'});
 }
  
 // ── Flight toggle ──
