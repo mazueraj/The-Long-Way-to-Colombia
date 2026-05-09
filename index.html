@@ -580,27 +580,29 @@ body {
       <div class="flight-row" onclick="toggleFlight(this)">
         <div class="flight-main">
           <div><div class="flight-num">QF 15</div><div class="flight-carrier">Qantas</div></div>
-          <div class="flight-route"><span class="route-city">BNE</span><span class="route-arrow">→</span><span class="route-city">LAX</span></div>
+          <div class="flight-route"><span class="route-city">Brisbane<br><small style="font-size:10px;color:var(--text-muted);font-weight:400;">BNE</small></span><span class="route-arrow">→</span><span class="route-city">Los Angeles<br><small style="font-size:10px;color:var(--text-muted);font-weight:400;">LAX</small></span></div>
           <div><div class="flight-time">20:35</div><div class="flight-date">09 Jun</div></div>
           <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
         <div class="flight-detail">
           <div class="detail-grid">
-            <div><div class="detail-label">Terminal BNE</div><div class="detail-value">International · Lvl 4</div></div>
+            <div><div class="detail-label">Terminal BNE</div><div class="detail-value">Terminal I</div></div>
             <div><div class="detail-label">Check-in opens</div><div class="detail-value">17:35 (3 hrs prior)</div></div>
-            <div><div class="detail-label">Arrives LAX</div><div class="detail-value">17:05 · Tue 9 Jun</div></div>
-            <div><div class="detail-label">Terminal LAX</div><div class="detail-value">Tom Bradley Int'l</div></div>
+            <div><div class="detail-label">Arrives LAX</div><div class="detail-value">17:05 · Tue 9 Jun · Terminal B</div></div>
+            <div><div class="detail-label">Aircraft</div><div class="detail-value">Airbus A330-200</div></div>
             <div><div class="detail-label">Duration</div><div class="detail-value">13h 30m</div></div>
             <div><div class="detail-label">Class</div><div class="detail-value">Economy · 1 bag included</div></div>
+            <div><div class="detail-label">PNR</div><div class="detail-value"><span class="ref-code">DUHWIX</span></div></div>
+            <div><div class="detail-label">Airline Ref</div><div class="detail-value"><span class="ref-code">FWVX4U</span></div></div>
           </div>
-          <div style="margin: 8px 0 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);">Passengers</div>
+          <div style="margin: 8px 0 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);">Passengers &amp; Ticket Numbers</div>
           <div style="font-size: 12px; line-height: 1.9; color: var(--text-mid);">
-            Laura Nataly Cruz Ropero<br>
-            Julian Mazuera Molina<br>
-            Martin Emilio Mazuera<br>
-            Oliver Isaias Mazuera
+            Laura Nataly Cruz Ropero &nbsp;<span class="ref-code">0812760307567</span><br>
+            Julian Mazuera Molina &nbsp;&nbsp;&nbsp;<span class="ref-code">0812760307568</span><br>
+            Martin Emilio Mazuera &nbsp;&nbsp;&nbsp;<span class="ref-code">0812760307569</span><br>
+            Oliver Isaias Mazuera &nbsp;&nbsp;&nbsp;<span class="ref-code">0812760307570</span>
           </div>
-          <div class="alert-pill alert-warning" style="margin-top:10px;">⚠ Crosses date line — departs Tue 9 Jun, arrives Tue 9 Jun LAX time</div>
+          <div class="alert-pill alert-warning" style="margin-top:10px;">⚠ Crosses date line — departs Tue 9 Jun BNE, arrives Tue 9 Jun LAX time</div>
         </div>
       </div>
     </div>
@@ -610,7 +612,7 @@ body {
       <div class="flight-row" onclick="toggleFlight(this)">
         <div class="flight-main">
           <div><div class="flight-num">UA 2305</div><div class="flight-carrier">United</div></div>
-          <div class="flight-route"><span class="route-city">SFO</span><span class="route-arrow">→</span><span class="route-city">HOU</span></div>
+          <div class="flight-route"><span class="route-city">San Francisco<br><small style="font-size:10px;color:var(--text-muted);font-weight:400;">SFO</small></span><span class="route-arrow">→</span><span class="route-city">Houston<br><small style="font-size:10px;color:var(--text-muted);font-weight:400;">IAH</small></span></div>
           <div><div class="flight-time">04:45</div><div class="flight-date">15 Jun</div></div>
           <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
@@ -627,7 +629,7 @@ body {
       <div class="flight-row" onclick="toggleFlight(this)">
         <div class="flight-main">
           <div><div class="flight-num">UA 1871</div><div class="flight-carrier">United · Leg 1</div></div>
-          <div class="flight-route"><span class="route-city">AUS</span><span class="route-arrow">→</span><span class="route-city">IAH</span></div>
+          <div class="flight-route"><span class="route-city">Austin<br><small style="font-size:10px;color:var(--text-muted);font-weight:400;">AUS</small></span><span class="route-arrow">→</span><span class="route-city">Houston<br><small style="font-size:10px;color:var(--text-muted);font-weight:400;">IAH</small></span></div>
           <div><div class="flight-time">19:44</div><div class="flight-date">18 Jun</div></div>
           <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
@@ -651,7 +653,7 @@ body {
       <div class="flight-row" onclick="toggleFlight(this)">
         <div class="flight-main">
           <div><div class="flight-num">UA 209</div><div class="flight-carrier">United · Leg 2</div></div>
-          <div class="flight-route"><span class="route-city">IAH</span><span class="route-arrow">→</span><span class="route-city">BOG</span></div>
+          <div class="flight-route"><span class="route-city">Houston<br><small style="font-size:10px;color:var(--text-muted);font-weight:400;">IAH</small></span><span class="route-arrow">→</span><span class="route-city">Bogotá<br><small style="font-size:10px;color:var(--text-muted);font-weight:400;">BOG</small></span></div>
           <div><div class="flight-time">23:59</div><div class="flight-date">18 Jun</div></div>
           <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
@@ -685,7 +687,7 @@ body {
       <div class="flight-row" onclick="toggleFlight(this)">
         <div class="flight-main">
           <div><div class="flight-num">UA 508</div><div class="flight-carrier">United · Leg 1</div></div>
-          <div class="flight-route"><span class="route-city">BOG</span><span class="route-arrow">→</span><span class="route-city">IAH</span></div>
+          <div class="flight-route"><span class="route-city">Bogotá<br><small style="font-size:10px;color:var(--text-muted);font-weight:400;">BOG</small></span><span class="route-arrow">→</span><span class="route-city">Houston<br><small style="font-size:10px;color:var(--text-muted);font-weight:400;">IAH</small></span></div>
           <div><div class="flight-time">08:30</div><div class="flight-date">22 Jul</div></div>
           <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
@@ -709,7 +711,7 @@ body {
       <div class="flight-row" onclick="toggleFlight(this)">
         <div class="flight-main">
           <div><div class="flight-num">UA 1743</div><div class="flight-carrier">United · Leg 2</div></div>
-          <div class="flight-route"><span class="route-city">IAH</span><span class="route-arrow">→</span><span class="route-city">LAX</span></div>
+          <div class="flight-route"><span class="route-city">Houston<br><small style="font-size:10px;color:var(--text-muted);font-weight:400;">IAH</small></span><span class="route-arrow">→</span><span class="route-city">Los Angeles<br><small style="font-size:10px;color:var(--text-muted);font-weight:400;">LAX</small></span></div>
           <div><div class="flight-time">16:30</div><div class="flight-date">22 Jul</div></div>
           <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
@@ -735,24 +737,27 @@ body {
       <div class="flight-row" onclick="toggleFlight(this)">
         <div class="flight-main">
           <div><div class="flight-num">QF 16</div><div class="flight-carrier">Qantas</div></div>
-          <div class="flight-route"><span class="route-city">LAX</span><span class="route-arrow">→</span><span class="route-city">BNE</span></div>
+          <div class="flight-route"><span class="route-city">Los Angeles<br><small style="font-size:10px;color:var(--text-muted);font-weight:400;">LAX</small></span><span class="route-arrow">→</span><span class="route-city">Brisbane<br><small style="font-size:10px;color:var(--text-muted);font-weight:400;">BNE</small></span></div>
           <div><div class="flight-time">22:10</div><div class="flight-date">23 Jul</div></div>
           <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
         <div class="flight-detail">
           <div class="detail-grid">
-            <div><div class="detail-label">Terminal LAX</div><div class="detail-value">Tom Bradley (TBIT)</div></div>
+            <div><div class="detail-label">Terminal LAX</div><div class="detail-value">Terminal B</div></div>
             <div><div class="detail-label">Check-in opens</div><div class="detail-value">19:10 (3 hrs prior)</div></div>
-            <div><div class="detail-label">Arrives BNE</div><div class="detail-value">05:00 · Sat 25 Jul ✓</div></div>
+            <div><div class="detail-label">Arrives BNE</div><div class="detail-value">05:00 · Sat 25 Jul · Terminal I</div></div>
+            <div><div class="detail-label">Aircraft</div><div class="detail-value">Airbus A330-200</div></div>
             <div><div class="detail-label">Duration</div><div class="detail-value">13h 50m</div></div>
             <div><div class="detail-label">Class</div><div class="detail-value">Economy · 1 bag included</div></div>
+            <div><div class="detail-label">PNR</div><div class="detail-value"><span class="ref-code">DUHWIX</span></div></div>
+            <div><div class="detail-label">Airline Ref</div><div class="detail-value"><span class="ref-code">FWVX4U</span></div></div>
           </div>
-          <div style="margin: 8px 0 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);">Passengers</div>
+          <div style="margin: 8px 0 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);">Passengers &amp; Ticket Numbers</div>
           <div style="font-size: 12px; line-height: 1.9; color: var(--text-mid);">
-            Laura Nataly Cruz Ropero<br>
-            Julian Mazuera Molina<br>
-            Martin Emilio Mazuera<br>
-            Oliver Isaias Mazuera
+            Laura Nataly Cruz Ropero &nbsp;<span class="ref-code">0812760307567</span><br>
+            Julian Mazuera Molina &nbsp;&nbsp;&nbsp;<span class="ref-code">0812760307568</span><br>
+            Martin Emilio Mazuera &nbsp;&nbsp;&nbsp;<span class="ref-code">0812760307569</span><br>
+            Oliver Isaias Mazuera &nbsp;&nbsp;&nbsp;<span class="ref-code">0812760307570</span>
           </div>
           <div class="alert-pill alert-success" style="margin-top:10px;">✓ UA 1743 arrives LAX 6:10 PM on 22 Jul. QF16 departs 10:10 PM on 23 Jul — plan one night in LAX.</div>
         </div>
@@ -772,16 +777,18 @@ body {
         <div class="hotel-icon">🏙</div>
         <div style="flex:1;">
           <div class="hotel-name">Embassy Suites by Hilton — LAX South El Segundo</div>
-          <div class="hotel-addr">El Segundo, CA (2 miles from LAX)</div>
+          <div class="hotel-addr">1440 E Imperial Ave, El Segundo, CA 90245</div>
           <div class="hotel-meta" style="margin-bottom:6px;">
             📅 09 Jun – 10 Jun 2026 · <strong>1 night</strong><br>
-            🛏 Standard Suite · 2 Queen beds · Bed &amp; Breakfast<br>
-            🕑 Check-in: 2:00 PM · Check-out: 10:00 AM
+            🛏 Standard Suite · 2 Queen beds · Bed &amp; Breakfast · 4 adults, 1 child<br>
+            🕑 Check-in: 3:00 PM · Check-out: 10:00 AM<br>
+            📞 +1 310-640-3600
           </div>
+          <div style="margin-bottom:6px;"><span class="ref-code">Booking Ref: 32202071</span></div>
           <div style="font-size:11px; color:var(--success); font-weight:600; margin-bottom:4px;">✓ Fully refundable before 06 Jun 2026</div>
           <div style="font-size:12px; color:var(--text-muted); margin-bottom:6px;">Pool · Restaurant · Spa · Bar · WiFi · Fitness · Laundry · Concierge</div>
           <div style="font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">AUD $459.35 · 5 travellers</div>
-          <a href="https://maps.google.com/?q=Embassy+Suites+LAX+South+El+Segundo" target="_blank" class="map-btn">📍 Open in Maps</a>
+          <a href="https://maps.google.com/?q=1440+E+Imperial+Ave+El+Segundo+CA+90245" target="_blank" class="map-btn">📍 Open in Maps</a>
         </div>
       </div>
  
@@ -790,16 +797,18 @@ body {
         <div class="hotel-icon">🌊</div>
         <div style="flex:1;">
           <div class="hotel-name">Embassy Suites by Hilton — San Luis Obispo</div>
-          <div class="hotel-addr">333 Madonna Rd, San Luis Obispo, CA</div>
+          <div class="hotel-addr">333 Madonna Road, San Luis Obispo, CA 93405</div>
           <div class="hotel-meta" style="margin-bottom:6px;">
             📅 10 Jun – 11 Jun 2026 · <strong>1 night</strong><br>
-            🛏 Executive Room · 2 Queen beds, no smoking · Bed &amp; Breakfast<br>
-            🕑 Check-in: 2:00 PM · Check-out: 10:00 AM
+            🛏 Executive Room · 2 Queen beds, no smoking · Bed &amp; Breakfast · 4 adults, 1 child<br>
+            🕑 Check-in: 3:00 PM · Check-out: 10:00 AM<br>
+            📞 +1 805-549-0800
           </div>
+          <div style="margin-bottom:6px;"><span class="ref-code">Booking Ref: GQ113045323NQ4109L5J5</span></div>
           <div style="font-size:11px; color:var(--success); font-weight:600; margin-bottom:4px;">✓ Fully refundable before 08 Jun 2026</div>
           <div style="font-size:12px; color:var(--text-muted); margin-bottom:6px;">Free WiFi · Pool · Parking · Restaurant · Bar · Fitness · Laundry · Bicycle rentals</div>
           <div style="font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px;">AUD $528.79 · 5 travellers</div>
-          <a href="https://maps.google.com/?q=Embassy+Suites+333+Madonna+Rd+San+Luis+Obispo" target="_blank" class="map-btn">📍 Open in Maps</a>
+          <a href="https://maps.google.com/?q=333+Madonna+Road+San+Luis+Obispo+CA+93405" target="_blank" class="map-btn">📍 Open in Maps</a>
         </div>
       </div>
  
@@ -841,26 +850,48 @@ body {
       <div style="padding: 0 16px 4px; border-top: 1px solid var(--border); margin-top:4px;">
         <div class="car-grid" style="grid-template-columns:1fr 1fr; padding:12px 0 0;">
           <div><div class="car-label">Booked total</div><div class="car-value" style="font-size:15px; font-weight:700; color:var(--navy);">AUD $10,085.13</div></div>
-          <div><div class="car-label">Amount paid</div><div class="car-value" style="color:var(--success); font-weight:600;">AUD $6,276.88</div></div>
+          <div><div class="car-label">Amount paid</div><div class="car-value" style="color:var(--success); font-weight:600;">AUD $6,806.73 ✅</div></div>
         </div>
       </div>
-      <div class="car-alert" style="background:var(--warning-bg); color:var(--warning);">
-        ⚠ Balance owing: <strong>AUD $3,808.25</strong> · Confirmation sent to lau_cruz7@hotmail.com
+      <div class="car-alert" style="background:var(--success-bg); color:var(--success);">
+        ✅ Fully paid — AUD $6,806.73 · Balance owing: $0.00 · Invoice issued 09 May 2026
       </div>
     </div>
  
     <div class="section-label">Car Hire</div>
     <div class="card">
-      <div class="card-header"><span class="card-title">Thrifty — LAX Pick-up</span><span class="badge badge-confirmed">Confirmed</span></div>
+      <div class="card-header"><span class="card-title">Thrifty — Nissan Pathfinder or similar SUV</span><span class="badge badge-confirmed">Confirmed</span></div>
+      <div style="width:100%; height:160px; overflow:hidden; background:#f0f4f8;">
+        <img src="https://www.nissan.co.nz/content/dam/Nissan/nz/vehicles/pathfinder/highlights/2024-Nissan-Pathfinder-MY24-Highlights-New-Look-Desktop.jpg" alt="Nissan Pathfinder SUV" style="width:100%; height:100%; object-fit:cover; object-position:center;" onerror="this.parentElement.style.display='none'">
+      </div>
       <div class="car-grid">
         <div><div class="car-label">Voucher</div><div class="car-value"><span class="ref-code">349649601</span></div></div>
         <div><div class="car-label">Reference</div><div class="car-value"><span class="ref-code">L46642299D4</span></div></div>
-        <div><div class="car-label">Pick-up</div><div class="car-value">10 Jun · 10:00 AM · LAX</div></div>
-        <div><div class="car-label">Drop-off</div><div class="car-value">15 Jun · SFO</div></div>
+        <div><div class="car-label">Pick-up</div><div class="car-value">10 Jun · 10:00 AM<br>Los Angeles Airport (LAX)</div></div>
+        <div><div class="car-label">Drop-off</div><div class="car-value">15 Jun · 10:00 AM<br>San Francisco Airport (SFO)</div></div>
+        <div><div class="car-label">Duration</div><div class="car-value">6 days · One-way</div></div>
+        <div><div class="car-label">Vehicle class</div><div class="car-value">Full Size SUV (FFARGDZEZB)</div></div>
+        <div><div class="car-label">Fuel policy</div><div class="car-value">Full to Full</div></div>
+        <div><div class="car-label">Mileage</div><div class="car-value">Unlimited</div></div>
       </div>
-      <div class="car-alert">⚠ Julian must have <strong>physical original licence</strong> + physical credit card. $200 USD deposit required.</div>
-      <div style="padding:10px 16px;">
-        <a href="https://www.google.com/maps/search/?api=1&query=Thrifty+Car+Rental+9000+Airport+Blvd+Los+Angeles" target="_blank" class="map-btn">📍 Navigate to Pick-up</a>
+      <div style="padding:12px 16px; border-top:1px solid var(--border);">
+        <div style="font-size:12px; font-weight:600; color:var(--navy); margin-bottom:6px;">✅ Included in rate</div>
+        <div style="font-size:12px; color:var(--text-mid); line-height:1.8;">
+          Collision Damage Waiver (CDW) · Excess USD $0.00<br>
+          Theft Protection (TP) · Excess USD $0.00<br>
+          Liability &amp; Fire Insurance · Breakdown &amp; towing<br>
+          One-way fee · VAT
+        </div>
+      </div>
+      <div class="car-alert">
+        ⚠ Julian must present <strong>physical original licence</strong> + credit card in his name.<br>
+        Deposit: <strong>USD $200.00</strong> · Accepted: Visa, Mastercard, Amex, Discover<br>
+        Additional driver: USD $13.50/day · Min age: 20 · Young driver fee (20–24): USD $25/day
+      </div>
+      <div style="padding:10px 16px; border-top:1px solid var(--border);">
+        <div style="font-size:11px; color:var(--danger); font-weight:600; margin-bottom:6px;">⚠ Cancellation charge of AUD $1,268.83 applies if cancelled on or after 10 Jun 2026</div>
+        <a href="https://www.google.com/maps/search/?api=1&query=Thrifty+Car+Rental+Los+Angeles+Airport" target="_blank" class="map-btn">📍 LAX Pick-up Location</a>
+        <a href="https://www.google.com/maps/search/?api=1&query=Thrifty+Car+Rental+San+Francisco+Airport" target="_blank" class="map-btn" style="margin-left:8px;">📍 SFO Drop-off Location</a>
       </div>
     </div>
  
@@ -877,6 +908,39 @@ body {
         </div>
       </div>
     </div>
+    <div class="section-label">Flight Centre &amp; Emergency Contacts</div>
+    <div class="card">
+      <div class="card-header"><span class="card-title">Booking ID: 7800906 — Flight Centre Robina</span></div>
+      <div class="car-grid" style="grid-template-columns:1fr 1fr;">
+        <div><div class="car-label">Travel Agent</div><div class="car-value">Eliza Joiner</div></div>
+        <div><div class="car-label">Agent Phone</div><div class="car-value">(07) 5583 1166</div></div>
+        <div><div class="car-label">Agent Email</div><div class="car-value" style="font-size:11px;"><a href="mailto:eliza.joiner@flightcentre.com.au" style="color:var(--navy-light);">eliza.joiner@flightcentre.com.au</a></div></div>
+        <div><div class="car-label">Balance</div><div class="car-value" style="color:var(--success); font-weight:600;">✅ Fully paid</div></div>
+      </div>
+      <div class="car-alert" style="flex-direction:column; gap:6px; background:var(--danger-bg); color:var(--danger);">
+        <div>🆘 <strong>24/7 Emergency (within AU):</strong> <a href="tel:1300131600" style="color:var(--danger);">1300 131 600</a></div>
+        <div>🆘 <strong>24/7 Emergency (outside AU):</strong> <a href="tel:+61730836452" style="color:var(--danger);">+61 7 3083 6452</a></div>
+      </div>
+      <div style="padding:12px 16px; border-top:1px solid var(--border);">
+        <div style="font-size:12px; font-weight:600; color:var(--navy); margin-bottom:8px;">🧳 Captain's Pack — Lost Baggage</div>
+        <div style="font-size:12px; color:var(--text-mid); line-height:1.7; margin-bottom:10px;">
+          1. Report to airline &amp; get a printed numbered report<br>
+          2. Report to Blue Ribbon Bags within <strong>24 hours</strong> of landing<br>
+          📞 <a href="tel:19179209699" style="color:var(--navy-light);">1-917-920-9699</a> (toll free)<br>
+          💰 $750 cashback per bag if not found after 96hrs (max 2 bags)
+        </div>
+        <div style="font-size:12px; font-weight:600; color:var(--navy); margin-bottom:8px;">🔗 Key Links</div>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <a href="https://flightcentre.blueribbonbags.com/" target="_blank" class="map-btn" style="font-size:12px;">🧳 Report Lost Bag — Blue Ribbon Bags</a>
+          <a href="https://www.smartraveller.gov.au/destinations/americas/united-states-america" target="_blank" class="map-btn" style="font-size:12px;">🇦🇺 Smartraveller — USA Travel Advice</a>
+          <a href="https://www.smartraveller.gov.au/destinations/americas/colombia" target="_blank" class="map-btn" style="font-size:12px;">🇦🇺 Smartraveller — Colombia Travel Advice</a>
+          <a href="https://help.flightcentre.com.au/s/article/booking-terms-conditions-au" target="_blank" class="map-btn" style="font-size:12px;">📄 Flight Centre Booking Terms &amp; Conditions</a>
+          <a href="https://www.flightcentre.com.au/booking/insurance" target="_blank" class="map-btn" style="font-size:12px;">🛡 Flight Centre Travel Insurance</a>
+          <a href="https://flightcentre.com.au/p/captains-pack" target="_blank" class="map-btn" style="font-size:12px;">⚓ Captain's Pack Full Details</a>
+        </div>
+      </div>
+    </div>
+ 
   </div>
  
   <!-- ═══════════════════════════════ PRE-TRIP PAGE ═══════════════════════════════ -->
