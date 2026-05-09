@@ -11,10 +11,10 @@
 <title>The Long Way to Colombia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
- 
+
 <!-- PWA Manifest — real file, required for Android Chrome install -->
 <link rel="manifest" href="./manifest.json">
- 
+
 <style>
 :root {
   --navy: #0d2b45;
@@ -41,11 +41,11 @@
   --safe-bot: env(safe-area-inset-bottom, 0px);
   --nav-h: 64px;
 }
- 
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
- 
+
 html { height: 100%; }
- 
+
 body {
   font-family: 'DM Sans', sans-serif;
   background: var(--sand);
@@ -57,7 +57,7 @@ body {
   /* Prevent rubber-band scroll revealing body bg */
   overscroll-behavior: none;
 }
- 
+
 /* ── SCROLL CONTAINER ── */
 .scroll-root {
   position: fixed;
@@ -135,7 +135,7 @@ body {
   font-size: 12px;
   font-weight: 500;
 }
- 
+
 /* ── JOURNEY STRIP ── */
 .journey-strip {
   background: var(--navy-mid);
@@ -156,7 +156,7 @@ body {
 .city-date { font-size: 9px; color: rgba(255,255,255,0.42); margin-top: 2px; }
 .journey-arrow { display: flex; align-items: center; padding: 0 4px; color: var(--gold); font-size: 10px; }
 .journey-line { width: 18px; height: 1px; background: var(--gold); opacity: 0.45; margin: 0 2px; }
- 
+
 /* ── STATS STRIP ── */
 .stats-strip {
   background: var(--navy);
@@ -167,11 +167,11 @@ body {
 .stat { text-align: center; }
 .stat-num { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--gold-light); display: block; }
 .stat-label { font-size: 10px; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
- 
+
 /* ── PAGES ── */
 .page { display: none; padding: 20px 14px 32px; }
 .page.active { display: block; }
- 
+
 /* ── SECTION LABEL ── */
 .section-label {
   font-size: 10px;
@@ -182,7 +182,7 @@ body {
   margin: 24px 0 10px;
 }
 .section-label:first-child { margin-top: 0; }
- 
+
 /* ── CARD ── */
 .card {
   background: var(--white);
@@ -199,7 +199,7 @@ body {
   justify-content: space-between;
 }
 .card-title { font-size: 13px; font-weight: 600; color: var(--navy); }
- 
+
 /* ── FLIGHT ROWS ── */
 .flight-row {
   padding: 16px;
@@ -231,7 +231,7 @@ body {
   flex-shrink: 0;
 }
 .flight-row.open .chevron { transform: rotate(180deg); }
- 
+
 /* Flight detail drawer */
 .flight-detail {
   display: none;
@@ -258,12 +258,12 @@ body {
 .alert-warning { background: var(--warning-bg); color: var(--warning); }
 .alert-info { background: #e8f3fd; color: #1a5fa8; }
 .alert-success { background: var(--success-bg); color: var(--success); }
- 
+
 /* ── BADGE ── */
 .badge { padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 500; }
 .badge-confirmed { background: var(--success-bg); color: var(--success); }
 .badge-done { background: #e8f3fd; color: #1a5fa8; }
- 
+
 /* ── HOTEL ROWS ── */
 .hotel-row {
   padding: 16px;
@@ -294,7 +294,7 @@ body {
   min-height: 36px;
 }
 .map-btn:active { background: #ece5d8; }
- 
+
 /* ── CAR HIRE ── */
 .car-grid {
   display: grid;
@@ -312,13 +312,13 @@ body {
   display: flex; align-items: flex-start; gap: 8px;
   line-height: 1.5;
 }
- 
+
 /* ── PROGRESS ── */
 .progress-wrap { padding: 14px 16px; background: var(--white); border-radius: var(--r-lg); margin-bottom: 14px; box-shadow: 0 2px 10px rgba(13,43,69,0.07); }
 .progress-label { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; display: flex; justify-content: space-between; }
 .progress-bar { height: 6px; background: var(--sand); border-radius: 10px; overflow: hidden; }
 .progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%); border-radius: 10px; transition: width 0.35s; }
- 
+
 /* ── CHECKLIST ── */
 .check-item {
   display: flex;
@@ -359,7 +359,7 @@ body {
 .urgency-high { background: var(--danger-bg); color: var(--danger); }
 .urgency-med { background: var(--warning-bg); color: var(--warning); }
 .urgency-low { background: var(--success-bg); color: var(--success); }
- 
+
 /* ── PACKING ── */
 .pack-item {
   display: flex;
@@ -391,7 +391,7 @@ body {
 }
 .pack-item.packed span { color: var(--text-muted); text-decoration: line-through; }
 .pack-label { font-size: 14px; }
- 
+
 /* ── NOTE CARD ── */
 .note-card {
   background: var(--white);
@@ -403,7 +403,7 @@ body {
   box-shadow: 0 2px 10px rgba(13,43,69,0.07);
   margin-bottom: 14px;
 }
- 
+
 /* ── ACCORDION ── */
   .accordion { margin-top: 10px; border-radius: var(--r-sm); overflow: hidden; border: 1px solid var(--border); }
   .accordion-btn {
@@ -427,7 +427,7 @@ body {
   .acc-link-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
   .acc-link-title { font-size: 13px; font-weight: 500; color: var(--navy-light); margin-bottom: 2px; }
   .acc-link-sub { font-size: 11px; color: var(--text-muted); }
- 
+
   /* ── BOTTOM NAV ── */
 .bottom-nav {
   position: fixed;
@@ -476,7 +476,7 @@ body {
   transition: opacity 0.15s;
 }
 .nav-item.active .nav-dot { opacity: 1; }
- 
+
 /* ── INSTALL BANNER ── */
 .install-banner {
   display: none;
@@ -509,7 +509,7 @@ body {
   background: none; border: none; color: rgba(255,255,255,0.5);
   font-size: 20px; cursor: pointer; padding: 0 0 0 8px; line-height: 1;
 }
- 
+
 /* ── iOS INSTALL TIP ── */
 .ios-tip {
   display: none;
@@ -526,9 +526,9 @@ body {
 </style>
 </head>
 <body>
- 
+
 <div class="scroll-root" id="scroll-root">
- 
+
   <!-- HERO -->
   <div class="hero">
     <div class="hero-eyebrow">09 June – 24 July 2026</div>
@@ -542,7 +542,7 @@ body {
       <span class="traveller-tag">Oliver</span>
     </div>
   </div>
- 
+
   <!-- JOURNEY STRIP -->
   <div class="journey-strip">
     <div class="journey-track">
@@ -565,7 +565,7 @@ body {
       <div class="journey-city"><div class="city-code">BNE</div><div class="city-date">25 Jul</div></div>
     </div>
   </div>
- 
+
   <!-- INSTALL BANNER (Android) -->
   <div class="install-banner" id="install-banner">
     <div class="install-banner-text">
@@ -575,24 +575,24 @@ body {
     <button class="install-btn" id="install-btn">Install</button>
     <button class="dismiss-btn" onclick="dismissInstall()">×</button>
   </div>
- 
+
   <!-- iOS INSTALL TIP -->
   <div class="ios-tip" id="ios-tip">
     <strong>Install on iPhone:</strong> tap the Share button below, then <strong>"Add to Home Screen"</strong> to use this as an app.
     <button class="dismiss-btn" style="float:right;margin-top:-2px;" onclick="dismissIos()">×</button>
   </div>
- 
+
   <!-- ═══════════════════════════════ FLIGHTS PAGE ═══════════════════════════════ -->
   <div class="pages-wrap">
   <div id="page-flights" class="page active">
- 
+
     <div class="stats-strip" style="border-radius:0; margin-bottom:20px;">
       <div class="stat"><span class="stat-num">7</span><span class="stat-label">Flights</span></div>
       <div class="stat"><span class="stat-num">46</span><span class="stat-label">Days</span></div>
       <div class="stat"><span class="stat-num">3</span><span class="stat-label">Countries</span></div>
       <div class="stat"><span class="stat-num">6</span><span class="stat-label">Cities</span></div>
     </div>
- 
+
     <div class="section-label">Outbound</div>
     <div class="card">
       <div class="flight-row" onclick="toggleFlight(this)">
@@ -624,7 +624,7 @@ body {
         </div>
       </div>
     </div>
- 
+
     <div class="section-label">USA Domestic</div>
     <div class="card">
       <div class="flight-row" onclick="toggleFlight(this)">
@@ -699,7 +699,7 @@ body {
         </div>
       </div>
     </div>
- 
+
     <div class="section-label">Return</div>
     <div class="card">
       <div class="flight-row" onclick="toggleFlight(this)">
@@ -782,14 +782,14 @@ body {
       </div>
     </div>
   </div>
- 
+
   <!-- ═══════════════════════════════ STAYS PAGE ═══════════════════════════════ -->
   <div id="page-stays" class="page">
- 
+
     <div class="section-label">Accommodation</div>
     <div class="card">
       <div class="card-header"><span class="card-title">Hotels — 6 nights total</span><span class="badge badge-confirmed">3 booked</span></div>
- 
+
       <!-- HOTEL 1: LA -->
       <div class="hotel-row">
         <div class="hotel-icon">🏙</div>
@@ -809,7 +809,7 @@ body {
           <a href="https://maps.google.com/?q=1440+E+Imperial+Ave+El+Segundo+CA+90245" target="_blank" class="map-btn">📍 Open in Maps</a>
         </div>
       </div>
- 
+
       <!-- HOTEL 2: SLO -->
       <div class="hotel-row">
         <div class="hotel-icon">🌊</div>
@@ -829,7 +829,7 @@ body {
           <a href="https://maps.google.com/?q=333+Madonna+Road+San+Luis+Obispo+CA+93405" target="_blank" class="map-btn">📍 Open in Maps</a>
         </div>
       </div>
- 
+
       <!-- HOTEL 3: SF -->
       <div class="hotel-row">
         <div class="hotel-icon">🌉</div>
@@ -853,7 +853,7 @@ body {
         </div>
       </div>
     </div>
- 
+
     <div class="section-label">Bogotá</div>
     <div class="card">
       <div class="hotel-row">
@@ -867,12 +867,12 @@ body {
         </div>
       </div>
     </div>
- 
+
   </div>
- 
+
   <!-- ═══════════════════════════════ INFO PAGE ═══════════════════════════════ -->
   <div id="page-info" class="page">
- 
+
     <!-- DOCUMENTS REPOSITORY -->
     <div class="section-label">Trip Documents</div>
     <div class="card">
@@ -891,7 +891,7 @@ body {
         </a>
       </div>
     </div>
- 
+
     <!-- INSURANCE -->
     <div class="section-label">Travel Insurance</div>
     <div class="card">
@@ -940,7 +940,7 @@ body {
         <div style="font-size:12px; color:var(--text-mid);">Has her own separate travel insurance policy ✅</div>
       </div>
     </div>
- 
+
     <!-- CAR HIRE -->
     <div class="section-label">Car Hire</div>
     <div class="card">
@@ -978,7 +978,7 @@ body {
         <a href="https://www.google.com/maps/search/?api=1&query=Thrifty+Car+Rental+San+Francisco+Airport" target="_blank" class="map-btn" style="margin-left:8px;">📍 SFO Drop-off</a>
       </div>
     </div>
- 
+
     <!-- COST SUMMARY -->
     <div class="section-label">Cost Summary</div>
     <div class="card">
@@ -1009,7 +1009,7 @@ body {
         ✅ Balance owing: $0.00 · Invoice issued 09 May 2026
       </div>
     </div>
- 
+
     <!-- FLIGHT CENTRE & EMERGENCY -->
     <div class="section-label">Flight Centre &amp; Emergency Contacts</div>
     <div class="card">
@@ -1042,17 +1042,17 @@ body {
         </div>
       </div>
     </div>
- 
+
   </div>
- 
+
   <!-- ═══════════════════════════════ PRE-TRIP PAGE ═══════════════════════════════ -->
   <div id="page-pretrip" class="page">
- 
+
     <div class="progress-wrap">
       <div class="progress-label"><span>Checklist progress</span><span id="progress-text">0 / 0 complete</span></div>
       <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
     </div>
- 
+
     <div class="section-label">Visas & Entry</div>
     <div class="card">
       <div class="check-item" onclick="toggleCheck(this)">
@@ -1112,7 +1112,7 @@ body {
         <div class="check-right"><span class="urgency urgency-high">Critical</span></div>
       </div>
     </div>
- 
+
     <div class="section-label">Insurance & Health</div>
     <div class="card">
       <div class="check-item" onclick="toggleCheck(this)">
@@ -1172,7 +1172,7 @@ body {
         <div class="check-right"><span class="urgency urgency-med">Medium</span></div>
       </div>
     </div>
- 
+
     <div class="section-label">Finance</div>
     <div class="card">
       <div class="check-item" onclick="toggleCheck(this)">
@@ -1231,7 +1231,7 @@ body {
         <div class="check-right"><span class="urgency urgency-low">Low</span></div>
       </div>
     </div>
- 
+
     <div class="section-label">Home & Utilities</div>
     <div class="card">
       <div class="check-item" onclick="toggleCheck(this)">
@@ -1279,13 +1279,14 @@ body {
         <div class="check-body">
           <div class="check-title">🚗 BMW iX2 Check-Up 1 — arrange for ~25 Jun (Week 2)</div>
           <div class="check-sub">
-            Ask your friend to do the following on or around <strong>Wednesday 25 June</strong>:<br><br>
-            1. <strong>Check the car is locked</strong> — walk around and confirm all doors, boot and windows are closed and locked.<br>
-            2. <strong>Check the BMW app</strong> (on your phone, which you'll have with you) — share your screen or ask them to open the MyBMW app if they have access. Confirm main battery is still above 40%.<br>
-            3. <strong>Sit in the driver's seat, press the brake and press the Start button</strong> — put the car into 'Ready' mode (it won't make a sound, just the dashboard lights up). Leave it in Ready mode with the seatbelt on for <strong>30–60 minutes</strong> while parked. This recharges the 12V auxiliary battery via the DC/DC converter — the most important step.<br>
-            4. <strong>Do NOT drive it</strong> at this check — just let it sit in Ready mode.<br>
-            5. Turn it off, make sure it is locked, and send you a quick message to confirm.<br><br>
-            ⚠️ Confirm before departure that your friend is comfortable operating the car and that they are covered on your insurance as an authorised person.
+            Ask your friend to swing by around <strong>25 June</strong>. The main thing is getting the car running for a bit to keep the 12V battery topped up — this is what keeps the electronics healthy during long storage.<br><br>
+            <strong>What to do:</strong><br>
+            1. Sit in the driver's seat, press the brake and press Start — the dashboard lights up (no engine sound, that's normal for an EV).<br>
+            2. Let it sit in Ready mode with the seatbelt on for 20–30 minutes. A quick spin around the block is even better if they feel like it.<br>
+            3. Note the battery % on the dashboard and send you a quick message with the number — that's all you need.<br>
+            4. If the battery is below 30%, plug into the home wallbox before running it.<br><br>
+            That's it — shouldn't take more than an hour of their time including the drive over.
+            <br><br>⚠️ If the car won't start or shows red warning lights — call BMW Roadside Assist: <strong>1800 813 111</strong> (24/7).
           </div>
         </div>
         <div class="check-right"><span class="urgency urgency-high">Critical</span></div>
@@ -1293,16 +1294,16 @@ body {
       <div class="check-item" onclick="toggleCheck(this)">
         <div class="check-box"></div>
         <div class="check-body">
-          <div class="check-title">🚗 BMW iX2 Check-Up 2 — arrange for ~14 Jul (Week 5) + short drive</div>
+          <div class="check-title">🚗 BMW iX2 Check-Up 2 — arrange for ~14 Jul (Week 5) + proper drive</div>
           <div class="check-sub">
-            Ask your friend to do the following on or around <strong>Monday 14 July</strong>:<br><br>
-            1. <strong>Check the car is locked</strong> — same as Check-Up 1.<br>
-            2. <strong>Check main battery is above 30%</strong> — via your BMW app remotely or ask them to check the dashboard when they turn it on. If below 30%, plug it into the home wallbox before driving.<br>
-            3. <strong>Start the car into Ready mode</strong> and let it run for 15 minutes before driving — this warms systems and charges the 12V.<br>
-            4. <strong>Take it for a 20–30 minute drive</strong> — normal suburb driving is fine. This exercises the brakes (prevents pad corrosion), rotates the tyres (prevents flat spots), and fully recharges the 12V via the DC/DC converter.<br>
-            5. <strong>Park it back in the same spot</strong>, turn off, lock, and send you a message with: (a) the battery % showing on the screen, and (b) confirmation it drove normally with no warning lights.<br>
-            6. <strong>If they see any warning lights or the car won't start</strong> — call BMW Roadside Assist: <strong>1800 813 111</strong> (Australia, 24/7).<br><br>
-            ⚠️ Your friend must hold a full licence and be covered on your insurance to drive. Confirm this before you leave.
+            This one's the bigger ask — and the more fun one. Around <strong>14 July</strong>, ask your friend to take the iX2 out for a proper 30–60 minute drive. Good for the car, and honestly it's a great car to drive so hopefully it's a decent reward for the favour.<br><br>
+            <strong>What to do:</strong><br>
+            1. Start it up, let it sit in Ready mode for a few minutes, then take it out.<br>
+            2. A 30–60 minute drive is ideal — highway, hills, suburbs, whatever they fancy. This exercises the brakes, keeps the tyres in good shape and fully recharges the 12V system.<br>
+            3. If the battery is below 30% when they start, plug into the home wallbox for a couple of hours before heading out.<br>
+            4. Park it back inside when done, and send you a message with the battery % from the dashboard and a quick "all good" — that's all you need.<br><br>
+            They're welcome to enjoy the drive — no pressure to rush back. Just needs a full licence and to be covered on your insurance as an occasional driver (confirm before you leave).
+            <br><br>⚠️ If the car won't start or shows red warning lights — call BMW Roadside Assist: <strong>1800 813 111</strong> (24/7).
           </div>
         </div>
         <div class="check-right"><span class="urgency urgency-high">Critical</span></div>
@@ -1333,7 +1334,7 @@ body {
         <div class="check-right"><span class="urgency urgency-low">Low</span></div>
       </div>
     </div>
- 
+
     <div class="section-label">Connectivity</div>
     <div class="card">
       <div class="check-item" onclick="toggleCheck(this)">
@@ -1361,7 +1362,7 @@ body {
         <div class="check-right"><span class="urgency urgency-low">Low</span></div>
       </div>
     </div>
- 
+
     <div class="section-label">Safety & Emergency</div>
     <div class="card">
       <div class="check-item" onclick="toggleCheck(this)">
@@ -1390,15 +1391,15 @@ body {
       </div>
     </div>
   </div>
- 
+
   <!-- ═══════════════════════════════ PACKING PAGE ═══════════════════════════════ -->
   <div id="page-packing" class="page">
- 
+
     <div class="progress-wrap">
       <div class="progress-label"><span>Packing progress</span><span id="pack-progress-text">0 / 0 packed</span></div>
       <div class="progress-bar"><div class="progress-fill" id="pack-progress-fill" style="width:0%"></div></div>
     </div>
- 
+
     <div class="section-label">Documents</div>
     <div class="card">
       <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span class="pack-label">Passport</span></div>
@@ -1410,7 +1411,7 @@ body {
       <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span class="pack-label">Car hire voucher</span></div>
       <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span class="pack-label">Emergency contact card</span></div>
     </div>
- 
+
     <div class="section-label">Clothing — 45 days, mixed climates</div>
     <div class="card">
       <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span class="pack-label">T-shirts (7–10)</span></div>
@@ -1426,7 +1427,7 @@ body {
       <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span class="pack-label">Rain poncho or umbrella</span></div>
       <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span class="pack-label">Smart casual outfit</span></div>
     </div>
- 
+
     <div class="section-label">Toiletries & Health</div>
     <div class="card">
       <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span class="pack-label">Prescription meds (45+ days)</span></div>
@@ -1442,7 +1443,7 @@ body {
       <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span class="pack-label">Blister plasters</span></div>
       <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span class="pack-label">Hand sanitiser</span></div>
     </div>
- 
+
     <div class="section-label">Tech & Gadgets</div>
     <div class="card">
       <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span class="pack-label">Phone + charger</span></div>
@@ -1453,14 +1454,14 @@ body {
       <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span class="pack-label">Headphones / earbuds</span></div>
       <div class="pack-item" onclick="togglePack(this)"><div class="pack-check"></div><span class="pack-label">Portable power bank</span></div>
     </div>
- 
+
   </div>
   <!-- end pages -->
- 
+
   </div><!-- end pages-wrap -->
- 
+
 </div><!-- end scroll-root -->
- 
+
 <!-- BOTTOM NAV -->
 <nav class="bottom-nav">
   <button class="nav-item active" onclick="showPage('flights', this)" style="font-size:9px;">
@@ -1489,24 +1490,24 @@ body {
     <div class="nav-dot"></div>
   </button>
 </nav>
- 
+
 <script>
 // ══════════════════════════════════════════════
 //  PERSISTENT STATE — localStorage
 //  All checkbox/pack states survive close/reopen
 // ══════════════════════════════════════════════
- 
+
 // Give every check-item and pack-item a stable ID based on its text content
 function getItemKey(el) {
   const label = el.querySelector('.check-title, .pack-label, span');
   return 'item:' + (label ? label.textContent.trim() : el.innerText.trim().slice(0, 60));
 }
- 
+
 // Save a single item's state
 function saveState(el, checked) {
   try { localStorage.setItem(getItemKey(el), checked ? '1' : '0'); } catch(e) {}
 }
- 
+
 // Restore all item states on load
 function restoreAllStates() {
   document.querySelectorAll('.check-item').forEach(el => {
@@ -1522,7 +1523,7 @@ function restoreAllStates() {
     } catch(e) {}
   });
 }
- 
+
 // ── Accordion ──
 function toggleAccordion(btn) {
   const body = btn.nextElementSibling;
@@ -1530,7 +1531,7 @@ function toggleAccordion(btn) {
   btn.classList.toggle('open', !isOpen);
   body.classList.toggle('open', !isOpen);
 }
- 
+
 // ── Navigation ──
 function showPage(name, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -1540,7 +1541,7 @@ function showPage(name, btn) {
   page.scrollTop = 0;
   if (btn) btn.classList.add('active');
 }
- 
+
 // ── Flight toggle ──
 function toggleFlight(row) {
   const detail = row.querySelector('.flight-detail');
@@ -1549,7 +1550,7 @@ function toggleFlight(row) {
   document.querySelectorAll('.flight-row.open').forEach(r => r.classList.remove('open'));
   if (!isOpen) { detail.classList.add('open'); row.classList.add('open'); }
 }
- 
+
 // ── Checklist ──
 function toggleCheck(item) {
   item.classList.toggle('checked');
@@ -1563,7 +1564,7 @@ function updateProgress() {
   document.getElementById('progress-fill').style.width = pct + '%';
   document.getElementById('progress-text').textContent = done.length + ' / ' + all.length + ' complete';
 }
- 
+
 // ── Packing ──
 function togglePack(item) {
   item.classList.toggle('packed');
@@ -1577,7 +1578,7 @@ function updatePackProgress() {
   document.getElementById('pack-progress-fill').style.width = pct + '%';
   document.getElementById('pack-progress-text').textContent = done.length + ' / ' + all.length + ' packed';
 }
- 
+
 // ── PWA Install (Android / Chrome) ──
 let deferredPrompt;
 window.addEventListener('beforeinstallprompt', e => {
@@ -1595,7 +1596,7 @@ document.getElementById('install-btn').addEventListener('click', async () => {
 function dismissInstall() {
   document.getElementById('install-banner').classList.remove('show');
 }
- 
+
 // ── iOS install tip ──
 const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
 const isStandalone = window.navigator.standalone;
@@ -1605,21 +1606,20 @@ if (isIos && !isStandalone) {
 function dismissIos() {
   document.getElementById('ios-tip').classList.remove('show');
 }
- 
+
 // ── Init — restore saved state first, then update progress bars ──
 restoreAllStates();
 updateProgress();
 updatePackProgress();
- 
+
 // ── Service Worker — references sw.js in same directory ──
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js', { scope: './' })
     .then(() => console.log('SW registered'))
     .catch(e => console.log('SW failed:', e));
 }
- 
- 
+
+
 </script>
 </body>
 </html>
- 
