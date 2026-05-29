@@ -11,6 +11,8 @@
 <title>The Long Way to Colombia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 
 <!-- PWA Manifest — real file, required for Android Chrome install -->
 <link rel="manifest" href="./manifest.json">
@@ -523,6 +525,121 @@ body {
 }
 .ios-tip.show { display: block; }
 .ios-tip strong { color: var(--gold-light); }
+
+/* ITINERARY ENGINE */
+/* All SF styles scoped under .itin-page so they can't affect Flights/Stays/etc.
+   Reuses the app's existing CSS variables (--navy, --gold, etc). */
+.itin-page { --d-thu: #2d7a4f; --d-fri: #c9963a; --d-sat: #9b2335; --d-sun: #1a5fa8; }
+.itin-page .view-toggle { display: flex; gap: 8px; margin-bottom: 16px; }
+.itin-page .vt-btn { flex: 1; padding: 11px; border: 1px solid var(--border); background: var(--white); color: var(--text-mid); border-radius: var(--r-sm); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+.itin-page .vt-btn.active { background: var(--navy); color: white; border-color: var(--navy); }
+.itin-page .sf-view { display: none; }
+.itin-page .sf-view.active { display: block; }
+.itin-page .day-strip { background: var(--navy-mid); border-radius: var(--r-md); padding: 8px; display: flex; gap: 4px; margin-bottom: 16px; }
+.itin-page .day-pill { flex: 1; text-align: center; padding: 8px 2px; border-radius: var(--r-sm); cursor: pointer; border: none; background: transparent; font-family: 'DM Sans', sans-serif; }
+.itin-page .dp-day { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.55); letter-spacing: 0.5px; }
+.itin-page .dp-date { font-size: 9px; color: rgba(255,255,255,0.35); margin-top: 2px; }
+.itin-page .day-pill.active { background: var(--gold); }
+.itin-page .day-pill.active .dp-day { color: var(--navy); }
+.itin-page .day-pill.active .dp-date { color: rgba(13,43,69,0.6); }
+.itin-page .traps { background: var(--warning-bg); border: 1px solid rgba(176,94,16,0.18); border-radius: var(--r-md); padding: 12px 14px; margin-bottom: 18px; }
+.itin-page .traps-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--warning); margin-bottom: 8px; }
+.itin-page .traps-list { font-size: 12px; color: var(--warning); line-height: 1.7; }
+.itin-page .traps-list b { font-weight: 700; }
+.itin-page .day-head { margin-bottom: 12px; }
+.itin-page .day-title { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--navy); line-height: 1.2; }
+.itin-page .day-sub { font-size: 12px; color: var(--text-mid); margin-top: 3px; }
+.itin-page .day-view { display: none; }
+.itin-page .day-view.active { display: block; }
+.itin-page .phase { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--navy-mid); margin: 16px 0 9px 2px; display: flex; align-items: center; gap: 8px; }
+.itin-page .phase::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.itin-page .phase:first-child { margin-top: 0; }
+.itin-page .anchor-card { background: var(--white); border-radius: var(--r-lg); border-left: 4px solid var(--gold); box-shadow: 0 2px 10px rgba(13,43,69,0.07), 0 0 0 1px rgba(13,43,69,0.05); overflow: hidden; margin-bottom: 10px; }
+.itin-page .anchor-head { padding: 14px 16px; cursor: pointer; user-select: none; display: flex; gap: 13px; align-items: flex-start; }
+.itin-page .anchor-head:active { background: #fafcff; }
+.itin-page .anchor-icon { width: 42px; height: 42px; background: var(--gold-pale); border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.itin-page .anchor-body { flex: 1; min-width: 0; }
+.itin-page .anchor-kicker { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--gold); margin-bottom: 2px; }
+.itin-page .anchor-name { font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.3; }
+.itin-page .anchor-tip { font-size: 12px; color: var(--text-mid); margin-top: 3px; line-height: 1.5; }
+.itin-page .anchor-check { width: 24px; height: 24px; border: 2px solid var(--border); border-radius: 7px; flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; background: white; transition: all 0.15s; cursor: pointer; }
+.itin-page .anchor-card.done .anchor-check { background: var(--navy); border-color: var(--navy); }
+.itin-page .anchor-card.done .anchor-check::after { content: ''; width: 11px; height: 6px; border-left: 2px solid white; border-bottom: 2px solid white; transform: rotate(-45deg) translate(1px,-1px); }
+.itin-page .anchor-card.done .anchor-name { color: var(--text-muted); text-decoration: line-through; }
+.itin-page .anchor-card.done .anchor-icon { opacity: 0.5; }
+.itin-page .anchor-detail { display: none; padding: 0 16px 14px 71px; }
+.itin-page .anchor-detail.open { display: block; }
+.itin-page .detail-meta { font-size: 12px; color: var(--text-mid); line-height: 1.8; padding-top: 4px; border-top: 1px solid var(--border); margin-bottom: 8px; }
+.itin-page .pill { display: inline-flex; align-items: center; gap: 5px; padding: 4px 9px; border-radius: 20px; font-size: 11px; font-weight: 500; margin: 4px 4px 0 0; line-height: 1.4; }
+.itin-page .pill-warn { background: var(--warning-bg); color: var(--warning); }
+.itin-page .pill-info { background: #e8f3fd; color: #1a5fa8; }
+.itin-page .sq-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-muted); margin: 4px 0 8px 4px; }
+.itin-page .sq-chip { background: var(--white); border-radius: var(--r-md); box-shadow: 0 1px 5px rgba(13,43,69,0.05), 0 0 0 1px rgba(13,43,69,0.04); padding: 11px 13px; margin-bottom: 7px; display: flex; gap: 11px; align-items: flex-start; }
+.itin-page .sq-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; opacity: 0.85; }
+.itin-page .sq-name { font-size: 13px; font-weight: 500; color: var(--text); }
+.itin-page .sq-tip { font-size: 11px; color: var(--text-muted); margin-top: 1px; line-height: 1.5; }
+.itin-page .match-block { background: var(--navy); border-radius: var(--r-lg); padding: 16px; margin-bottom: 14px; color: white; }
+.itin-page .match-eyebrow { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--gold-light); margin-bottom: 6px; }
+.itin-page .match-title { font-family: 'Playfair Display', serif; font-size: 20px; color: white; line-height: 1.2; margin-bottom: 4px; }
+.itin-page .match-meta { font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 12px; }
+.itin-page .match-step { display: flex; gap: 10px; font-size: 12px; color: rgba(255,255,255,0.85); padding: 7px 0; border-top: 1px solid rgba(255,255,255,0.1); line-height: 1.4; }
+.itin-page .match-step b { color: var(--gold-light); font-weight: 600; white-space: nowrap; }
+.itin-page .match-warn { font-size: 11px; color: var(--gold-light); margin-top: 12px; line-height: 1.5; background: rgba(201,150,58,0.12); padding: 9px 11px; border-radius: var(--r-sm); }
+.itin-page .map-mode-toggle { display: flex; gap: 6px; margin-bottom: 12px; }
+.itin-page .mm-btn { flex: 1; padding: 9px; border: 1px solid var(--border); background: var(--white); color: var(--text-mid); border-radius: var(--r-sm); font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; }
+.itin-page .mm-btn.active { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+.itin-page .map-wrap { position: relative; height: 440px; border-radius: var(--r-lg); overflow: hidden; box-shadow: 0 2px 12px rgba(13,43,69,0.12), 0 0 0 1px rgba(13,43,69,0.06); margin-bottom: 14px; }
+.itin-page .itin-map { position: absolute; inset: 0; height: 100%; width: 100%; z-index: 1; }
+.itin-page .map-fallback { position: absolute; inset: 0; z-index: 2; display: none; background: var(--navy); }
+.itin-page .map-wrap.offline .map-fallback { display: block; }
+.itin-page .map-wrap.offline .itin-map { display: none; }
+.itin-page .map-fallback svg { width: 100%; height: 100%; display: block; }
+.itin-page .fallback-note { position: absolute; bottom: 8px; left: 0; right: 0; text-align: center; font-size: 10px; color: var(--gold-light); z-index: 3; }
+.itin-page .legend { background: var(--white); border-radius: var(--r-md); padding: 12px 14px; box-shadow: 0 2px 10px rgba(13,43,69,0.07); display: flex; flex-wrap: wrap; gap: 10px 16px; }
+.itin-page .legend-item { display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 500; color: var(--text-mid); }
+.itin-page .legend-dot { width: 13px; height: 13px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 0 1px rgba(0,0,0,0.15); }
+.itin-page .map-note { font-size: 11px; color: var(--text-muted); margin-top: 10px; line-height: 1.5; padding: 0 4px; }
+.itin-page .sf-pin { width: 26px; height: 26px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); border: 2.5px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; }
+.itin-page .sf-pin span { transform: rotate(45deg); font-size: 12px; }
+.leaflet-popup-content { font-family: 'DM Sans', sans-serif; margin: 10px 12px; }
+.leaflet-popup-content .pop-name { font-size: 13px; font-weight: 600; color: var(--navy); }
+.leaflet-popup-content .pop-tip { font-size: 11px; color: var(--text-mid); margin: 3px 0 7px; line-height: 1.4; }
+.leaflet-popup-content .pop-link { font-size: 12px; font-weight: 600; color: var(--gold); text-decoration: none; }
+
+/* ── AREA-MODE BROWSE INTERFACE ── */
+.itin-page .browse-controls { display: flex; gap: 8px; margin-bottom: 12px; }
+.itin-page .browse-search { flex: 1; padding: 11px 14px; border: 1px solid var(--border); border-radius: var(--r-sm); font-family: 'DM Sans', sans-serif; font-size: 14px; background: var(--white); color: var(--text); }
+.itin-page .browse-search:focus { outline: none; border-color: var(--gold); }
+.itin-page .musts-toggle { padding: 11px 13px; border: 1px solid var(--border); border-radius: var(--r-sm); background: var(--white); color: var(--text-mid); font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.itin-page .musts-toggle.active { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+.itin-page .cat-strip { display: flex; gap: 6px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; margin-bottom: 14px; padding-bottom: 2px; }
+.itin-page .cat-strip::-webkit-scrollbar { display: none; }
+.itin-page .cat-pill { flex-shrink: 0; padding: 8px 14px; border: 1px solid var(--border); border-radius: 20px; background: var(--white); color: var(--text-mid); font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; }
+.itin-page .cat-pill.active { background: var(--navy); color: white; border-color: var(--navy); }
+.itin-page .browse-count { font-size: 11px; color: var(--text-muted); margin-bottom: 10px; padding-left: 2px; }
+.itin-page .cat-block { margin-bottom: 18px; }
+.itin-page .cat-head { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--navy); margin-bottom: 8px; }
+.itin-page .cat-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.itin-page .cat-num { color: var(--text-muted); font-weight: 600; }
+.itin-page .row { background: var(--white); border-radius: var(--r-md); box-shadow: 0 1px 4px rgba(13,43,69,0.05), 0 0 0 1px rgba(13,43,69,0.04); margin-bottom: 6px; overflow: hidden; }
+.itin-page .row-must { box-shadow: 0 1px 4px rgba(201,150,58,0.15), 0 0 0 1px rgba(201,150,58,0.3); }
+.itin-page .row-head { display: flex; align-items: center; gap: 11px; padding: 11px 13px; cursor: pointer; user-select: none; }
+.itin-page .row-head:active { background: #fafcff; }
+.itin-page .row-icon { font-size: 17px; flex-shrink: 0; width: 22px; text-align: center; }
+.itin-page .row-body { flex: 1; min-width: 0; }
+.itin-page .row-name { font-size: 14px; font-weight: 500; color: var(--text); line-height: 1.3; }
+.itin-page .must-star { font-size: 11px; }
+.itin-page .row-tip { font-size: 11px; color: var(--text-muted); margin-top: 1px; line-height: 1.4; }
+.itin-page .row-chev { color: var(--text-muted); font-size: 18px; flex-shrink: 0; transition: transform 0.2s; }
+.itin-page .row.open .row-chev { transform: rotate(90deg); }
+.itin-page .row-check { width: 22px; height: 22px; border: 2px solid var(--border); border-radius: 6px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: white; cursor: pointer; }
+.itin-page .row.done .row-check { background: var(--navy); border-color: var(--navy); }
+.itin-page .row.done .row-check::after { content: ''; width: 10px; height: 5px; border-left: 2px solid white; border-bottom: 2px solid white; transform: rotate(-45deg) translate(1px,-1px); }
+.itin-page .row.done .row-name { color: var(--text-muted); text-decoration: line-through; }
+.itin-page .row-detail { display: none; padding: 0 13px 12px 46px; }
+.itin-page .row-detail.open { display: block; }
+.itin-page .browse-empty { text-align: center; color: var(--text-muted); font-size: 13px; padding: 30px 0; }
+
 </style>
 </head>
 <body>
@@ -1474,6 +1591,16 @@ body {
     <span>Stays</span>
     <div class="nav-dot"></div>
   </button>
+  <button class="nav-item" onclick="showPage('sf', this)" style="font-size:9px;">
+    <span class="nav-icon">🌉</span>
+    <span>SF</span>
+    <div class="nav-dot"></div>
+  </button>
+  <button class="nav-item" onclick="showPage('bogota', this)" style="font-size:9px;">
+    <span class="nav-icon">🇨🇴</span>
+    <span>Bogotá</span>
+    <div class="nav-dot"></div>
+  </button>
   <button class="nav-item" onclick="showPage('pretrip', this)" style="font-size:9px;">
     <span class="nav-icon">📋</span>
     <span>Pre-Trip</span>
@@ -1612,12 +1739,723 @@ restoreAllStates();
 updateProgress();
 updatePackProgress();
 
+// Static offline map (embedded, ~2KB). Used by the engine when tiles fail to load.
+var FALLBACK_SVG = '<svg viewBox="0 0 360 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;"> <defs>  <linearGradient id="bay" x1="0" y1="0" x2="0" y2="1">   <stop offset="0%" stop-color="#15405e"/>   <stop offset="100%" stop-color="#0d2b45"/>  </linearGradient> </defs> <rect width="360" height="300" fill="url(#bay)"/> <!-- stylised land mass --> <path d="M40,120 Q90,70 150,75 Q240,80 300,60 L320,40 L340,120 Q330,200 280,250 Q200,290 120,275 Q50,250 30,190 Z"    fill="#1a3f5c" opacity="0.55" stroke="#c9963a" stroke-width="0.6" stroke-opacity="0.3"/> <!-- peninsula hint --> <text x="180.0" y="20" font-family="DM Sans,sans-serif" font-size="10" fill="#e8b86d" text-anchor="middle" letter-spacing="1.5">SAN FRANCISCO</text> <g transform="translate(289.1,136.5)"><circle r="8" fill="#0d2b45" stroke="#fff" stroke-width="2.5"/><text x="0" y="3.5" font-size="9" text-anchor="middle" fill="#fff">H</text></g> <g transform="translate(336.2,111.0)"><circle r="7" fill="#2d7a4f" stroke="#fff" stroke-width="2"/></g><g transform="translate(32.1,147.0)"><circle r="7" fill="#2d7a4f" stroke="#fff" stroke-width="2"/></g><g transform="translate(111.3,64.5)"><circle r="7" fill="#2d7a4f" stroke="#fff" stroke-width="2"/></g><g transform="translate(300.2,102.7)"><circle r="7" fill="#c9963a" stroke="#fff" stroke-width="2"/></g><g transform="translate(289.7,122.2)"><circle r="7" fill="#c9963a" stroke="#fff" stroke-width="2"/></g><g transform="translate(303.0,129.0)"><circle r="7" fill="#c9963a" stroke="#fff" stroke-width="2"/></g><g transform="translate(304.9,69.4)"><circle r="7" fill="#1a5fa8" stroke="#fff" stroke-width="2"/></g><g transform="translate(287.2,53.3)"><circle r="7" fill="#1a5fa8" stroke="#fff" stroke-width="2"/></g><g transform="translate(268.3,277.9)"><circle r="7" fill="#1a5fa8" stroke="#fff" stroke-width="2"/></g><g transform="translate(227.6,182.6)"><circle r="7" fill="#1a5fa8" stroke="#fff" stroke-width="2"/></g><g transform="translate(135.4,206.6)"><circle r="7" fill="#1a5fa8" stroke="#fff" stroke-width="2"/></g> <!-- Levi\'s off-map arrow --> <g transform="translate(180.0,286)">  <text font-family="DM Sans,sans-serif" font-size="8.5" fill="#9b2335" text-anchor="middle">⚽ Levi\'s Stadium — 45mi south ↓</text> </g></svg>';
+// ══════════════════════════════════════════════════════════════
+//  ITINERARY ENGINE  (data-driven, multi-city)
+//  ----------------------------------------------------------------
+//  Add a city = append one object to CITIES. No new HTML/CSS/JS.
+//  Supports two structures:
+//    mode:'days'  → tabbed day-by-day (e.g. San Francisco)
+//    mode:'areas' → area/neighbourhood blocks (e.g. Bogotá, 33 nights)
+//  Each city renders into one <div id="page-{id}" class="page">.
+//  Done-state persists via localStorage under keys you define (key:).
+// ══════════════════════════════════════════════════════════════
+
+// ---- DATA SCHEMA (reference) -------------------------------------
+// CITY = {
+//   id:        'sf',                 // page id -> #page-sf, nav showPage('sf')
+//   title:     'San Francisco',
+//   subtitle:  '11–15 Jun 2026',
+//   mode:      'days' | 'areas',
+//   map:       { center:[lat,lng], zoom:12, hotel:{lat,lng,name} },
+//   traps:     [ 'string', ... ],    // optional warning banner lines
+//   groups:    [                     // a "group" = one day OR one area
+//     {
+//       key:    'thu',               // unique within city; used for ids
+//       label:  'THU', sublabel:'11 Jun',   // strip button (days) / header (areas)
+//       title:  'Settle In + Coast',
+//       note:   'Arrival · check in 3 PM',
+//       phases: [                    // optional sub-sections (e.g. Morning/Afternoon)
+//         { heading:'☀ Morning', items:[...] },
+//       ],
+//       items:  [ ITEM, ... ],       // used if no phases
+//       special: { type:'match', ... } // optional custom block (e.g. World Cup)
+//     }
+//   ]
+// }
+// ITEM = {
+//   kind:   'anchor' | 'sidequest',
+//   key:    'alcatraz',              // persists as `${city.id}:${key}` if anchor
+//   icon:   '🏝', name:'Alcatraz', tip:'...',
+//   kicker: 'Anchor · pre-booked',   // small uppercase label (anchors)
+//   meta:   '🕑 ... ',               // detail line(s), HTML allowed
+//   pills:  [ {type:'warn'|'info', text:'...'} ],
+//   maps:   'https://maps.google.com/?q=...',
+//   pin:    { lat, lng, color:'#..', t:'short map tip' }  // optional map pin
+// }
+// -------------------------------------------------------------------
+
+var CITIES = []; // populated by city data files (sf, bogota, ...)
+
+function registerCity(city) { CITIES.push(city); }
+
+// ---- RENDER: build the page DOM for every registered city ----
+function renderCities() {
+  var wrap = document.querySelector('.pages-wrap');
+  CITIES.forEach(function(city) {
+    if (document.getElementById('page-' + city.id)) return; // already built
+    var page = document.createElement('div');
+    page.id = 'page-' + city.id;
+    page.className = 'page itin-page';
+    page.innerHTML = buildCityHTML(city);
+    // insert before the Info page if present, else append
+    var info = document.getElementById('page-info');
+    if (info) wrap.insertBefore(page, info); else wrap.appendChild(page);
+  });
+}
+
+function esc(s){ return (s==null?'':String(s)); }
+
+function buildItem(city, it) {
+  if (it.kind === 'sidequest') {
+    return '<div class="sq-chip"><div class="sq-icon">'+esc(it.icon)+'</div><div>'
+      + '<div class="sq-name">'+esc(it.name)+'</div>'
+      + '<div class="sq-tip">'+esc(it.tip)+'</div></div></div>';
+  }
+  // anchor
+  var pills = (it.pills||[]).map(function(p){
+    return '<span class="pill pill-'+(p.type==='warn'?'warn':'info')+'">'+esc(p.text)+'</span>';
+  }).join('');
+  var maps = it.maps ? '<a href="'+esc(it.maps)+'" target="_blank" class="map-btn">📍 Open in Maps</a>' : '';
+  var dataKey = it.key ? ' data-itin="'+city.id+':'+it.key+'"' : '';
+  return ''
+    + '<div class="anchor-card"'+dataKey+'>'
+    +   '<div class="anchor-head" onclick="itinExpand(this)">'
+    +     '<div class="anchor-icon">'+esc(it.icon)+'</div>'
+    +     '<div class="anchor-body">'
+    +       (it.kicker?'<div class="anchor-kicker">'+esc(it.kicker)+'</div>':'')
+    +       '<div class="anchor-name">'+esc(it.name)+'</div>'
+    +       '<div class="anchor-tip">'+esc(it.tip)+'</div>'
+    +     '</div>'
+    +     '<div class="anchor-check" onclick="event.stopPropagation();itinMarkDone(this)"></div>'
+    +   '</div>'
+    +   '<div class="anchor-detail">'
+    +     (it.meta?'<div class="detail-meta">'+it.meta+'</div>':'')
+    +     pills + maps
+    +   '</div>'
+    + '</div>';
+}
+
+function buildSpecial(sp) {
+  if (sp.type === 'match') {
+    var steps = (sp.steps||[]).map(function(s){
+      return '<div class="match-step"><b>'+esc(s.time)+'</b><span>'+esc(s.text)+'</span></div>';
+    }).join('');
+    return ''
+      + '<div class="match-block">'
+      +   '<div class="match-eyebrow">'+esc(sp.eyebrow)+'</div>'
+      +   '<div class="match-title">'+esc(sp.title)+'</div>'
+      +   '<div class="match-meta">'+esc(sp.meta)+'</div>'
+      +   steps
+      +   (sp.warn?'<div class="match-warn">'+esc(sp.warn)+'</div>':'')
+      + '</div>';
+  }
+  return '';
+}
+
+function buildGroupBody(city, g) {
+  var html = '';
+  if (g.special) html += buildSpecial(g.special);
+  if (g.phases && g.phases.length) {
+    g.phases.forEach(function(ph){
+      html += '<div class="phase">'+esc(ph.heading)+'</div>';
+      var anchors = (ph.items||[]).filter(function(i){return i.kind!=='sidequest';});
+      var sqs     = (ph.items||[]).filter(function(i){return i.kind==='sidequest';});
+      anchors.forEach(function(i){ html += buildItem(city,i); });
+      if (sqs.length) { html += '<div class="sq-label">↳ Sidequests</div>'; sqs.forEach(function(i){ html += buildItem(city,i); }); }
+    });
+  } else if (g.items && g.items.length) {
+    var anchors = g.items.filter(function(i){return i.kind!=='sidequest';});
+    var sqs     = g.items.filter(function(i){return i.kind==='sidequest';});
+    anchors.forEach(function(i){ html += buildItem(city,i); });
+    if (sqs.length) { html += '<div class="sq-label">↳ Sidequests · if the mood strikes</div>'; sqs.forEach(function(i){ html += buildItem(city,i); }); }
+  }
+  return html;
+}
+
+function buildCityHTML(city) {
+  if (city.mode === 'areas') return buildAreaCityHTML(city);
+  var html = '';
+  // view toggle (list / map) — only if the city has any pins
+  var hasPins = cityHasPins(city);
+  html += '<div class="view-toggle">'
+        +   '<button class="vt-btn active" onclick="itinView(\''+city.id+'\',\'list\',this)">📋 Itinerary</button>'
+        +   (hasPins?'<button class="vt-btn" onclick="itinView(\''+city.id+'\',\'map\',this)">🗺 Map</button>':'')
+        + '</div>';
+
+  // ---- LIST VIEW ----
+  html += '<div class="itin-listview active" data-city="'+city.id+'">';
+
+  // day strip (only for mode:'days')
+  if (city.mode === 'days') {
+    html += '<div class="day-strip">';
+    city.groups.forEach(function(g, i){
+      html += '<button class="day-pill'+(i===0?' active':'')+'" onclick="itinDay(\''+city.id+'\','+i+',this)">'
+            +   '<div class="dp-day">'+esc(g.label)+'</div>'
+            +   (g.sublabel?'<div class="dp-date">'+esc(g.sublabel)+'</div>':'')
+            + '</button>';
+    });
+    html += '</div>';
+  }
+
+  // traps banner
+  if (city.traps && city.traps.length) {
+    html += '<div class="traps"><div class="traps-title">⚠ Don\'t-miss timing traps</div><div class="traps-list">'
+          + city.traps.map(function(t){return '• '+t;}).join('<br>')
+          + '</div></div>';
+  }
+
+  // groups
+  city.groups.forEach(function(g, i){
+    html += '<div class="day-view'+(i===0?' active':'')+'" id="'+city.id+'-grp-'+i+'">';
+    html += '<div class="day-head"><div class="day-title">'+esc(g.title)+'</div>'
+          + (g.note?'<div class="day-sub">'+esc(g.note)+'</div>':'')+'</div>';
+    html += buildGroupBody(city, g);
+    html += '</div>';
+  });
+  html += '</div>'; // listview
+
+  // ---- MAP VIEW ----
+  if (hasPins) {
+    html += '<div class="itin-mapview" data-city="'+city.id+'">';
+    html += '<div class="map-mode-toggle">'
+          +   '<button class="mm-btn active" onclick="itinMapMode(\''+city.id+'\',\'all\',this)">All</button>';
+    city.groups.forEach(function(g,i){
+      html += '<button class="mm-btn" onclick="itinMapMode(\''+city.id+'\','+i+',this)">'+esc(g.label.charAt(0)+g.label.slice(1).toLowerCase())+'</button>';
+    });
+    html += '</div>';
+    html += '<div class="map-wrap" id="'+city.id+'-map-wrap"><div class="itin-map" id="'+city.id+'-map"></div>'
+          + '<div class="map-fallback">'+FALLBACK_SVG+'<div class="fallback-note">Offline — simplified map. Reconnect for live.</div></div></div>';
+    html += '<div class="legend">';
+    city.groups.forEach(function(g){
+      if (g.legendColor) html += '<div class="legend-item"><span class="legend-dot" style="background:'+g.legendColor+'"></span>'+esc(g.legendLabel||g.title)+'</div>';
+    });
+    html += '</div>';
+    html += '<div class="map-note">Tap a pin for the spot + a directions link. Live map needs internet; a simplified offline map shows automatically without signal.</div>';
+    html += '</div>';
+  }
+
+  return html;
+}
+
+// ── AREA-MODE (browse) city: search + musts toggle + category strip + compact rows ──
+function buildAreaCityHTML(city) {
+  var html = '';
+  // Controls bar
+  html += '<div class="browse-controls">';
+  html += '<input class="browse-search" type="text" placeholder="🔍 Search '+esc(city.title)+'…" '
+        + 'oninput="itinFilter(\''+city.id+'\')" id="'+city.id+'-search">';
+  html += '<button class="musts-toggle" id="'+city.id+'-musts" onclick="itinToggleMusts(\''+city.id+'\',this)">⭐ Musts only</button>';
+  html += '</div>';
+
+  // Category strip: All + one per group
+  html += '<div class="cat-strip" id="'+city.id+'-cats">';
+  html += '<button class="cat-pill active" data-cat="all" onclick="itinCat(\''+city.id+'\',\'all\',this)">All</button>';
+  city.groups.forEach(function(g, i){
+    html += '<button class="cat-pill" data-cat="'+i+'" onclick="itinCat(\''+city.id+'\',\''+i+'\',this)">'+esc(g.label)+'</button>';
+  });
+  html += '</div>';
+
+  // traps banner (if any)
+  if (city.traps && city.traps.length) {
+    html += '<div class="traps"><div class="traps-title">⚠ Notes</div><div class="traps-list">'
+          + city.traps.map(function(t){return '• '+t;}).join('<br>') + '</div></div>';
+  }
+
+  // result count
+  html += '<div class="browse-count" id="'+city.id+'-count"></div>';
+
+  // Blocks with compact rows
+  html += '<div class="browse-list" id="'+city.id+'-list">';
+  city.groups.forEach(function(g, gi){
+    html += '<div class="cat-block" data-cat="'+gi+'">';
+    html += '<div class="cat-head"><span class="cat-dot" style="background:'+(g.legendColor||'#c9963a')+'"></span>'
+          + esc(g.title)+' <span class="cat-num">'+(g.items||[]).length+'</span></div>';
+    (g.items||[]).forEach(function(it){
+      html += buildRow(city, it, gi);
+    });
+    html += '</div>';
+  });
+  html += '</div>';
+  html += '<div class="browse-empty" id="'+city.id+'-empty" style="display:none;">No places match.</div>';
+
+  return html;
+}
+
+// Compact row (area mode). Tappable to expand detail.
+function buildRow(city, it, gi) {
+  var must = !!it.must || it.kind === 'anchor';
+  var nameLow = (it.name||'').toLowerCase();
+  var tipLow = (it.tip||'').toLowerCase();
+  var key = it.key ? ' data-itin="'+city.id+':'+it.key+'"' : '';
+  var pills = (it.pills||[]).map(function(p){
+    return '<span class="pill pill-'+(p.type==='warn'?'warn':'info')+'">'+esc(p.text)+'</span>';
+  }).join('');
+  var maps = it.maps ? '<a href="'+esc(it.maps)+'" target="_blank" class="map-btn">📍 Maps</a>' : '';
+  var hasDetail = !!(it.meta || pills || maps);
+  return ''
+    + '<div class="row'+(must?' row-must':'')+'" data-cat="'+gi+'" data-must="'+(must?1:0)+'" '
+    +      'data-search="'+esc(nameLow+' '+tipLow)+'"'+key+'>'
+    +   '<div class="row-head"'+(hasDetail?' onclick="itinRowExpand(this)"':'')+'>'
+    +     '<div class="row-icon">'+esc(it.icon||'•')+'</div>'
+    +     '<div class="row-body">'
+    +       '<div class="row-name">'+(must?'<span class="must-star">⭐</span> ':'')+esc(it.name)+'</div>'
+    +       (it.tip?'<div class="row-tip">'+esc(it.tip)+'</div>':'')
+    +     '</div>'
+    +     (it.key?'<div class="row-check" onclick="event.stopPropagation();itinMarkDone(this)"></div>':(hasDetail?'<div class="row-chev">›</div>':''))
+    +   '</div>'
+    +   (hasDetail?('<div class="row-detail">'+(it.meta?'<div class="detail-meta">'+it.meta+'</div>':'')+pills+maps+'</div>'):'')
+    + '</div>';
+}
+
+function cityHasPins(city) {
+  return city.groups.some(function(g){
+    var items = (g.items||[]).concat((g.phases||[]).reduce(function(a,p){return a.concat(p.items||[]);},[]));
+    return items.some(function(i){return i.pin;});
+  });
+}
+
+// ---- INTERACTIONS ----
+function itinView(cityId, v, btn) {
+  var page = document.getElementById('page-'+cityId);
+  page.querySelectorAll('.vt-btn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  page.querySelector('.itin-listview').classList.toggle('active', v==='list');
+  var mv = page.querySelector('.itin-mapview');
+  if (mv) mv.classList.toggle('active', v==='map');
+  if (v==='map') { itinInitMap(cityId); var m=ITIN_MAPS[cityId]; if(m){ [60,200,500].forEach(function(t){ setTimeout(function(){ m.invalidateSize(); }, t); }); } }
+}
+function itinDay(cityId, idx, btn) {
+  var page = document.getElementById('page-'+cityId);
+  page.querySelectorAll('.day-pill').forEach(function(p){p.classList.remove('active');});
+  btn.classList.add('active');
+  page.querySelectorAll('.day-view').forEach(function(v){v.classList.remove('active');});
+  document.getElementById(cityId+'-grp-'+idx).classList.add('active');
+}
+function itinExpand(head){ head.parentElement.querySelector('.anchor-detail').classList.toggle('open'); }
+
+// ── Area-mode browse interactions ──
+function itinRowExpand(head){ head.parentElement.querySelector('.row-detail').classList.toggle('open'); head.parentElement.classList.toggle('open'); }
+function itinCat(cityId, cat, btn){
+  var page = document.getElementById('page-'+cityId);
+  page.querySelectorAll('.cat-pill').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  page._itinCat = cat;
+  itinApplyFilter(cityId);
+}
+function itinToggleMusts(cityId, btn){
+  var page = document.getElementById('page-'+cityId);
+  page._itinMusts = !page._itinMusts;
+  btn.classList.toggle('active', page._itinMusts);
+  itinApplyFilter(cityId);
+}
+function itinFilter(cityId){ itinApplyFilter(cityId); }
+function itinApplyFilter(cityId){
+  var page = document.getElementById('page-'+cityId);
+  var cat = page._itinCat || 'all';
+  var mustsOnly = !!page._itinMusts;
+  var q = (document.getElementById(cityId+'-search').value || '').trim().toLowerCase();
+  var shown = 0;
+  page.querySelectorAll('.cat-block').forEach(function(block){
+    var blockCat = block.getAttribute('data-cat');
+    var blockVisible = (cat==='all' || cat===blockCat);
+    var anyRow = false;
+    block.querySelectorAll('.row').forEach(function(row){
+      var ok = blockVisible;
+      if (ok && mustsOnly) ok = row.getAttribute('data-must')==='1';
+      if (ok && q) ok = row.getAttribute('data-search').indexOf(q) !== -1;
+      row.style.display = ok ? '' : 'none';
+      if (ok) { anyRow = true; shown++; }
+    });
+    block.style.display = anyRow ? '' : 'none';
+  });
+  var countEl = document.getElementById(cityId+'-count');
+  if (countEl) countEl.textContent = shown + (shown===1?' place':' places');
+  var empty = document.getElementById(cityId+'-empty');
+  if (empty) empty.style.display = shown===0 ? '' : 'none';
+}
+function itinMarkDone(box){
+  var card = box.closest('.anchor-card') || box.closest('.row');
+  card.classList.toggle('done');
+  var key = card.getAttribute('data-itin');
+  if (key) { try { localStorage.setItem(key, card.classList.contains('done')?'1':'0'); } catch(e){} }
+}
+function restoreItinStates(){
+  document.querySelectorAll('.anchor-card[data-itin], .row[data-itin]').forEach(function(card){
+    try { if (localStorage.getItem(card.getAttribute('data-itin'))==='1') card.classList.add('done'); } catch(e){}
+  });
+}
+
+// ---- MAP (Leaflet) per city ----
+var ITIN_MAPS = {};
+function itinInitMap(cityId) {
+  if (ITIN_MAPS[cityId]) return;
+  var city = CITIES.find(function(c){return c.id===cityId;});
+  if (!city || typeof L === 'undefined') { document.getElementById(cityId+'-map-wrap').classList.add('offline'); return; }
+  var m = L.map(cityId+'-map', { zoomControl:true }).setView(city.map.center, city.map.zoom||12);
+  var tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { attribution:'© OpenStreetMap © CARTO', maxZoom:19 });
+  var loaded=false, wrap=document.getElementById(cityId+'-map-wrap');
+  tiles.on('tileload', function(){ loaded=true; wrap.classList.remove('offline'); });
+  tiles.on('tileerror', function(){ if(!loaded) wrap.classList.add('offline'); });
+  tiles.addTo(m);
+  setTimeout(function(){ if(!loaded) wrap.classList.add('offline'); }, 4000);
+  if (city.map.hotel) {
+    var h = city.map.hotel;
+    var hIcon = L.divIcon({ className:'', html:'<div class="itin-pin" style="background:#0d2b45"><span>🏨</span></div>', iconSize:[26,26], iconAnchor:[13,26] });
+    L.marker([h.lat,h.lng],{icon:hIcon}).addTo(m).bindPopup('<div class="pop-name">'+esc(h.name)+'</div>');
+  }
+  ITIN_MAPS[cityId] = m;
+  itinRenderPins(cityId, 'all');
+  [60, 200, 500, 900].forEach(function(t){ setTimeout(function(){ m.invalidateSize(); }, t); });
+}
+function itinAllPins(city) {
+  var pins = [];
+  city.groups.forEach(function(g, gi){
+    var items = (g.items||[]).concat((g.phases||[]).reduce(function(a,p){return a.concat(p.items||[]);},[]));
+    items.forEach(function(it){ if (it.pin) pins.push({ pin:it.pin, name:it.name, grp:gi }); });
+  });
+  return pins;
+}
+function itinRenderPins(cityId, mode) {
+  var m = ITIN_MAPS[cityId]; if (!m) return;
+  var city = CITIES.find(function(c){return c.id===cityId;});
+  m._itinMarkers = m._itinMarkers || [];
+  m._itinMarkers.forEach(function(x){ m.removeLayer(x); });
+  m._itinMarkers = [];
+  var pts = city.map.hotel ? [[city.map.hotel.lat, city.map.hotel.lng]] : [];
+  itinAllPins(city).filter(function(p){ return mode==='all' || p.grp===mode; }).forEach(function(p){
+    var icon = L.divIcon({ className:'', html:'<div class="itin-pin" style="background:'+(p.pin.color||'#c9963a')+'"><span>'+esc(p.pin.icon||'')+'</span></div>', iconSize:[26,26], iconAnchor:[13,26] });
+    var dir = 'https://www.google.com/maps/dir/?api=1&destination='+p.pin.lat+','+p.pin.lng;
+    var mk = L.marker([p.pin.lat,p.pin.lng],{icon:icon}).addTo(m)
+      .bindPopup('<div class="pop-name">'+esc(p.name)+'</div>'+(p.pin.t?'<div class="pop-tip">'+esc(p.pin.t)+'</div>':'')+'<a class="pop-link" href="'+dir+'" target="_blank">Directions ›</a>');
+    m._itinMarkers.push(mk); pts.push([p.pin.lat,p.pin.lng]);
+  });
+  if (pts.length>1) m.fitBounds(pts, { padding:[40,40], maxZoom:14 });
+}
+function itinMapMode(cityId, mode, btn) {
+  var page = document.getElementById('page-'+cityId);
+  page.querySelectorAll('.mm-btn').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  itinRenderPins(cityId, mode);
+}
+
+// ---- BOOT ----
+function bootItineraries() {
+  renderCities();
+  restoreItinStates();
+  // initialise browse counts for any area-mode cities
+  CITIES.forEach(function(c){ if (c.mode==='areas') { try { itinApplyFilter(c.id); } catch(e){} } });
+}
+// ── CITY DATA: San Francisco (mode: days) ──
+// This is pure data. The engine renders it. To edit the trip, edit this object.
+registerCity({
+  id: 'sf',
+  title: 'San Francisco',
+  subtitle: '11–15 Jun 2026',
+  mode: 'days',
+  map: { center:[37.78,-122.43], zoom:12, hotel:{ lat:37.7886, lng:-122.4106, name:'Hotel Amari (base)' } },
+  traps: [
+    '<b>Alcatraz — BOOK NOW</b> at cityexperiences.com (sells out 4–8 wks ahead in summer; Sun AM slot)',
+    'Tonga Room — Wed–Sat eves only, book ahead',
+    'La Taqueria — closed Mon &amp; Tue',
+    'Cal Academy — closes 5 PM; Sun opens 11 AM',
+    'Confirm match kickoff on your FIFA ticket',
+    'Mon 15 Jun — pre-dawn Houston flight, no SF time'
+  ],
+  groups: [
+    {
+      key:'thu', label:'THU', sublabel:'11 Jun',
+      title:'Settle In + Coast', note:'Arrival · check in from 3 PM · your only coast day',
+      legendColor:'#2d7a4f', legendLabel:'Thu · Coast',
+      items: [
+        { kind:'anchor', key:'ferry-building', icon:'🌅', name:'Ferry Building Marketplace',
+          kicker:'Anchor · whenever you land', tip:'Graze-y late lunch in a historic food hall. Easiest win for a mixed-age crew.',
+          meta:'🕑 Daily 7 AM – 8 PM · Embarcadero', maps:'https://maps.google.com/?q=Ferry+Building+San+Francisco',
+          pin:{ lat:37.7954425, lng:-122.3936136, color:'#2d7a4f', icon:'🌅', t:'Late-lunch food hall' } },
+        { kind:'anchor', key:'lands-end', icon:'🌊', name:'Lands End + Sutro Baths',
+          kicker:'Anchor · late afternoon', tip:'Coastal cliff walk to the shipwreck ruins. The only window for the coast now Monday\'s gone.',
+          meta:'🕑 Dawn–dusk · free lot at Lands End Lookout', pills:[{type:'info',text:'ℹ Carrier for the 5yo on rough bits'}],
+          maps:'https://maps.google.com/?q=Lands+End+Lookout+San+Francisco',
+          pin:{ lat:37.7858035, lng:-122.5033753, color:'#2d7a4f', icon:'🌊', t:'Coastal cliff walk' } },
+        { kind:'sidequest', icon:'🌉', name:'Golden Gate Bridge viewpoint', tip:'Welcome Center + classic photo stop — easy add near Lands End. Open 9–6.',
+          pin:{ lat:37.8077973, lng:-122.4748473, color:'#2d7a4f', icon:'🌉', t:'Welcome Center + photos' } },
+        { kind:'sidequest', icon:'🎡', name:'Musée Mécanique', tip:'Free antique arcade — bring quarters.',
+          pin:{ lat:37.8093037, lng:-122.4159684, color:'#2d7a4f', icon:'🎡', t:'Free antique arcade' } }
+      ]
+    },
+    {
+      key:'fri', label:'FRI', sublabel:'12 Jun',
+      title:'North Beach + Tiki Night', note:'Beat-era culture &amp; Chinatown by day · OTT tiki by night',
+      legendColor:'#c9963a', legendLabel:'Fri · North Beach',
+      items: [
+        { kind:'anchor', key:'tonga', icon:'🍹', name:'Tonga Room &amp; Hurricane Bar',
+          kicker:'Anchor · dinner, BOOK AHEAD', tip:'Indoor rainstorms and a band on a floating barge. The day\'s one fixed point.',
+          meta:'🕑 Fri 5 – 11 PM · Fairmont, Nob Hill', pills:[{type:'warn',text:'⚠ Wed–Sat only · reservations essential'}],
+          maps:'https://maps.google.com/?q=Tonga+Room+Fairmont+San+Francisco',
+          pin:{ lat:37.792419, lng:-122.410427, color:'#c9963a', icon:'🍹', t:'Tiki bar · book ahead' } },
+        { kind:'sidequest', icon:'🐉', name:'Chinatown (Dragon Gate → Grant Ave)', tip:'Enter at the gate, wander up Grant. Sits between Union Sq and North Beach.',
+          pin:{ lat:37.7906274, lng:-122.4055973, color:'#c9963a', icon:'🐉', t:'Wander Grant Ave' } },
+        { kind:'sidequest', icon:'📚', name:'City Lights Booksellers', tip:'Beat-era bookshop + Caffe Trieste round the corner.',
+          pin:{ lat:37.7976271, lng:-122.4066213, color:'#c9963a', icon:'📚', t:'Beat-era bookshop' } },
+        { kind:'sidequest', icon:'🚡', name:'Cable car ride', tip:'Hop the Powell–Hyde line — Nob Hill climb with bay + Alcatraz views.',
+          pin:{ lat:37.8070737, lng:-122.4212460, color:'#c9963a', icon:'🚡', t:'Classic hill ride' } },
+        { kind:'sidequest', icon:'🗼', name:'Coit Tower murals', tip:'10-min uphill for the WPA murals + view.',
+          pin:{ lat:37.8024, lng:-122.4058, color:'#c9963a', icon:'🗼', t:'WPA murals + view' } }
+      ]
+    },
+    {
+      key:'sat', label:'SAT', sublabel:'13 Jun',
+      title:'World Cup Match Day', note:'Saturday is the match — the one rigid day',
+      legendColor:'#9b2335', legendLabel:'Sat · Match',
+      special: {
+        type:'match', eyebrow:'FIFA World Cup 26 · Group B', title:'Qatar vs Switzerland',
+        meta:'SF Bay Area Stadium (Levi\'s), Santa Clara · ~12 PM PT',
+        steps:[
+          { time:'~7:30 AM', text:'Leave SF — Caltrain from 4th & King, or pre-booked van. Rental stays at the hotel.' },
+          { time:'~10:00 AM', text:'Arrive Santa Clara · early lunch (Rise Woodfire / Pacific Catch).' },
+          { time:'~10:45 AM', text:'Head to gates — through security ~45 min before kickoff.' },
+          { time:'12 PM', text:'Kickoff. Qatar vs Switzerland.' },
+          { time:'~2 PM', text:'Full time · slow exit · back in SF late afternoon.' }
+        ],
+        warn:'⚠ Confirm kickoff on your FIFA ticket — listings conflict. Pack kids\' ear protection (100–120 dB). All ages need a ticket; buy in one transaction for adjacent seats.'
+      },
+      items: [
+        { kind:'sidequest', icon:'⚽', name:"Levi's Stadium", tip:'Qatar vs Switzerland — 45mi south in Santa Clara.',
+          pin:{ lat:37.4030, lng:-121.9700, color:'#9b2335', icon:'⚽', t:'Qatar vs Switzerland' } }
+      ]
+    },
+    {
+      key:'sun', label:'SUN', sublabel:'14 Jun',
+      title:'Alcatraz + The Mission', note:'North in the morning, south in the afternoon · last full day',
+      legendColor:'#1a5fa8', legendLabel:'Sun · Alcatraz + Mission',
+      phases: [
+        { heading:'☀ Morning · Northern waterfront', items:[
+          { kind:'anchor', key:'alcatraz', icon:'🏝', name:'Alcatraz Island',
+            kicker:'Anchor · timed ferry, PRE-BOOKED', tip:'The Rock — cellhouse audio tour narrated by real inmates &amp; guards. Allow 3–4 hrs incl. ferry.',
+            meta:'🕑 Ferry from Pier 33 · arrive 30 min early, boarding closes 15 min prior<br>🎟 Adult $47.95 · child 5–11 $29.15 · under-5 free',
+            pills:[{type:'warn',text:'⚠ Book at cityexperiences.com NOW — peak-season sell-out'},{type:'info',text:'ℹ 13-storey climb (tram assists) · dress in layers'}],
+            maps:'https://maps.google.com/?q=Alcatraz+Landing+Pier+33+San+Francisco',
+            pin:{ lat:37.8065473, lng:-122.4049057, color:'#1a5fa8', icon:'🏝', t:'Pre-booked ferry · AM' } },
+          { kind:'sidequest', icon:'🦭', name:'Pier 39 sea lions', tip:'Free, always-on, and the 5yo will love them. 5-min walk from Pier 33.',
+            pin:{ lat:37.8107757, lng:-122.411273, color:'#1a5fa8', icon:'🦭', t:'5-min walk from Pier 33' } }
+        ]},
+        { heading:'🌆 Afternoon · The Mission', items:[
+          { kind:'anchor', key:'la-taqueria', icon:'🌯', name:'La Taqueria',
+            kicker:'Anchor · late lunch', tip:'Arguably SF\'s best burrito — get it toasted ("dorado"). Open Sun till 7:15.',
+            meta:'🕑 Sun 11 AM – 7:15 PM · 2889 Mission St', pills:[{type:'warn',text:'⚠ Closed Mon &amp; Tue — Sunday works'}],
+            maps:'https://maps.google.com/?q=La+Taqueria+Mission+San+Francisco',
+            pin:{ lat:37.7508961, lng:-122.4180867, color:'#1a5fa8', icon:'🌯', t:"SF's best burrito · PM" } },
+          { kind:'sidequest', icon:'🌳', name:'Dolores Park', tip:'Let the kids run; Bi-Rite Creamery for ice cream nearby.',
+            pin:{ lat:37.7596, lng:-122.4269, color:'#1a5fa8', icon:'🌳', t:'Let the kids run' } },
+          { kind:'sidequest', icon:'🎨', name:'Balmy &amp; Clarion Alleys', tip:'The city\'s best murals, blocks apart.',
+            pin:{ lat:37.7508, lng:-122.4122, color:'#1a5fa8', icon:'🎨', t:'Best murals' } },
+          { kind:'sidequest', icon:'🏠', name:'Painted Ladies (Alamo Square)', tip:'Iconic Victorian row — short drive NW of the Mission. Shoot from the park.',
+            pin:{ lat:37.7762528, lng:-122.4327556, color:'#1a5fa8', icon:'🏠', t:'Victorian row · Alamo Sq' } },
+          { kind:'sidequest', icon:'🦋', name:'California Academy of Sciences', tip:'Aquarium + rainforest + planetarium — a half-day kids\' win. Closes 5, Sun opens 11. Swap for Mission if you\'d rather a big indoor day.',
+            pin:{ lat:37.7698646, lng:-122.4660947, color:'#1a5fa8', icon:'🦋', t:'Aquarium + rainforest' } }
+        ]}
+      ]
+    }
+  ]
+});
+// ── CITY DATA: Bogotá — spreadsheet + researched notes + verified Instagram ──
+registerCity({
+  id: 'bogota', title: 'Bogotá', subtitle: '19 Jun – 22 Jul 2026 · 33 nights', mode: 'areas',
+  map: { center:[4.6663,-74.0556], zoom:12, hotel:{ lat:4.6960, lng:-74.0330, name:'Apartment · Calle 118 #15-55' } },
+  traps: ['Notes marked with a source are verified from credible web sources (50Best, El Tiempo, official IG). Plain entries show what you provided — always verify hours before going.'],
+  groups: [
+    {
+      key:'culture-sights', label:'CULTURE', title:'Culture & Sights', note:'Museums, plazas, viewpoints, markets',
+      legendColor:'#b05e10', legendLabel:'Culture & Sights',
+      items: [
+        { kind:'sidequest', icon:'🏛', name:'Arrogante', tip:'', maps:'https://maps.google.com/?q=Arrogante%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'Biblioteca nacional', tip:'', maps:'https://maps.google.com/?q=Biblioteca%20nacional%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'Biblioteca Virgilio Barco', tip:'', maps:'https://maps.google.com/?q=Biblioteca%20Virgilio%20Barco%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'Centro cultural Gabriel Garcia Marquez', tip:'', maps:'https://maps.google.com/?q=Centro%20cultural%20Gabriel%20Garcia%20Marquez%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'Centro Historico La Candelaria', tip:'', maps:'https://maps.google.com/?q=Centro%20Historico%20La%20Candelaria%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'Cinemateca', tip:'', meta:'📍 Carrera 3 #19-10', maps:'https://maps.google.com/?q=Cinemateca%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'El bronx', tip:'', maps:'https://maps.google.com/?q=El%20bronx%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'El rincon de fusa', tip:'', meta:'📍 Carrera 7 via Bta chia', maps:'https://maps.google.com/?q=El%20rincon%20de%20fusa%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'Fogodabahia rodizio', tip:'', meta:'📍 Calle 69a #9-21', maps:'https://maps.google.com/?q=Fogodabahia%20rodizio%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'Jardin Botanico', tip:'', maps:'https://maps.google.com/?q=Jardin%20Botanico%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'Mecado de las Pulgas', tip:'', maps:'https://maps.google.com/?q=Mecado%20de%20las%20Pulgas%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'Mercado de la parceverancia', tip:'', maps:'https://maps.google.com/?q=Mercado%20de%20la%20parceverancia%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'Monserrate', tip:'', maps:'https://maps.google.com/?q=Monserrate%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'Museo el chico', tip:'', maps:'https://maps.google.com/?q=Museo%20el%20chico%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'Museos Botero, MAMU, casa de la modena, del oro, teatro colon', tip:'', maps:'https://maps.google.com/?q=Museos%20Botero%2C%20MAMU%2C%20casa%20de%20la%20modena%2C%20del%20oro%2C%20teatro%20colon%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'Parque veltical (Centro de Felicidad Chapinero)', tip:'', meta:'📍 carrea 11 calle 82 Detras del CC Andino<br><a href="https://www.culturarecreacionydeporte.gov.co/es/centro-felicidad-chapinero" target="_blank" style="color:var(--gold);">🌐 Website</a>', maps:'https://maps.google.com/?q=Parque%20veltical%20%28Centro%20de%20Felicidad%20Chapinero%29%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'Pasaje Rivas', tip:'', meta:'📍 Calle 10 #10-54', maps:'https://maps.google.com/?q=Pasaje%20Rivas%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'Planetario', tip:'', maps:'https://maps.google.com/?q=Planetario%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'Pozo la calavera', tip:'', maps:'https://maps.google.com/?q=Pozo%20la%20calavera%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'Quinta de Bolivar mucseo', tip:'', maps:'https://maps.google.com/?q=Quinta%20de%20Bolivar%20mucseo%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'Reserva La serrana', tip:'', maps:'https://maps.google.com/?q=Reserva%20La%20serrana%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'Tardeo', tip:'', maps:'https://maps.google.com/?q=Tardeo%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'Teatro mayor', tip:'', maps:'https://maps.google.com/?q=Teatro%20mayor%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'Tejo el rolo', tip:'', meta:'📍 Calle 74 #15-51', maps:'https://maps.google.com/?q=Tejo%20el%20rolo%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'Tiendas', tip:'', meta:'📍 Calle de los anticuarios-CC el retiro', maps:'https://maps.google.com/?q=Tiendas%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'Torre Colpatria', tip:'', meta:'📍 Piso 48 Colpatria · 🎟 $18000 COP<br><a href="https://colombia.travel/es/bogota/sube-al-mirador-de-la-torre-colpatria" target="_blank" style="color:var(--gold);">🌐 Website</a>', maps:'https://maps.google.com/?q=Torre%20Colpatria%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'Usaquen', tip:'', maps:'https://maps.google.com/?q=Usaquen%20Bogota' },
+        { kind:'sidequest', icon:'🏛', name:'Woofdatesbta', tip:'', maps:'https://maps.google.com/?q=Woofdatesbta%20Bogota' },
+      ]
+    },
+    {
+      key:'eat', label:'EAT', title:'Eat', note:'Restaurants across the city',
+      legendColor:'#9b2335', legendLabel:'Eat',
+      items: [
+        { kind:'anchor', icon:'🍽', name:'Adriano', tip:'Inside Casa República', kicker:'★ Must-do', meta:'<i style="color:var(--warning);">ℹ Confirmed hours per IG: Mon-Wed 12-9:30pm · Thu-Sat 12-11pm · Sun-Hol 12-5pm · ☎ +57 313 3075877</i><br>📍 Calle 85 #7-74<br><a href="https://instagram.com/adrianocasarepublica" target="_blank" style="color:var(--gold);">📷 @adrianocasarepublica (21k)</a> · <a href="https://casarepublica.co/" target="_blank" style="color:var(--gold);">🌐 Website</a><br><span style="color:var(--text-muted);font-size:10px;">source: casarepublica.co</span>', maps:'https://maps.google.com/?q=Adriano%20Bogota', key:'adriano' },
+        { kind:'anchor', icon:'🍽', name:'El don rooftop', tip:'', kicker:'★ Must-do', meta:'📍 Calle 93 #14-14', maps:'https://maps.google.com/?q=El%20don%20rooftop%20Bogota', key:'el-don-rooftop' },
+        { kind:'anchor', icon:'🍽', name:'La tavola pizza', tip:'', kicker:'★ Must-do', meta:'📍 Carrera 11 #86-75', maps:'https://maps.google.com/?q=La%20tavola%20pizza%20Bogota', key:'la-tavola-pizza' },
+        { kind:'anchor', icon:'🍽', name:'Matrona (Parkway)', tip:'Colombian cuisine, Parkway — book ahead', kicker:'★ Must-do', meta:'Well-regarded Colombian restaurant on the Parkway (La Soledad). Known for warm service, an experimental welcome cocktail, rich soups; growing demand often outstrips its two floors of tables. Roughly $14,000–80,000 COP.<br>📍 Carrera 24 #39b-56 · 🎟 $14000 - 80000 COP<br><a href="https://instagram.com/matronacolombia" target="_blank" style="color:var(--gold);">📷 @matronacolombia (33k)</a><br><span style="color:var(--text-muted);font-size:10px;">source: Tripadvisor</span>', maps:'https://maps.google.com/?q=Matrona%20%28Parkway%29%20Bogota', key:'matrona-parkway' },
+        { kind:'anchor', icon:'🍽', name:'Oda', tip:'★ Latin America\'s Most Sustainable Restaurant 2025', kicker:'★ Must-do', meta:'Top-floor fine dining in Torre HHC (Cedritos) with sweeping city views. Chef Natalia Cocomá. Author cuisine celebrating Colombian biodiversity, sourced from 10+ urban gardens and 70 small farming families. First Bogotá restaurant certified \'Negocio Verde\'. #76 on Latin America\'s 50 Best.<br>📍 Calle 140 #11-45<br><a href="https://instagram.com/odarestaurante" target="_blank" style="color:var(--gold);">📷 @odarestaurante (59k)</a><br><span style="color:var(--text-muted);font-size:10px;">source: eltiempo.com / theworlds50best.com</span>', maps:'https://maps.google.com/?q=Oda%20Bogota', key:'oda' },
+        { kind:'anchor', icon:'🍽', name:'Vinos y vinilos', tip:'', kicker:'★ Must-do', meta:'<i style="color:var(--warning);">ℹ Specifically: Calle 127 #15-03, 7th floor of Hotel Sonesta</i><br>📍 Calle 127 · 🎟 $12000 COP<br><a href="https://instagram.com/vinosyvinilosrooftop" target="_blank" style="color:var(--gold);">📷 @vinosyvinilosrooftop (10k)</a>', maps:'https://maps.google.com/?q=Vinos%20y%20vinilos%20Bogota', key:'vinos-y-vinilos' },
+        { kind:'sidequest', icon:'🍽', name:'Aalto bistro piano', tip:'', meta:'📍 CC el retiro piso 5', maps:'https://maps.google.com/?q=Aalto%20bistro%20piano%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'Abasto', tip:'', maps:'https://maps.google.com/?q=Abasto%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'Afluente', tip:'#34 Latin America\'s 50 Best 2025', meta:'On Latin America\'s 50 Best (#34, 2025). Founded by Oda\'s former chef Jeferson García.<br><a href="https://instagram.com/afluenterestaurante" target="_blank" style="color:var(--gold);">📷 @afluenterestaurante (28k)</a><br><span style="color:var(--text-muted);font-size:10px;">source: theworlds50best.com</span>', maps:'https://maps.google.com/?q=Afluente%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'Afuente', tip:'Possibly \'Afluente\' — #34 Latin America\'s 50 Best', meta:'This may be the same as Afluente (#34 on Latin America\'s 50 Best 2025). Worth confirming the spelling/address.<br><i style="color:var(--warning);">ℹ Likely typo for \'Afluente\' — verified address: Carrera 3a #57-35 (which matches the sheet)</i><br>📍 Carreara 3a #57-35<br><span style="color:var(--text-muted);font-size:10px;">source: theworlds50best.com</span>', maps:'https://maps.google.com/?q=Afuente%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'Ajisen Ramen', tip:'', meta:'📍 Calle 67 #7-38', maps:'https://maps.google.com/?q=Ajisen%20Ramen%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'Akari', tip:'', meta:'📍 Calle 71 #9-45', maps:'https://maps.google.com/?q=Akari%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'Cascajal', tip:'', meta:'📍 Calle 65 #2-85 piso 2', maps:'https://maps.google.com/?q=Cascajal%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'Chorro de quevedo La tierria', tip:'', maps:'https://maps.google.com/?q=Chorro%20de%20quevedo%20La%20tierria%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'Creps & waffles', tip:'', meta:'📍 Calle 90 #11-13', maps:'https://maps.google.com/?q=Creps%20%26%20waffles%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'de la loma', tip:'', meta:'📍 Calle 30 #5-16', maps:'https://maps.google.com/?q=de%20la%20loma%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'Debora', tip:'#85 Latin America\'s 50 Best 2025', meta:'\'Débora\' on Latin America\'s 50 Best extended list (#85, 2025).<br><i style="color:var(--warning);">ℹ Sheet says Calle 70a #10a-18; current address per Instagram & 50Best: Cll 69 #4-80, Chapinero</i><br>📍 Calle 70a #10a-18<br><a href="https://instagram.com/deborarest" target="_blank" style="color:var(--gold);">📷 @deborarest (29k)</a><br><span style="color:var(--text-muted);font-size:10px;">source: theworlds50best.com</span>', maps:'https://maps.google.com/?q=Debora%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'Desayunadero de la 82', tip:'', maps:'https://maps.google.com/?q=Desayunadero%20de%20la%2082%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'El chato', tip:'★ #1 Restaurant in Latin America 2025', meta:'Álvaro Clavijo\'s El Chato was named THE best restaurant in Latin America in 2025. French technique, Colombian ingredients, sourced from small producers. À la carte and tasting menus that change with the season. Lunch & dinner Mon–Sat; book well ahead. In a Chapinero Alto house.<br>📍 Calle 65 #4-76 · 🎟 tasting ~$182 USD<br><a href="https://instagram.com/elchato_rest" target="_blank" style="color:var(--gold);">📷 @elchato_rest (152k)</a><br><span style="color:var(--text-muted);font-size:10px;">source: theworlds50best.com</span>', maps:'https://maps.google.com/?q=El%20chato%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'El Kilo (Marisqueria)', tip:'', maps:'https://maps.google.com/?q=El%20Kilo%20%28Marisqueria%29%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'El poblado', tip:'', maps:'https://maps.google.com/?q=El%20poblado%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'Harry Sasson', tip:'', maps:'https://maps.google.com/?q=Harry%20Sasson%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'Humo Negro', tip:'#41 Latin America\'s 50 Best 2025', meta:'On Latin America\'s 50 Best extended list (#41, 2025). Contemporary Bogotá restaurant in Chapinero.<br>📍 Carreara 5 #56-06<br><a href="https://instagram.com/humonegro_bog" target="_blank" style="color:var(--gold);">📷 @humonegro_bog (43k)</a><br><span style="color:var(--text-muted);font-size:10px;">source: theworlds50best.com</span>', maps:'https://maps.google.com/?q=Humo%20Negro%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'Ken gogi parrilla coreana', tip:'', meta:'📍 Calle 93a - 11', maps:'https://maps.google.com/?q=Ken%20gogi%20parrilla%20coreana%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'La biferia', tip:'', maps:'https://maps.google.com/?q=La%20biferia%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'La gran parrilla boyacence', tip:'', maps:'https://maps.google.com/?q=La%20gran%20parrilla%20boyacence%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'Leo', tip:'★ Chef Leonor Espinosa — #23 Latin America\'s 50 Best', meta:'World-renowned fine dining by Leonor Espinosa (World\'s Best Female Chef 2022). 8 or 13-course \'Ciclo-Bioma\' tasting menu built on little-known Colombian ingredients from across the country\'s ecosystems. Daughter Laura runs the drinks pairing. Reservations required; roughly $100,000–400,000 COP pp.<br>📍 Calle 65bis #4-23 · 🎟 ~$100,000–400,000 COP<br><a href="https://instagram.com/leorestaurantcol" target="_blank" style="color:var(--gold);">📷 @leorestaurantcol (91k)</a><br><span style="color:var(--text-muted);font-size:10px;">source: theworlds50best.com</span>', maps:'https://maps.google.com/?q=Leo%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'Lobo negro (la macarene)', tip:'', meta:'📍 Carrera 4a #26c-12<br><a href="https://www.lobonegrobog.com/" target="_blank" style="color:var(--gold);">🌐 Website</a>', maps:'https://maps.google.com/?q=Lobo%20negro%20%28la%20macarene%29%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'Mama Luz', tip:'', maps:'https://maps.google.com/?q=Mama%20Luz%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'Nana Omakase (Tuna/ronqueo)', tip:'', meta:'📍 Calle 65 #4a-54<br><a href="https://atgente.com/blogs/news/nana-omakase-bogota" target="_blank" style="color:var(--gold);">🌐 Website</a>', maps:'https://maps.google.com/?q=Nana%20Omakase%20%28Tuna/ronqueo%29%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'Prudencia', tip:'', meta:'📍 Carrera 2 #11-34', maps:'https://maps.google.com/?q=Prudencia%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'Quinto cocina', tip:'', maps:'https://maps.google.com/?q=Quinto%20cocina%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'Santorini rooftop (sangria)', tip:'', meta:'📍 Calle 85 #12-66 piso 15', maps:'https://maps.google.com/?q=Santorini%20rooftop%20%28sangria%29%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'SoyAnfitriona', tip:'', meta:'📍 Calle 83bis #24-09', maps:'https://maps.google.com/?q=SoyAnfitriona%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'Taperia de la plaza (7 de Agosto)', tip:'', meta:'📍 Calle 66 #22-39', maps:'https://maps.google.com/?q=Taperia%20de%20la%20plaza%20%287%20de%20Agosto%29%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'The cheese weel', tip:'', meta:'<a href="https://www.cheesewheelco.com/" target="_blank" style="color:var(--gold);">🌐 Website</a>', maps:'https://maps.google.com/?q=The%20cheese%20weel%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'Treme (Jazz)', tip:'', meta:'📍 Carrera 10a #70-50', maps:'https://maps.google.com/?q=Treme%20%28Jazz%29%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'Tres cuatro cinco', tip:'', maps:'https://maps.google.com/?q=Tres%20cuatro%20cinco%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'Verano', tip:'', meta:'<a href="https://gruposmile.co/verano/" target="_blank" style="color:var(--gold);">🌐 Website</a>', maps:'https://maps.google.com/?q=Verano%20Bogota' },
+        { kind:'sidequest', icon:'🍽', name:'Via del Cuore', tip:'', meta:'📍 Carrera 13 #83-54<br><a href="https://viadelcuore.com.co/" target="_blank" style="color:var(--gold);">🌐 Website</a>', maps:'https://maps.google.com/?q=Via%20del%20Cuore%20Bogota' },
+      ]
+    },
+    {
+      key:'drink', label:'DRINK', title:'Drink', note:'Bars, rooftops & rumba',
+      legendColor:'#1a5fa8', legendLabel:'Drink',
+      items: [
+        { kind:'sidequest', icon:'🍸', name:'Apache', tip:'', maps:'https://maps.google.com/?q=Apache%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'Astoria', tip:'', maps:'https://maps.google.com/?q=Astoria%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'Attic & Keller', tip:'', meta:'📍 Carrera 13 #75-51<br><a href="https://instagram.com/attic_keller" target="_blank" style="color:var(--gold);">📷 @attic_keller (53k)</a>', maps:'https://maps.google.com/?q=Attic%20%26%20Keller%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'BBC pub rosales', tip:'', meta:'📍 Carrera 5 #71a-75', maps:'https://maps.google.com/?q=BBC%20pub%20rosales%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'BrewPub', tip:'', maps:'https://maps.google.com/?q=BrewPub%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'Bulevard salsa rooftop', tip:'', meta:'📍 Carrera 13 #82-37', maps:'https://maps.google.com/?q=Bulevard%20salsa%20rooftop%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'Cerveza Turmeque', tip:'', meta:'📍 Calle 29bis #5-66<br><a href="https://instagram.com/cervezaturmeque" target="_blank" style="color:var(--gold);">📷 @cervezaturmeque</a>', maps:'https://maps.google.com/?q=Cerveza%20Turmeque%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'Chin chin', tip:'Trendy wine bar — Grupo Takami', meta:'Fashionable wine bar on Calle 80 from Grupo Takami, led by sommelier Izaskun de Ugarriza. Monthly-changing wine selection, half-glass pours at fair prices, warm vibe and strong food. Gets very busy Wed onwards — book ahead.<br>📍 Av Cl 80 #9 - 17<br><a href="https://takami.co/chin-chin/" target="_blank" style="color:var(--gold);">🌐 Website</a><br><span style="color:var(--text-muted);font-size:10px;">source: eltiempo.com</span>', maps:'https://maps.google.com/?q=Chin%20chin%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'Cocodrilo', tip:'', meta:'📍 Calle 59bis #8-15<br><a href="https://instagram.com/cocodrilo.coffee.bar" target="_blank" style="color:var(--gold);">📷 @cocodrilo.coffee.bar</a>', maps:'https://maps.google.com/?q=Cocodrilo%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'El purgatorio (Rosales)', tip:'', meta:'📍 Calle 74 #02-86', maps:'https://maps.google.com/?q=El%20purgatorio%20%28Rosales%29%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'El sitio', tip:'', meta:'📍 Carrera 13 con 85', maps:'https://maps.google.com/?q=El%20sitio%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'Enano bar', tip:'', meta:'📍 Calle 79b #712', maps:'https://maps.google.com/?q=Enano%20bar%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'Fantasma (Jazz)', tip:'', meta:'📍 Carrera 7 #72-77<br><a href="https://instagram.com/fantasmabogota" target="_blank" style="color:var(--gold);">📷 @fantasmabogota (39k)</a> · <a href="https://fantasmabogota.com/" target="_blank" style="color:var(--gold);">🌐 Website</a>', maps:'https://maps.google.com/?q=Fantasma%20%28Jazz%29%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'Frank', tip:'', meta:'📍 Carrera 4 #58-40', maps:'https://maps.google.com/?q=Frank%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'Huerta bar', tip:'', meta:'📍 Carrera 12a #83-64', maps:'https://maps.google.com/?q=Huerta%20bar%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'La cava 80', tip:'', meta:'📍 Av Calle 80 #8-65', maps:'https://maps.google.com/?q=La%20cava%2080%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'La mesa del buen vivir', tip:'', meta:'📍 Calle 79a #8-31', maps:'https://maps.google.com/?q=La%20mesa%20del%20buen%20vivir%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'La sala de Laura', tip:'', meta:'📍 Calle 65bis #4-23', maps:'https://maps.google.com/?q=La%20sala%20de%20Laura%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'Levels bar', tip:'', meta:'📍 Ak 7 #72-41', maps:'https://maps.google.com/?q=Levels%20bar%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'Lumina', tip:'', maps:'https://maps.google.com/?q=Lumina%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'Metronomo', tip:'', meta:'📍 Carrera 5 #66-a-24', maps:'https://maps.google.com/?q=Metronomo%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'Mr Bum', tip:'', meta:'📍 Carrera 6 #116-56<br><a href="https://instagram.com/mrbumaudiobar" target="_blank" style="color:var(--gold);">📷 @mrbumaudiobar (16k)</a>', maps:'https://maps.google.com/?q=Mr%20Bum%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'Petit comite', tip:'', maps:'https://maps.google.com/?q=Petit%20comite%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'Rio de todos', tip:'', meta:'📍 Calle 61 #5-20', maps:'https://maps.google.com/?q=Rio%20de%20todos%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'Ruda', tip:'', meta:'📍 Calle 65 #4-20', maps:'https://maps.google.com/?q=Ruda%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'Sky 15', tip:'', maps:'https://maps.google.com/?q=Sky%2015%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'Uma cantina peruana', tip:'', meta:'📍 Calle 79b #8-10', maps:'https://maps.google.com/?q=Uma%20cantina%20peruana%20Bogota' },
+        { kind:'sidequest', icon:'🍸', name:'Vista corona', tip:'', maps:'https://maps.google.com/?q=Vista%20corona%20Bogota' },
+      ]
+    },
+    {
+      key:'cafe', label:'CAFÉ', title:'Cafe', note:'Coffee & brunch',
+      legendColor:'#2d7a4f', legendLabel:'Cafe',
+      items: [
+        { kind:'anchor', icon:'☕', name:'Juan Valdez', tip:'', kicker:'★ Must-do', meta:'📍 Carrera 13 #93b-51', maps:'https://maps.google.com/?q=Juan%20Valdez%20Bogota', key:'juan-valdez' },
+        { kind:'sidequest', icon:'☕', name:'Elements', tip:'', meta:'📍 Zona T', maps:'https://maps.google.com/?q=Elements%20Bogota' },
+        { kind:'sidequest', icon:'☕', name:'Gracia coffee & brunch', tip:'', meta:'📍 Carrera 4 #12-74', maps:'https://maps.google.com/?q=Gracia%20coffee%20%26%20brunch%20Bogota' },
+        { kind:'sidequest', icon:'☕', name:'Hab Café', tip:'', meta:'📍 Carrera 5 #58-07', maps:'https://maps.google.com/?q=Hab%20Caf%C3%A9%20Bogota' },
+        { kind:'sidequest', icon:'☕', name:'Libertario Zona G', tip:'', meta:'📍 Calle 70a #5-37', maps:'https://maps.google.com/?q=Libertario%20Zona%20G%20Bogota' },
+        { kind:'sidequest', icon:'☕', name:'Lunda (Bagels)', tip:'', maps:'https://maps.google.com/?q=Lunda%20%28Bagels%29%20Bogota' },
+        { kind:'sidequest', icon:'☕', name:'Topis', tip:'', meta:'📍 Carrera 13 #77a-65', maps:'https://maps.google.com/?q=Topis%20Bogota' },
+        { kind:'sidequest', icon:'☕', name:'Tropicalia', tip:'', maps:'https://maps.google.com/?q=Tropicalia%20Bogota' },
+        { kind:'sidequest', icon:'☕', name:'Workhouse & coffe 94', tip:'', meta:'📍 Carrera 9 # 93-71<br><a href="https://hotelesdann.com/2025/10/16/work-house-coffee-94/" target="_blank" style="color:var(--gold);">🌐 Website</a>', maps:'https://maps.google.com/?q=Workhouse%20%26%20coffe%2094%20Bogota' },
+      ]
+    },
+    {
+      key:'sweet', label:'SWEET', title:'Sweet', note:'Desserts & ice cream',
+      legendColor:'#c9963a', legendLabel:'Sweet',
+      items: [
+        { kind:'sidequest', icon:'🍰', name:'Clemente', tip:'', meta:'📍 56 #3a-50<br><a href="https://www.heladosclemente.com/" target="_blank" style="color:var(--gold);">🌐 Website</a>', maps:'https://maps.google.com/?q=Clemente%20Bogota' },
+        { kind:'sidequest', icon:'🍰', name:'Good Acai', tip:'', meta:'📍 Carrera 11a #93-42<br><a href="https://good-acai.cluvi.co/" target="_blank" style="color:var(--gold);">🌐 Website</a>', maps:'https://maps.google.com/?q=Good%20Acai%20Bogota' },
+        { kind:'sidequest', icon:'🍰', name:'Orate (la candelarie)', tip:'', meta:'📍 Carrera 2 #11-45<br><a href="https://orate-molecular-ice-cream.menufyy.com/#google_vignette" target="_blank" style="color:var(--gold);">🌐 Website</a>', maps:'https://maps.google.com/?q=Orate%20%28la%20candelarie%29%20Bogota' },
+        { kind:'sidequest', icon:'🍰', name:'Pasteis de nata', tip:'', meta:'📍 Calle 84a #12a-44 · 🎟 $8000 COP<br><a href="https://pasteisdenata.co/" target="_blank" style="color:var(--gold);">🌐 Website</a>', maps:'https://maps.google.com/?q=Pasteis%20de%20nata%20Bogota' },
+      ]
+    },
+    {
+      key:'family-kids', label:'FAMILY', title:'Family & Kids', note:'Kid-friendly spots',
+      legendColor:'#7a4fb0', legendLabel:'Family & Kids',
+      items: [
+        { kind:'anchor', icon:'🧒', name:'Nidho', tip:'', kicker:'★ Must-do', meta:'📍 Calle 109 #15-56', maps:'https://maps.google.com/?q=Nidho%20Bogota', key:'nidho' },
+        { kind:'anchor', icon:'🧒', name:'Sala lab chapinero', tip:'', kicker:'★ Must-do', maps:'https://maps.google.com/?q=Sala%20lab%20chapinero%20Bogota', key:'sala-lab-chapinero' },
+        { kind:'sidequest', icon:'🧒', name:'Biblioteca publica del deporte', tip:'', meta:'📍 Centro felicidad chapinero', maps:'https://maps.google.com/?q=Biblioteca%20publica%20del%20deporte%20Bogota' },
+        { kind:'sidequest', icon:'🧒', name:'Hollywood burger', tip:'', meta:'📍 Carrera 50 #94c-76', maps:'https://maps.google.com/?q=Hollywood%20burger%20Bogota' },
+      ]
+    },
+    {
+      key:'out-of-town', label:'TRIPS', title:'Out of Town', note:'Day trips & overnight escapes around Bogotá',
+      legendColor:'#0d7a6f', legendLabel:'Out of Town',
+      items: [
+        { kind:'anchor', icon:'🏞', name:'Ain Karim', tip:'Villa de leyva Winery', kicker:'★ Must-do', meta:'📍 Villa de leyva · 🎟 $79000 - 180000 COP · 🕑 2 day trip<br><a href="https://ainkarim.co/" target="_blank" style="color:var(--gold);">🌐 Website</a>', maps:'https://maps.google.com/?q=Ain%20Karim%20Villa%20de%20leyva', key:'ain-karim' },
+        { kind:'anchor', icon:'🏞', name:'Andres carne de res', tip:'★ Bogotá\'s most iconic night out — in Chía', kicker:'★ Must-do', meta:'Legendary restaurant/bar/rumbeadero ~40 min away in Chía. A maximalist wonderland — thousands of diners, 11 themed seating areas, a 75-page menu of grilled Colombian classics (try the empanadas, churrasco, arepas), live shows and dancing into the night. Weekend cover charge after 6pm. There\'s also a city branch (Andrés DC). Pricey but unforgettable; great for the family early, party later.<br>🕑 Day trip<br><a href="https://instagram.com/andres_c_de_res" target="_blank" style="color:var(--gold);">📷 @andres_c_de_res (297k)</a><br><span style="color:var(--text-muted);font-size:10px;">source: Fodor\'s / visitingbogota.com</span>', maps:'https://maps.google.com/?q=Andres%20carne%20de%20res%20Cajica', key:'andres-carne-de-res' },
+        { kind:'anchor', icon:'🏞', name:'Eco hotel  Santuario', tip:'Villeta', kicker:'★ Must-do', meta:'🕑 2 day trip<br><a href="https://santuarioluxury.com/" target="_blank" style="color:var(--gold);">🌐 Website</a>', maps:'https://maps.google.com/?q=Eco%20hotel%20%20Santuario%20Villeta', key:'eco-hotel-santuario' },
+        { kind:'anchor', icon:'🏞', name:'Gondava Dinos', tip:'Villa de leyva', kicker:'★ Must-do', meta:'🕑 2 day trip<br><a href="https://www.granvalle.com/" target="_blank" style="color:var(--gold);">🌐 Website</a>', maps:'https://maps.google.com/?q=Gondava%20Dinos%20Villa%20de%20leyva', key:'gondava-dinos' },
+        { kind:'anchor', icon:'🏞', name:'Hotal ca alcestre', tip:'Villa de leyva', kicker:'★ Must-do', meta:'🕑 2 day trip<br><a href="https://www.alcestre.com/" target="_blank" style="color:var(--gold);">🌐 Website</a>', maps:'https://maps.google.com/?q=Hotal%20ca%20alcestre%20Villa%20de%20leyva', key:'hotal-ca-alcestre' },
+        { kind:'anchor', icon:'🏞', name:'La galleta', tip:'Villa de leyva', kicker:'★ Must-do', meta:'🕑 2 day trip<br><a href="https://lagalleta.com.co/" target="_blank" style="color:var(--gold);">🌐 Website</a>', maps:'https://maps.google.com/?q=La%20galleta%20Villa%20de%20leyva', key:'la-galleta' },
+        { kind:'anchor', icon:'🏞', name:'Macanal', tip:'Boyaca', kicker:'★ Must-do', meta:'🎟 $35000 COP · 🕑 2 day trip', maps:'https://maps.google.com/?q=Macanal%20Boyaca', key:'macanal' },
+        { kind:'anchor', icon:'🏞', name:'Rodadero arcoiris', tip:'Villa de leyva', kicker:'★ Must-do', meta:'🕑 2 day trip', maps:'https://maps.google.com/?q=Rodadero%20arcoiris%20Villa%20de%20leyva', key:'rodadero-arcoiris' },
+        { kind:'anchor', icon:'🏞', name:'Tributo', tip:'Enbalse del Neusa', kicker:'★ Must-do', meta:'🕑 2 day trip<br><a href="https://www.neusahills.com/en/restaurante" target="_blank" style="color:var(--gold);">🌐 Website</a>', maps:'https://maps.google.com/?q=Tributo%20Enbalse%20del%20Neusa', key:'tributo' },
+        { kind:'sidequest', icon:'🏞', name:'Aguafresca glampling', tip:'Sesquile Glamping', meta:'📍 Sesquile · 🕑 2 day trip<br><a href="https://www.aguafrescaglamping.com/familiar/" target="_blank" style="color:var(--gold);">🌐 Website</a>', maps:'https://maps.google.com/?q=Aguafresca%20glampling%20Sesquile' },
+        { kind:'sidequest', icon:'🏞', name:'Bioparque Monarca (Bosque de hadas )', tip:'Tenjo', meta:'📍 Tenjo · 🎟 $18000 COP · 🕑 Day trip<br><a href="https://parquemonarca.com/" target="_blank" style="color:var(--gold);">🌐 Website</a>', maps:'https://maps.google.com/?q=Bioparque%20Monarca%20%28Bosque%20de%20hadas%20%29%20Tenjo' },
+        { kind:'sidequest', icon:'🏞', name:'Casa al reves', tip:'tenjo', meta:'🎟 $20000 COP', maps:'https://maps.google.com/?q=Casa%20al%20reves%20tenjo' },
+        { kind:'sidequest', icon:'🏞', name:'El tambor', tip:'', meta:'📍 Km 12 via la calera · 🕑 Day trip', maps:'https://maps.google.com/?q=El%20tambor%20Bogota' },
+        { kind:'sidequest', icon:'🏞', name:'Fundo llanero', tip:'Cajica', maps:'https://maps.google.com/?q=Fundo%20llanero%20Cajica' },
+        { kind:'sidequest', icon:'🏞', name:'Isla Myconos', tip:'La mesa', maps:'https://maps.google.com/?q=Isla%20Myconos%20La%20mesa' },
+        { kind:'sidequest', icon:'🏞', name:'Jurassic park col', tip:'tenjo', maps:'https://maps.google.com/?q=Jurassic%20park%20col%20tenjo' },
+        { kind:'sidequest', icon:'🏞', name:'La chancheria', tip:'Chia-Cota', maps:'https://maps.google.com/?q=La%20chancheria%20Chia-Cota' },
+        { kind:'sidequest', icon:'🏞', name:'La chorrera', tip:'', meta:'🕑 Day trip', maps:'https://maps.google.com/?q=La%20chorrera%20Bogota' },
+        { kind:'sidequest', icon:'🏞', name:'Olivanto', tip:'Villa de leyva', maps:'https://maps.google.com/?q=Olivanto%20Villa%20de%20leyva' },
+        { kind:'sidequest', icon:'🏞', name:'Pachamama', tip:'La calera', maps:'https://maps.google.com/?q=Pachamama%20La%20calera' },
+        { kind:'sidequest', icon:'🏞', name:'Piscina Natural (10 min caminando desde la plaza)', tip:'Villa de leyva', meta:'🎟 $16000 COP · 🕑 2 day trip<br><a href="https://bogotivo.com/en/casona-mesopotamia/" target="_blank" style="color:var(--gold);">🌐 Website</a>', maps:'https://maps.google.com/?q=Piscina%20Natural%20%2810%20min%20caminando%20desde%20la%20plaza%29%20Villa%20de%20leyva' },
+        { kind:'sidequest', icon:'🏞', name:'Queseria hola andes', tip:'Guatavita', maps:'https://maps.google.com/?q=Queseria%20hola%20andes%20Guatavita' },
+        { kind:'sidequest', icon:'🏞', name:'Tinyhouse glamping', tip:'Duitana Glamping', meta:'📍 Duitama/pueblito boyacence · 🕑 2 day trip<br><a href="https://casa-barcelona.hoteles-en-boyaca.com/en/" target="_blank" style="color:var(--gold);">🌐 Website</a>', maps:'https://maps.google.com/?q=Tinyhouse%20glamping%20Duitana' },
+        { kind:'sidequest', icon:'🏞', name:'Zelva glamping', tip:'Villeta', meta:'🕑 2 day trip<br><a href="https://www.mundozelva.com/cabanas" target="_blank" style="color:var(--gold);">🌐 Website</a>', maps:'https://maps.google.com/?q=Zelva%20glamping%20Villeta' },
+      ]
+    },
+  ]
+});
+
 // ── Service Worker — references sw.js in same directory ──
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js', { scope: './' })
     .then(() => console.log('SW registered'))
     .catch(e => console.log('SW failed:', e));
 }
+
+// ── Itinerary engine boot (runs LAST, after all city data registered) ──
+bootItineraries();
 
 
 </script>
